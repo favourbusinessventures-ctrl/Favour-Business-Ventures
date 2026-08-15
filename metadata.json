@@ -1,0 +1,6 @@
+{
+  "name": "Favour Business Ventures",
+  "description": "Premium Nigerian foodstuff business specializing in authentic high-grade stockfish and cleaned sun-dried crayfish with direct WhatsApp ordering.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
