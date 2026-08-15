@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion } from 'motion/react';
 import { X, MessageCircle, ArrowUpRight } from 'lucide-react';
 import { GalleryItem } from '../types';
 import { BUSINESS_CONFIG } from '../config/business';
@@ -24,18 +25,22 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose }) => 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-[#071F16]/90 backdrop-blur-md animate-fade-up"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-[#071F16]/90 backdrop-blur-md"
       onClick={onClose}
     >
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 8 }}
+        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         className="relative max-w-4xl w-full bg-[#FFF9EF] border border-[#E5DEC9] shadow-2xl overflow-hidden rounded-[2px]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
+        {/* Close Button (Touch Target >= 44px) */}
         <button
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-4 right-4 z-10 w-9 h-9 bg-[#071F16] text-[#F5F0E6] hover:bg-[#B8954A] hover:text-[#071F16] transition-colors flex items-center justify-center cursor-pointer rounded-[1px]"
+          className="absolute top-4 right-4 z-10 w-11 h-11 bg-[#071F16] text-[#F5F0E6] hover:bg-[#B8954A] hover:text-[#071F16] transition-colors flex items-center justify-center cursor-pointer rounded-[2px] border border-[#B8954A]/30 focus:outline-none"
         >
           <X className="w-5 h-5" />
         </button>
@@ -47,13 +52,13 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose }) => 
               src={item.imageUrl}
               alt={item.title}
               referrerPolicy="no-referrer"
-              className="max-h-[60vh] md:max-h-[75vh] w-auto object-contain"
+              className="max-h-[50vh] sm:max-h-[60vh] md:max-h-[75vh] w-auto object-contain rounded-[1px]"
             />
           </div>
 
           {/* Details Column */}
           <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#FFF9EF]">
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.3em] text-[#B8954A] block">
                 {item.category.toUpperCase()}
               </span>
@@ -70,12 +75,12 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose }) => 
             </div>
 
             {/* Inquire Action */}
-            <div className="pt-6 border-t border-[#E5DEC9] space-y-4">
+            <div className="pt-6 border-t border-[#E5DEC9] space-y-3">
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/30 text-xs font-semibold tracking-[0.18em] uppercase transition-all duration-300 shadow-sm group rounded-[2px]"
+                className="btn-tactile w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/30 text-xs font-semibold tracking-[0.18em] uppercase shadow-sm group rounded-[2px]"
               >
                 <MessageCircle className="w-4 h-4 text-[#B8954A]" />
                 <span>Inquire on WhatsApp</span>
@@ -89,7 +94,7 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose }) => 
 
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

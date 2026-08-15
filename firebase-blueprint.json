@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "User": {
+      "collection": "users",
+      "description": "Registered system accounts and administrative role assignments",
+      "fields": {
+        "email": { "type": "string", "description": "Email address of user" },
+        "role": { "type": "string", "description": "Authorization role e.g. admin or staff" },
+        "displayName": { "type": "string", "description": "Full name or display label" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" },
+        "lastLoginAt": { "type": "string", "description": "ISO timestamp of last sign in" }
+      },
+      "rules": {
+        "read": "request.auth != null && (request.auth.uid == resource.id || request.auth.token.admin == true || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')",
+        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
+      }
+    },
+    "Product": {
+      "collection": "products",
+      "description": "Stockfish and crayfish product catalog items",
+      "fields": {
+        "name": { "type": "string", "description": "Product display name" },
+        "category": { "type": "string", "description": "Stockfish or Crayfish" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "imageUrl": { "type": "string", "description": "Product photo URL" },
+        "status": { "type": "string", "description": "active or draft" }
+      },
+      "rules": {
+        "read": "true",
+        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
+      }
+    },
+    "Gallery": {
+      "collection": "gallery",
+      "description": "Curated product and bulk photography items",
+      "fields": {
+        "title": { "type": "string", "description": "Photo title" },
+        "category": { "type": "string", "description": "stockfish or crayfish" },
+        "imageUrl": { "type": "string", "description": "Image URL" }
+      },
+      "rules": {
+        "read": "true",
+        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
+      }
+    },
+    "Setting": {
+      "collection": "settings",
+      "description": "Global business configuration and WhatsApp messaging defaults",
+      "fields": {
+        "phone": { "type": "string", "description": "Contact phone" },
+        "whatsapp": { "type": "string", "description": "WhatsApp number" }
+      },
+      "rules": {
+        "read": "true",
+        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
+      }
+    }
+  }
+}

@@ -1,14 +1,14 @@
 import React from 'react';
 import { AboutSection } from '../components/AboutSection';
+import { BrandMoment } from '../components/BrandMoment';
 import { TrustSection } from '../components/TrustSection';
-import { ContactSection } from '../components/ContactSection';
 
 export const AboutView: React.FC = () => {
   return (
-    <div className="animate-fade-in pt-6">
+    <div className="w-full">
       <AboutSection />
+      <BrandMoment />
       <TrustSection />
-      <ContactSection />
     </div>
   );
 };

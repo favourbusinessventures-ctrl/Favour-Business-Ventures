@@ -24,6 +24,7 @@
     scroll-behavior: smooth;
     background-color: #071F16;
     color: #111511;
+    -webkit-tap-highlight-color: transparent;
   }
 
   h1, h2, h3, h4, .font-editorial {
@@ -47,31 +48,46 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F6F1E7;
+  background: #071F16;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D8CEBC;
+  background: #16382A;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C6A15B;
+  background: #B8954A;
+}
+
+/* Tactile app-like button feedback */
+.btn-tactile {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 44px;
+}
+
+.btn-tactile:hover {
+  transform: translateY(-1px);
+}
+
+.btn-tactile:active {
+  transform: scale(0.98);
 }
 
 /* Editorial image zoom interaction */
 .img-editorial-zoom {
-  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s ease;
+  will-change: transform;
 }
 
 .img-editorial-zoom:hover {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
-/* Editorial subtle fade animations */
-@keyframes editorialFadeUp {
+/* Smooth keyframes */
+@keyframes viewFadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -79,7 +95,18 @@
   }
 }
 
-.animate-fade-up {
-  animation: editorialFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-view-entry {
+  animation: viewFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

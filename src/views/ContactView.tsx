@@ -4,7 +4,7 @@ import { TrustSection } from '../components/TrustSection';
 
 export const ContactView: React.FC = () => {
   return (
-    <div className="animate-fade-in pt-6">
+    <div className="w-full">
       <ContactSection />
       <TrustSection />
     </div>

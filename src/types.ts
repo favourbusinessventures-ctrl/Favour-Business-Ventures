@@ -1,5 +1,10 @@
 export type NavigationTab = 'home' | 'products' | 'about' | 'gallery' | 'contact';
 
+export interface ProductOption {
+  name: string;
+  description: string;
+}
+
 export interface ProductDetail {
   id: string;
   name: string;
@@ -8,10 +13,7 @@ export interface ProductDetail {
   description: string;
   highlights: string[];
   imageUrl: string;
-  options: {
-    name: string;
-    description: string;
-  }[];
+  options: ProductOption[];
   culinaryNotes: string;
 }
 

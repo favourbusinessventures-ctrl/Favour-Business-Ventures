@@ -4,7 +4,7 @@ import { ContactSection } from '../components/ContactSection';
 
 export const GalleryView: React.FC = () => {
   return (
-    <div className="animate-fade-in pt-6">
+    <div className="w-full">
       <GallerySection />
       <ContactSection />
     </div>

@@ -8,18 +8,18 @@ export const BrandMoment: React.FC = () => {
   const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
 
   return (
-    <section className="relative bg-[#071F16] text-[#F5F0E6] py-24 sm:py-32 lg:py-40 overflow-hidden border-y border-[#16382A]">
+    <section className="relative bg-[#071F16] text-[#F5F0E6] py-16 sm:py-24 lg:py-32 overflow-hidden border-y border-[#16382A]">
       {/* Background Ambience in Deep Forest */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#0D3325]/50 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#B8954A]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
           {/* Typography & Campaign Statement */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-7">
             
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div className="inline-flex items-center gap-2.5">
                 <span className="w-6 h-[1.5px] bg-[#B8954A]" />
                 <span className="text-[10px] sm:text-[11px] font-sans-clean font-semibold tracking-[0.35em] uppercase text-[#B8954A]">
@@ -28,7 +28,7 @@ export const BrandMoment: React.FC = () => {
               </div>
 
               {/* Enormous Warm Ivory Editorial Headline */}
-              <h2 className="font-editorial text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-[#F5F0E6] leading-[0.96]">
+              <h2 className="font-editorial text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-[#F5F0E6] leading-[0.96]">
                 QUALITY <br />
                 YOU CAN <br />
                 <span className="italic font-normal text-[#B8954A]">TASTE.</span>
@@ -43,12 +43,12 @@ export const BrandMoment: React.FC = () => {
               From everyday cooking to the meals you make for people you love.
             </p>
 
-            <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 shadow-md group rounded-[2px]"
+                className="btn-tactile inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.2em] uppercase shadow-md group rounded-[2px]"
               >
                 <MessageCircle className="w-4 h-4 text-[#071F16]" />
                 <span>Order on WhatsApp</span>
@@ -79,7 +79,7 @@ export const BrandMoment: React.FC = () => {
 
               {/* Minimal Tag */}
               <div className="p-3.5 bg-[#0D3325] border-t border-[#16382A] flex items-center justify-between">
-                <span className="font-editorial italic text-base text-[#F5F0E6]">
+                <span className="font-editorial italic text-sm sm:text-base text-[#F5F0E6]">
                   Hand-inspected cuts
                 </span>
                 <span className="text-[9px] font-sans-clean font-semibold uppercase tracking-[0.22em] text-[#B8954A]">
