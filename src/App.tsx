@@ -18,7 +18,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf7f2] text-[#1c1c1a]">
+    <div className="min-h-screen flex flex-col bg-[#071F16] text-[#F5F0E6]">
       
       {/* Top Editorial Navbar */}
       <Navbar
@@ -26,7 +26,7 @@ export default function App() {
         onNavigate={handleNavigate}
       />
 
-      {/* Main Content Areas */}
+      {/* Main Content View with Smooth Transition */}
       <main className="flex-1">
         {currentTab === 'home' && <HomeView onNavigate={handleNavigate} />}
         {currentTab === 'products' && <ProductsView />}

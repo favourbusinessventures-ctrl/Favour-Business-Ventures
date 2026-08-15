@@ -8,6 +8,7 @@ export const BUSINESS_CONFIG = {
   name: "FAVOUR BUSINESS VENTURES",
   shortName: "Favour",
   tagline: "Premium Stockfish & Crayfish",
+  heroSubtitle: "Quality food products, thoughtfully presented and easy to order.",
   description: "Favour Business Ventures provides quality stockfish and crayfish for customers looking for dependable food products.",
   
   // Single configurable WhatsApp number
@@ -24,3 +25,4 @@ export const BUSINESS_CONFIG = {
   stockfishOrderMessage: "Hello Favour Business Ventures, I would like to inquire about ordering stockfish. Please share your available cuts and pricing.",
   crayfishOrderMessage: "Hello Favour Business Ventures, I would like to inquire about ordering crayfish. Please share your available options and pricing.",
 };
+

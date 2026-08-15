@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { BUSINESS_CONFIG } from '../config/business';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 export const WhatsAppFloatingButton: React.FC = () => {
+  const [isHovered, setIsHovered] = useState(false);
   const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
 
   return (
@@ -12,15 +13,14 @@ export const WhatsAppFloatingButton: React.FC = () => {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Order on WhatsApp"
-        className="flex items-center gap-2.5 px-4 py-3 bg-[#122b1e] hover:bg-[#0b1c13] text-[#faf7f2] border border-[#c59b27] shadow-xl transition-all duration-300 hover:scale-105 group"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        aria-label="Direct WhatsApp Order"
+        className="flex items-center gap-2 px-3.5 py-2.5 bg-[#071F16]/95 hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/50 shadow-2xl backdrop-blur-xs transition-all duration-300 group hover:border-[#B8954A] rounded-[2px]"
       >
-        <div className="relative">
-          <MessageCircle className="w-5 h-5 text-[#c59b27]" />
-          <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#c59b27]" />
-        </div>
-        <span className="text-xs font-sans-clean font-semibold tracking-[0.12em] uppercase hidden sm:inline-block">
-          Order on WhatsApp
+        <MessageCircle className="w-4 h-4 text-[#B8954A] transition-transform group-hover:scale-110" />
+        <span className="text-[10px] font-sans-clean font-semibold tracking-[0.2em] uppercase text-[#F5F0E6]/90 group-hover:text-[#F5F0E6] transition-colors">
+          WhatsApp
         </span>
       </a>
     </div>

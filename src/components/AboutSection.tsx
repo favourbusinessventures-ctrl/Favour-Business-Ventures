@@ -2,60 +2,65 @@ import React from 'react';
 import { MessageCircle, ArrowUpRight } from 'lucide-react';
 import { BUSINESS_CONFIG } from '../config/business';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
-import { stockfishHeadImg } from '../data/products';
+import { stockfishBaleImg } from '../data/products';
 
 export const AboutSection: React.FC = () => {
   const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
 
   return (
-    <section id="about-section" className="py-20 sm:py-28 bg-[#f5f1e8] border-b border-[#ece6d9]">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <section id="about-section" className="py-24 sm:py-36 bg-[#F5F0E6] text-[#071F16] border-b border-[#E5DEC9]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column: Editorial Brand Story */}
+          {/* Left Column: Authentic Brand Narrative */}
           <div className="lg:col-span-6 space-y-8">
             
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="w-8 h-[1.5px] bg-[#c59b27]" />
-                <span className="text-[11px] font-sans-clean font-semibold tracking-[0.3em] uppercase text-[#c59b27]">
-                  About The Brand
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-[1.5px] bg-[#B8954A]" />
+                <span className="text-[11px] font-sans-clean font-semibold tracking-[0.35em] uppercase text-[#B8954A]">
+                  Our Approach
                 </span>
               </div>
               
-              <h2 className="font-editorial text-3xl sm:text-5xl font-bold tracking-tight text-[#122b1e] leading-[1.1]">
-                About Favour Business Ventures
+              <h2 className="font-editorial text-4xl sm:text-6xl font-bold tracking-tight text-[#071F16] leading-[1.02]">
+                A Dedicated Focus on What Matters.
               </h2>
             </div>
 
-            <div className="space-y-5 text-sm sm:text-base text-[#47433c] font-sans-clean font-light leading-relaxed">
-              <p className="font-editorial italic text-xl sm:text-2xl text-[#122b1e] leading-snug">
-                "{BUSINESS_CONFIG.description}"
+            <div className="space-y-5 text-base sm:text-lg text-[#111511] font-sans-clean font-light leading-relaxed">
+              <p className="font-editorial italic text-2xl sm:text-3xl text-[#071F16] leading-snug">
+                "Good meals begin with ingredients you can trust."
               </p>
 
               <p>
-                We focus squarely on two essential culinary ingredients: stockfish and crayfish. By concentrating our attention on these core staples, we ensure each order meets standards of cleanliness, proper drying, and rich traditional flavor.
+                At {BUSINESS_CONFIG.name}, we believe in doing fewer things with exceptional standards. We concentrate entirely on stockfish and sun-dried crayfish.
               </p>
 
-              <p>
-                Whether you are ordering for home meals, family gatherings, catering, or commercial food service, we provide responsive service and direct communication from order placement to final delivery.
+              <p className="text-[#6B7266] text-sm sm:text-base">
+                Whether you are preparing everyday family meals, cooking for a weekend celebration, or running a catering kitchen, we provide dependable products packaged cleanly and dispatched without fuss.
               </p>
             </div>
 
-            {/* Core Values */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[#e2dbcd]">
-              <div className="space-y-1">
-                <span className="font-editorial text-xl font-bold text-[#122b1e]">Quality</span>
-                <p className="text-xs text-[#6b665c]">Clean and carefully selected stockfish & crayfish.</p>
+            {/* Two Column Highlight Metrics */}
+            <div className="grid grid-cols-2 gap-6 pt-4 border-t border-[#E5DEC9]">
+              <div>
+                <span className="font-editorial text-3xl sm:text-4xl font-bold text-[#071F16] block">
+                  Pure Focus
+                </span>
+                <span className="text-xs text-[#6B7266] font-sans-clean mt-1 block">
+                  Dedicated strictly to stockfish & crayfish.
+                </span>
               </div>
-              <div className="space-y-1">
-                <span className="font-editorial text-xl font-bold text-[#122b1e]">Reliability</span>
-                <p className="text-xs text-[#6b665c]">Consistent supply and dependable communication.</p>
-              </div>
-              <div className="space-y-1">
-                <span className="font-editorial text-xl font-bold text-[#122b1e]">Simplicity</span>
-                <p className="text-xs text-[#6b665c]">Direct, straightforward ordering over WhatsApp.</p>
+
+              <div>
+                <span className="font-editorial text-3xl sm:text-4xl font-bold text-[#071F16] block">
+                  Direct Care
+                </span>
+                <span className="text-xs text-[#6B7266] font-sans-clean mt-1 block">
+                  Inspected, packed, and confirmed before dispatch.
+                </span>
               </div>
             </div>
 
@@ -65,36 +70,41 @@ export const AboutSection: React.FC = () => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#122b1e] hover:bg-[#0b1c13] text-[#faf7f2] text-xs font-medium tracking-[0.15em] uppercase transition-all shadow-xs group"
+                className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/30 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 shadow-md group rounded-[2px]"
               >
-                <MessageCircle className="w-4 h-4 text-[#c59b27]" />
-                <span>Contact on WhatsApp</span>
-                <ArrowUpRight className="w-3 h-3 text-[#faf7f2]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <MessageCircle className="w-4 h-4 text-[#B8954A]" />
+                <span>Talk with Us on WhatsApp</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#F5F0E6]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
 
           </div>
 
-          {/* Right Column: Editorial Photography */}
-          <div className="lg:col-span-6">
-            <div className="p-3 sm:p-4 bg-[#faf7f2] border border-[#e4ddcf] relative">
-              <div className="aspect-4/3 sm:aspect-5/4 overflow-hidden bg-[#122b1e]">
+          {/* Right Column: Editorial Photo Framing */}
+          <div className="lg:col-span-6 relative">
+            <div className="p-3 sm:p-4 bg-[#FFF9EF] border border-[#E5DEC9] shadow-xl relative">
+              <div className="aspect-4/3 sm:aspect-5/4 overflow-hidden bg-[#071F16]">
                 <img
-                  src={stockfishHeadImg}
-                  alt="Stockfish quality preparation"
+                  src={stockfishBaleImg}
+                  alt="Stockfish presentation by Favour Business Ventures"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover img-zoom-hover"
+                  className="w-full h-full object-cover img-editorial-zoom"
                 />
               </div>
 
-              {/* Minimal caption */}
-              <div className="p-4 sm:p-5 bg-[#faf7f2] border-t border-[#ede7dc]">
-                <p className="font-editorial text-base text-[#122b1e] font-semibold">
-                  Dedicated to authentic culinary depth
-                </p>
-                <p className="text-xs text-[#6b665c] mt-0.5 font-sans-clean">
-                  Carefully preserved and prepared for traditional recipes.
-                </p>
+              {/* Minimal caption banner */}
+              <div className="p-5 bg-[#FFF9EF] border-t border-[#E5DEC9] flex items-center justify-between">
+                <div>
+                  <p className="font-editorial text-lg text-[#071F16] font-bold">
+                    Dependable food supply
+                  </p>
+                  <p className="text-xs text-[#6B7266] font-sans-clean">
+                    For household kitchens, events, and caterers.
+                  </p>
+                </div>
+                <span className="text-[10px] font-sans-clean uppercase tracking-[0.25em] text-[#B8954A] font-semibold">
+                  Standard 01
+                </span>
               </div>
             </div>
           </div>

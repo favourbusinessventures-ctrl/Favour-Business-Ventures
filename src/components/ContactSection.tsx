@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
-import { MessageCircle, Phone, Mail, ArrowUpRight, Send, Check } from 'lucide-react';
+import { MessageCircle, Phone, Mail, ArrowUpRight, Send } from 'lucide-react';
 import { BUSINESS_CONFIG } from '../config/business';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 export const ContactSection: React.FC = () => {
   const [productChoice, setProductChoice] = useState<'Stockfish' | 'Crayfish' | 'Both Stockfish & Crayfish'>('Stockfish');
-  const [orderQuantity, setOrderQuantity] = useState('Standard Order');
+  const [orderQuantity, setOrderQuantity] = useState('Standard Retail / Household Portion');
   const [customerName, setCustomerName] = useState('');
   const [customNote, setCustomNote] = useState('');
 
   const handleSendOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    let message = `Hello Favour Business Ventures, I would like to place an order.`;
-    message += `\n- Product: ${productChoice}`;
-    message += `\n- Quantity / Requirement: ${orderQuantity}`;
+    
+    let message = `Hello Favour Business Ventures, I would like to place an order.\n\n`;
+    message += `• Product: ${productChoice}\n`;
+    message += `• Quantity/Purpose: ${orderQuantity}\n`;
     if (customerName.trim()) {
-      message += `\n- Name: ${customerName.trim()}`;
+      message += `• Name: ${customerName.trim()}\n`;
     }
     if (customNote.trim()) {
-      message += `\n- Notes: ${customNote.trim()}`;
+      message += `• Notes: ${customNote.trim()}\n`;
     }
-    message += `\n\nPlease share current pricing and availability.`;
+    message += `\nPlease confirm availability, pricing, and dispatch details.`;
 
     const url = buildWhatsAppUrl(message);
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -29,80 +30,86 @@ export const ContactSection: React.FC = () => {
   const defaultWhatsAppUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
 
   return (
-    <section id="contact-section" className="py-20 sm:py-28 bg-[#faf7f2] border-b border-[#ece6d9]">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 space-y-16">
+    <section id="contact-section" className="py-24 sm:py-36 bg-[#F5F0E6] text-[#071F16] border-b border-[#E5DEC9]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 space-y-16 sm:space-y-24">
         
-        {/* Header */}
-        <div className="max-w-2xl space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="w-8 h-[1.5px] bg-[#c59b27]" />
-            <span className="text-[11px] font-sans-clean font-semibold tracking-[0.3em] uppercase text-[#c59b27]">
-              Order & Inquiries
+        {/* Powerful Section Banner / Header */}
+        <div className="space-y-4 max-w-3xl">
+          <div className="flex items-center gap-3">
+            <span className="w-8 h-[1.5px] bg-[#B8954A]" />
+            <span className="text-[11px] font-sans-clean font-semibold tracking-[0.35em] uppercase text-[#B8954A]">
+              Direct Inquiries
             </span>
           </div>
-          <h2 className="font-editorial text-3xl sm:text-5xl font-bold tracking-tight text-[#122b1e]">
-            Connect & Place Your Order
+
+          <h2 className="font-editorial text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-[#071F16] leading-[0.98]">
+            Ready to order?
           </h2>
-          <p className="text-sm sm:text-base text-[#57534a] font-sans-clean font-light leading-relaxed">
-            Direct communication on WhatsApp for current price quotes, product inquiries, and fast fulfillment.
+
+          <p className="font-editorial italic text-2xl sm:text-3xl text-[#6B7266]">
+            Tell us what you need.
+          </p>
+
+          <p className="text-base sm:text-lg text-[#6B7266] font-sans-clean font-light leading-relaxed">
+            Choose what you need. Send your order. We'll take it from there. Direct WhatsApp communication for transparent quotes and swift fulfillment.
           </p>
         </div>
 
-        {/* 2-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        {/* 2-Column Split: Custom Order Builder & Direct Channels */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
-          {/* Left Column: Direct WhatsApp Order Builder */}
-          <div className="lg:col-span-7 bg-[#f5f1e8] border border-[#e4ddcf] p-6 sm:p-10 space-y-6">
-            <div className="space-y-2">
-              <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.25em] text-[#c59b27]">
-                Interactive Order Composer
+          {/* Left Column: Interactive Order Composer */}
+          <div className="lg:col-span-7 bg-[#FFF9EF] border border-[#E5DEC9] p-8 sm:p-12 space-y-8 shadow-sm rounded-[2px]">
+            <div className="space-y-2 border-b border-[#E5DEC9] pb-6">
+              <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.3em] text-[#B8954A]">
+                Order Composer
               </span>
-              <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#122b1e]">
-                Prepare Your Order Message
+              <h3 className="font-editorial text-3xl sm:text-4xl font-bold text-[#071F16]">
+                Format Your WhatsApp Message
               </h3>
-              <p className="text-xs sm:text-sm text-[#57534a] font-sans-clean font-light">
-                Select your product interest below to generate a pre-filled WhatsApp message.
+              <p className="text-xs sm:text-sm text-[#6B7266] font-sans-clean font-light">
+                Select your required products to generate a clear, pre-filled WhatsApp inquiry.
               </p>
             </div>
 
-            <form onSubmit={handleSendOrder} className="space-y-5">
+            <form onSubmit={handleSendOrder} className="space-y-6">
               
               {/* Product Selection */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#122b1e]">
-                  Product Interest
+              <div className="space-y-2">
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#071F16]">
+                  Select Product
                 </label>
                 <select
                   value={productChoice}
                   onChange={(e) => setProductChoice(e.target.value as any)}
-                  className="w-full px-4 py-3 bg-[#faf7f2] border border-[#d8d0bf] text-[#122b1e] text-sm focus:outline-none focus:border-[#122b1e] rounded-none"
+                  className="w-full px-4 py-3.5 bg-[#F5F0E6] border border-[#E5DEC9] text-[#071F16] text-sm focus:outline-none focus:border-[#071F16] rounded-[2px] cursor-pointer"
                 >
-                  <option value="Stockfish">Stockfish (Cuts / Heads / Bulk)</option>
-                  <option value="Crayfish">Crayfish (Whole / Pure Ground / Bulk)</option>
-                  <option value="Both Stockfish & Crayfish">Both Stockfish & Crayfish Combo</option>
+                  <option value="Stockfish">Stockfish (Cuts / Heads / Bulk Packs)</option>
+                  <option value="Crayfish">Crayfish (Whole Sun-Dried / Pure Ground Powder)</option>
+                  <option value="Both Stockfish & Crayfish">Stockfish & Crayfish Combination</option>
                 </select>
               </div>
 
-              {/* Order Scale / Option */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#122b1e]">
-                  Order Size / Quantity
+              {/* Quantity Selection */}
+              <div className="space-y-2">
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#071F16]">
+                  Order Quantity / Purpose
                 </label>
                 <select
                   value={orderQuantity}
                   onChange={(e) => setOrderQuantity(e.target.value)}
-                  className="w-full px-4 py-3 bg-[#faf7f2] border border-[#d8d0bf] text-[#122b1e] text-sm focus:outline-none focus:border-[#122b1e] rounded-none"
+                  className="w-full px-4 py-3.5 bg-[#F5F0E6] border border-[#E5DEC9] text-[#071F16] text-sm focus:outline-none focus:border-[#071F16] rounded-[2px] cursor-pointer"
                 >
-                  <option value="Standard Retail / Household Order">Standard Retail / Household Order</option>
-                  <option value="Catering / Family Volume">Catering / Family Volume</option>
-                  <option value="Commercial / Wholesale Bulk Order">Commercial / Wholesale Bulk Order</option>
-                  <option value="Custom Quantity (Specify in Notes)">Custom Quantity (Specify in Notes)</option>
+                  <option value="Standard Retail / Household Portion">Standard Retail / Household Portion</option>
+                  <option value="Family / Event Volume">Family Gathering / Event Volume</option>
+                  <option value="Commercial Catering / Vendor Supply">Commercial Catering / Vendor Supply</option>
+                  <option value="Custom Quantity (Specified in Notes)">Custom Quantity (Specified in Notes)</option>
                 </select>
               </div>
 
               {/* Customer Name */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#122b1e]">
+              <div className="space-y-2">
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#071F16]">
                   Your Name (Optional)
                 </label>
                 <input
@@ -110,126 +117,123 @@ export const ContactSection: React.FC = () => {
                   placeholder="e.g. Customer Name"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-4 py-3 bg-[#faf7f2] border border-[#d8d0bf] text-[#122b1e] text-sm focus:outline-none focus:border-[#122b1e] rounded-none"
+                  className="w-full px-4 py-3.5 bg-[#F5F0E6] border border-[#E5DEC9] text-[#071F16] text-sm focus:outline-none focus:border-[#071F16] rounded-[2px]"
                 />
               </div>
 
-              {/* Special Notes */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-[0.15em] text-[#122b1e]">
-                  Additional Instructions / Notes (Optional)
+              {/* Custom Notes */}
+              <div className="space-y-2">
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#071F16]">
+                  Notes or Custom Cut Requests (Optional)
                 </label>
                 <textarea
                   rows={3}
-                  placeholder="e.g. Please share current price list for prime cuts..."
+                  placeholder="e.g. Prefer prime fleshy body cuts, extra clean crayfish packaging..."
                   value={customNote}
                   onChange={(e) => setCustomNote(e.target.value)}
-                  className="w-full px-4 py-3 bg-[#faf7f2] border border-[#d8d0bf] text-[#122b1e] text-sm focus:outline-none focus:border-[#122b1e] rounded-none"
+                  className="w-full px-4 py-3.5 bg-[#F5F0E6] border border-[#E5DEC9] text-[#071F16] text-sm focus:outline-none focus:border-[#071F16] rounded-[2px]"
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* Submit CTA */}
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 bg-[#122b1e] hover:bg-[#0b1c13] text-[#faf7f2] text-xs font-semibold tracking-[0.18em] uppercase transition-all duration-200 shadow-sm cursor-pointer group"
+                className="w-full inline-flex items-center justify-center gap-3 py-4 px-6 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/40 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 shadow-md cursor-pointer group rounded-[2px]"
               >
-                <Send className="w-4 h-4 text-[#c59b27]" />
-                <span>Send Order via WhatsApp ({BUSINESS_CONFIG.whatsappNumberDisplay})</span>
+                <Send className="w-4 h-4 text-[#B8954A]" />
+                <span>Send via WhatsApp ({BUSINESS_CONFIG.whatsappNumberDisplay})</span>
               </button>
 
             </form>
           </div>
 
-          {/* Right Column: Contact Channels & Business Card */}
-          <div className="lg:col-span-5 space-y-8 flex flex-col justify-between">
+          {/* Right Column: Direct Channels in Deep Luxury Green */}
+          <div className="lg:col-span-5 space-y-6">
             
-            <div className="space-y-6">
-              {/* WhatsApp Card */}
-              <div className="p-6 sm:p-8 bg-[#122b1e] text-[#faf7f2] border border-[#0b1c13] space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[#c59b27] text-[#122b1e] flex items-center justify-center">
-                    <MessageCircle className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-sans-clean uppercase tracking-[0.2em] text-[#c59b27] font-semibold">
-                      Primary Channel
-                    </span>
-                    <h4 className="font-editorial text-2xl font-bold text-[#faf7f2]">
-                      WhatsApp Direct
-                    </h4>
-                  </div>
+            {/* WhatsApp Direct Card */}
+            <div className="p-8 sm:p-10 bg-[#071F16] text-[#F5F0E6] border border-[#16382A] space-y-5 rounded-[2px] shadow-lg">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-[#B8954A] text-[#071F16] flex items-center justify-center rounded-[1px]">
+                  <MessageCircle className="w-6 h-6" />
                 </div>
-
-                <p className="text-xs sm:text-sm text-[#c8d4cc] font-sans-clean font-light leading-relaxed">
-                  Fastest response for real-time inquiries, product availability, and custom orders.
-                </p>
-
-                <div className="pt-2">
-                  <a
-                    href={defaultWhatsAppUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-[#c59b27] hover:underline"
-                  >
-                    <span>Message {BUSINESS_CONFIG.whatsappNumberDisplay}</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
+                <div>
+                  <span className="text-[9px] font-sans-clean uppercase tracking-[0.3em] text-[#B8954A] font-semibold block">
+                    Primary Channel
+                  </span>
+                  <h4 className="font-editorial text-3xl font-bold text-[#F5F0E6]">
+                    WhatsApp Direct
+                  </h4>
                 </div>
               </div>
 
-              {/* Direct Phone Call */}
-              <div className="p-6 bg-[#f5f1e8] border border-[#e4ddcf] space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-[#e8e2d5] text-[#122b1e] flex items-center justify-center">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-sans-clean uppercase tracking-[0.2em] text-[#8a8477]">
-                      Voice Calls
-                    </span>
-                    <h4 className="font-editorial text-lg font-bold text-[#122b1e]">
-                      Phone Inquiries
-                    </h4>
-                  </div>
-                </div>
-                <p className="text-sm font-sans-clean text-[#122b1e] font-semibold">
-                  <a href={BUSINESS_CONFIG.phoneCallUrl} className="hover:text-[#c59b27] transition-colors">
-                    {BUSINESS_CONFIG.phoneNumberDisplay}
-                  </a>
-                </p>
-              </div>
+              <p className="text-sm text-[#F5F0E6]/80 font-sans-clean font-light leading-relaxed">
+                Fastest response for real-time stock availability, custom cut selections, and instant price confirmations.
+              </p>
 
-              {/* Email Contact */}
-              <div className="p-6 bg-[#f5f1e8] border border-[#e4ddcf] space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-[#e8e2d5] text-[#122b1e] flex items-center justify-center">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-sans-clean uppercase tracking-[0.2em] text-[#8a8477]">
-                      Electronic Mail
-                    </span>
-                    <h4 className="font-editorial text-lg font-bold text-[#122b1e]">
-                      Email Desk
-                    </h4>
-                  </div>
-                </div>
-                <p className="text-sm font-sans-clean text-[#122b1e] font-semibold">
-                  <a href={`mailto:${BUSINESS_CONFIG.email}`} className="hover:text-[#c59b27] transition-colors">
-                    {BUSINESS_CONFIG.email}
-                  </a>
-                </p>
+              <div className="pt-2">
+                <a
+                  href={defaultWhatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-[#B8954A] hover:text-[#C9A75E] transition-colors"
+                >
+                  <span>Chat with {BUSINESS_CONFIG.whatsappNumberDisplay}</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </a>
               </div>
-
             </div>
 
-            {/* Bottom Assurance */}
-            <div className="p-5 border border-[#e4ddcf] bg-[#faf7f2] space-y-2">
-              <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#c59b27]">
-                Customer Commitment
+            {/* Direct Phone Call */}
+            <div className="p-6 sm:p-8 bg-[#FFF9EF] border border-[#E5DEC9] space-y-3 rounded-[2px]">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 bg-[#F5F0E6] text-[#071F16] flex items-center justify-center border border-[#E5DEC9]">
+                  <Phone className="w-4 h-4 text-[#B8954A]" />
+                </div>
+                <div>
+                  <span className="text-[9px] font-sans-clean uppercase tracking-[0.25em] text-[#6B7266]">
+                    Telephone
+                  </span>
+                  <h4 className="font-editorial text-xl font-bold text-[#071F16]">
+                    Voice Calls
+                  </h4>
+                </div>
+              </div>
+              <p className="text-sm font-sans-clean text-[#071F16] font-semibold pt-1">
+                <a href={BUSINESS_CONFIG.phoneCallUrl} className="hover:text-[#B8954A] transition-colors">
+                  {BUSINESS_CONFIG.phoneNumberDisplay}
+                </a>
+              </p>
+            </div>
+
+            {/* Email Contact */}
+            <div className="p-6 sm:p-8 bg-[#FFF9EF] border border-[#E5DEC9] space-y-3 rounded-[2px]">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 bg-[#F5F0E6] text-[#071F16] flex items-center justify-center border border-[#E5DEC9]">
+                  <Mail className="w-4 h-4 text-[#B8954A]" />
+                </div>
+                <div>
+                  <span className="text-[9px] font-sans-clean uppercase tracking-[0.25em] text-[#6B7266]">
+                    Electronic Mail
+                  </span>
+                  <h4 className="font-editorial text-xl font-bold text-[#071F16]">
+                    Email Desk
+                  </h4>
+                </div>
+              </div>
+              <p className="text-sm font-sans-clean text-[#071F16] font-semibold pt-1">
+                <a href={`mailto:${BUSINESS_CONFIG.email}`} className="hover:text-[#B8954A] transition-colors">
+                  {BUSINESS_CONFIG.email}
+                </a>
+              </p>
+            </div>
+
+            {/* Service Standard */}
+            <div className="p-6 border border-[#E5DEC9] bg-[#FFF9EF] space-y-2 rounded-[2px]">
+              <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.25em] text-[#B8954A] block">
+                Our Standard
               </span>
-              <p className="text-xs text-[#57534a] font-sans-clean leading-relaxed">
-                Every inquiry is handled directly to ensure clear communication on product selection, pricing, and fulfillment.
+              <p className="text-xs text-[#6B7266] font-sans-clean leading-relaxed">
+                Every order is inspected and confirmed directly before packaging. Inquiries receive attention during standard operating hours.
               </p>
             </div>
 
