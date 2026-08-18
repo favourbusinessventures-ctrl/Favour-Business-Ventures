@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, ArrowUpRight } from 'lucide-react';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 import { NavigationTab } from '../types';
 
@@ -14,6 +14,7 @@ export const StickyMobileOrderBar: React.FC<StickyMobileOrderBarProps> = ({
   currentTab,
   onNavigate,
 }) => {
+  const { settings } = useBusinessSettings();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export const StickyMobileOrderBar: React.FC<StickyMobileOrderBarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <AnimatePresence>

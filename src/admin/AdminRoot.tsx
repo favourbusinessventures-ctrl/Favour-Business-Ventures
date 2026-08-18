@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { AdminAuthProvider, useAdminAuth } from './AdminAuthContext';
 import { AdminLogin } from './AdminLogin';
 import { AdminDashboard } from './AdminDashboard';
+import { AdminProducts } from './AdminProducts';
+import { AdminGallery } from './AdminGallery';
+import { AdminOrders } from './AdminOrders';
+import { AdminSettings } from './AdminSettings';
 import { AdminHeader } from './components/AdminHeader';
 import { AdminSidebar } from './components/AdminSidebar';
 import { AdminTab } from './types';
@@ -57,7 +61,24 @@ const AdminContent: React.FC<AdminRootProps> = ({ onReturnToStore }) => {
 
         {/* Dynamic Content Panel */}
         <main className="flex-1 overflow-y-auto bg-[#071F16]">
-          {currentTab === 'dashboard' && <AdminDashboard />}
+          {currentTab === 'dashboard' && (
+            <AdminDashboard 
+              onNavigateTab={setCurrentTab}
+              onReturnToStore={onReturnToStore}
+            />
+          )}
+          {currentTab === 'products' && (
+            <AdminProducts />
+          )}
+          {currentTab === 'gallery' && (
+            <AdminGallery />
+          )}
+          {currentTab === 'orders' && (
+            <AdminOrders />
+          )}
+          {currentTab === 'settings' && (
+            <AdminSettings />
+          )}
         </main>
 
       </div>

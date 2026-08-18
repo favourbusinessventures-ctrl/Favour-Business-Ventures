@@ -1,10 +1,11 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 export const WhatsAppFloatingButton: React.FC = () => {
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const { settings } = useBusinessSettings();
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, Menu, X, ArrowUpRight } from 'lucide-react';
 import { NavigationTab } from '../types';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 interface NavbarProps {
@@ -11,6 +11,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
+  const { settings } = useBusinessSettings();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -47,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
     setIsMobileMenuOpen(false);
   };
 
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <>
@@ -67,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
           >
             <div className="flex flex-col">
               <span className="font-editorial text-lg sm:text-xl md:text-2xl font-bold tracking-[0.16em] text-[#F5F0E6] uppercase transition-colors group-hover:text-[#B8954A]">
-                {BUSINESS_CONFIG.name}
+                {settings.name}
               </span>
               <span className="text-[8.5px] sm:text-[9px] font-sans-clean font-semibold tracking-[0.32em] text-[#B8954A] uppercase">
                 Stockfish & Crayfish
@@ -200,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
               </a>
               <div className="text-center">
                 <span className="text-[11px] text-[#F5F0E6]/60 font-sans-clean">
-                  Direct Line: {BUSINESS_CONFIG.whatsappNumberDisplay}
+                  Direct Line: {settings.whatsappNumberDisplay}
                 </span>
               </div>
             </div>

@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { ZoomIn, MessageCircle } from 'lucide-react';
+import { useLiveGallery } from '../hooks/useLiveGallery';
 import { GALLERY_ITEMS } from '../data/gallery';
 import { GalleryItem } from '../types';
 import { GalleryModal } from './GalleryModal';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 export const GallerySection: React.FC = () => {
+  const { galleryItems } = useLiveGallery();
+  const { settings } = useBusinessSettings();
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'stockfish' | 'crayfish'>('all');
   const [activeModalItem, setActiveModalItem] = useState<GalleryItem | null>(null);
 
-  const filteredItems = selectedCategory === 'all'
-    ? GALLERY_ITEMS
-    : GALLERY_ITEMS.filter((item) => item.category === selectedCategory);
+  const displayList = galleryItems && galleryItems.length > 0 ? galleryItems : GALLERY_ITEMS;
 
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const filteredItems = selectedCategory === 'all'
+    ? displayList
+    : displayList.filter((item) => item.category === selectedCategory);
+
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <section id="gallery-section" className="py-16 sm:py-24 lg:py-32 bg-[#F5F0E6] text-[#071F16] border-b border-[#E5DEC9]">

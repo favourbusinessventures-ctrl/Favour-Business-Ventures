@@ -1,10 +1,13 @@
 import React from 'react';
+import { useLiveProducts } from '../hooks/useLiveProducts';
 import { PRODUCTS_DATA } from '../data/products';
 import { ProductSelector } from './ProductSelector';
 
 export const ProductSection: React.FC = () => {
-  const stockfish = PRODUCTS_DATA.find((p) => p.id === 'stockfish') || PRODUCTS_DATA[0];
-  const crayfish = PRODUCTS_DATA.find((p) => p.id === 'crayfish') || PRODUCTS_DATA[1];
+  const { products } = useLiveProducts();
+  
+  const stockfish = products.find((p) => p.category === 'Stockfish') || PRODUCTS_DATA[0];
+  const crayfish = products.find((p) => p.category === 'Crayfish') || PRODUCTS_DATA[1];
 
   return (
     <section id="products-section" className="border-b border-[#16382A]">

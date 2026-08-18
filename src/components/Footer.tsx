@@ -1,7 +1,7 @@
 import React from 'react';
 import { MessageCircle, ArrowUpRight } from 'lucide-react';
 import { NavigationTab } from '../types';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 interface FooterProps {
@@ -10,7 +10,8 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin }) => {
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const { settings } = useBusinessSettings();
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <footer className="bg-[#071F16] text-[#F5F0E6] border-t border-[#16382A]">
@@ -23,10 +24,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
               Stockfish & Crayfish Provisions
             </span>
             <h3 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F5F0E6]">
-              {BUSINESS_CONFIG.name}
+              {settings.name}
             </h3>
             <p className="text-xs sm:text-sm text-[#F5F0E6]/75 font-sans-clean font-light leading-relaxed">
-              {BUSINESS_CONFIG.description}
+              {settings.description}
             </p>
           </div>
 
@@ -50,13 +51,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-3.5">
             <span className="font-editorial text-2xl font-bold tracking-[0.1em] text-[#F5F0E6] uppercase">
-              {BUSINESS_CONFIG.name}
+              {settings.name}
             </span>
             <p className="text-xs text-[#F5F0E6]/75 font-sans-clean font-light leading-relaxed max-w-sm">
               Stockfish and crayfish provided with dependable quality for homes, food vendors, and caterers.
             </p>
             <div className="pt-1 text-xs text-[#B8954A] font-sans-clean font-medium">
-              WhatsApp: {BUSINESS_CONFIG.whatsappNumberDisplay}
+              WhatsApp: {settings.whatsappNumberDisplay}
             </div>
           </div>
 
@@ -128,7 +129,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
         {/* Bottom Copyright */}
         <div className="mt-12 pt-6 border-t border-[#16382A] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#F5F0E6]/50 font-sans-clean">
           <p>
-            © {new Date().getFullYear()} {BUSINESS_CONFIG.name}. All rights reserved.
+            © {new Date().getFullYear()} {settings.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {onNavigateToAdmin && (

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { MessageCircle, Phone, Mail, ArrowUpRight, Send } from 'lucide-react';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 export const ContactSection: React.FC = () => {
+  const { settings } = useBusinessSettings();
   const [productChoice, setProductChoice] = useState<'Stockfish' | 'Crayfish' | 'Both Stockfish & Crayfish'>('Stockfish');
   const [orderQuantity, setOrderQuantity] = useState('Standard Retail / Household Portion');
   const [customerName, setCustomerName] = useState('');
@@ -12,7 +13,7 @@ export const ContactSection: React.FC = () => {
   const handleSendOrder = (e: React.FormEvent) => {
     e.preventDefault();
     
-    let message = `Hello Favour Business Ventures, I would like to place an order.\n\n`;
+    let message = `Hello ${settings.shortName || 'Favour Business Ventures'}, I would like to place an order.\n\n`;
     message += `• Product: ${productChoice}\n`;
     message += `• Quantity/Purpose: ${orderQuantity}\n`;
     if (customerName.trim()) {
@@ -23,11 +24,11 @@ export const ContactSection: React.FC = () => {
     }
     message += `\nPlease confirm availability, pricing, and dispatch details.`;
 
-    const url = buildWhatsAppUrl(message);
+    const url = buildWhatsAppUrl(message, settings.whatsappNumberRaw);
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const defaultWhatsAppUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const defaultWhatsAppUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <section id="contact-section" className="py-16 sm:py-24 lg:py-32 bg-[#F5F0E6] text-[#071F16] border-b border-[#E5DEC9]">
@@ -141,7 +142,7 @@ export const ContactSection: React.FC = () => {
                 className="btn-tactile w-full inline-flex items-center justify-center gap-3 py-4 px-6 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/40 text-xs font-semibold tracking-[0.2em] uppercase shadow-md cursor-pointer group rounded-[2px]"
               >
                 <Send className="w-4 h-4 text-[#B8954A]" />
-                <span>Send via WhatsApp ({BUSINESS_CONFIG.whatsappNumberDisplay})</span>
+                <span>Send via WhatsApp ({settings.whatsappNumberDisplay})</span>
               </button>
 
             </form>
@@ -177,7 +178,7 @@ export const ContactSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-[#B8954A] hover:text-[#C9A75E] transition-colors py-1"
                 >
-                  <span>Chat with {BUSINESS_CONFIG.whatsappNumberDisplay}</span>
+                  <span>Chat with {settings.whatsappNumberDisplay}</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
               </div>
@@ -199,8 +200,8 @@ export const ContactSection: React.FC = () => {
                 </div>
               </div>
               <p className="text-sm font-sans-clean text-[#071F16] font-semibold pt-1">
-                <a href={BUSINESS_CONFIG.phoneCallUrl} className="hover:text-[#B8954A] transition-colors">
-                  {BUSINESS_CONFIG.phoneNumberDisplay}
+                <a href={settings.phoneCallUrl} className="hover:text-[#B8954A] transition-colors">
+                  {settings.phoneNumberDisplay}
                 </a>
               </p>
             </div>
@@ -221,8 +222,8 @@ export const ContactSection: React.FC = () => {
                 </div>
               </div>
               <p className="text-sm font-sans-clean text-[#071F16] font-semibold pt-1">
-                <a href={`mailto:${BUSINESS_CONFIG.email}`} className="hover:text-[#B8954A] transition-colors">
-                  {BUSINESS_CONFIG.email}
+                <a href={`mailto:${settings.email}`} className="hover:text-[#B8954A] transition-colors">
+                  {settings.email}
                 </a>
               </p>
             </div>

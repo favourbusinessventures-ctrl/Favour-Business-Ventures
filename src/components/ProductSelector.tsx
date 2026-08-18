@@ -6,6 +6,7 @@ import { OptionSelector } from './OptionSelector';
 import { QuantitySelector } from './QuantitySelector';
 import { OrderSummary } from './OrderSummary';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { getCustomOrderWhatsAppUrl } from '../utils/whatsapp';
 
 interface ProductSelectorProps {
@@ -20,6 +21,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   theme = 'light',
   indexNumber,
 }) => {
+  const { settings } = useBusinessSettings();
   const [selectedOption, setSelectedOption] = useState<ProductOption>(
     product.options[0] || { name: 'Standard Format', description: '' }
   );
@@ -27,12 +29,12 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
   const isDark = theme === 'dark';
 
-  // Build WhatsApp URL with the exact details
+  // Build WhatsApp URL with the exact details and live number
   const whatsappUrl = getCustomOrderWhatsAppUrl({
     productName: product.name,
     sizeOrPackage: selectedOption.name,
     quantity: quantity,
-  });
+  }, settings.whatsappNumberRaw);
 
   return (
     <div

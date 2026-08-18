@@ -1,11 +1,12 @@
 import React from 'react';
 import { MessageCircle, ArrowUpRight } from 'lucide-react';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 import { crayfishWholeImg, stockfishCutsImg } from '../data/products';
 
 export const BrandMoment: React.FC = () => {
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const { settings } = useBusinessSettings();
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <section className="relative bg-[#071F16] text-[#F5F0E6] py-16 sm:py-24 lg:py-32 overflow-hidden border-y border-[#16382A]">

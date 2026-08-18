@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { MessageCircle, ArrowDown, ArrowUpRight } from 'lucide-react';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 import { heroImg, crayfishWholeImg } from '../data/products';
 import { NavigationTab } from '../types';
@@ -12,7 +12,8 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const { settings } = useBusinessSettings();
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
     <section className="relative bg-[#071F16] text-[#F5F0E6] overflow-hidden pt-4 pb-16 sm:pt-6 sm:pb-24 lg:pb-32 border-b border-[#16382A]">

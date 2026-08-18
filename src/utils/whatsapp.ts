@@ -15,14 +15,15 @@ export function buildWhatsAppUrl(message: string, customNumber?: string): string
 export function getProductOrderWhatsAppUrl(
   productName: string,
   category: string,
-  selectedSize?: string
+  selectedSize?: string,
+  customNumber?: string
 ): string {
   let message = `Hello Favour Business Ventures, I would like to order *${productName}*`;
   if (selectedSize) {
     message += ` (Size / Quantity: *${selectedSize}*)`;
   }
   message += `. Please confirm current price and availability for delivery.`;
-  return buildWhatsAppUrl(message);
+  return buildWhatsAppUrl(message, customNumber);
 }
 
 /**
@@ -35,7 +36,7 @@ export function getCustomOrderWhatsAppUrl(details: {
   customerName?: string;
   location?: string;
   notes?: string;
-}): string {
+}, customNumber?: string): string {
   const lines: string[] = [
     `*NEW ORDER INQUIRY - FAVOUR BUSINESS VENTURES*`,
     `----------------------------------------`,
@@ -59,5 +60,5 @@ export function getCustomOrderWhatsAppUrl(details: {
   lines.push(`----------------------------------------`);
   lines.push(`Kindly let me know the total cost and payment/waybill details. Thank you!`);
 
-  return buildWhatsAppUrl(lines.join('\n'));
+  return buildWhatsAppUrl(lines.join('\n'), customNumber);
 }

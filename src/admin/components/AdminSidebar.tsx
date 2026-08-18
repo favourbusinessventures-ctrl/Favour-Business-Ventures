@@ -45,29 +45,25 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       id: 'products',
       label: 'Products',
       icon: Package,
-      enabled: false,
-      badge: 'Phase 3'
+      enabled: true
     },
     {
       id: 'gallery',
       label: 'Gallery',
       icon: ImageIcon,
-      enabled: false,
-      badge: 'Phase 3'
+      enabled: true
     },
     {
       id: 'orders',
       label: 'Orders',
       icon: ShoppingBag,
-      enabled: false,
-      badge: 'Phase 3'
+      enabled: true
     },
     {
       id: 'settings',
       label: 'Business Settings',
       icon: Settings,
-      enabled: false,
-      badge: 'Phase 3'
+      enabled: true
     }
   ];
 
@@ -185,7 +181,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           </button>
 
           <div className="text-[10px] text-center text-[#6B7266] font-sans-clean">
-            Favour Admin v1.0 • Phase 2
+            Favour Admin v1.0 • Phase 4
           </div>
         </div>
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import { MessageCircle, ArrowUpRight } from 'lucide-react';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 import { stockfishBaleImg } from '../data/products';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 
 export const AboutSection: React.FC = () => {
-  const whatsappUrl = buildWhatsAppUrl(BUSINESS_CONFIG.defaultOrderMessage);
+  const { settings } = useBusinessSettings();
+  const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   const values = [
     {
@@ -104,7 +105,7 @@ export const AboutSection: React.FC = () => {
               </p>
               
               <p className="text-[#6B7266]">
-                {BUSINESS_CONFIG.name} focuses on stockfish and crayfish — presented simply, clearly, and ready to order. We avoid unnecessary complexity and concentrate on delivering clean, dependable provisions directly to your doorstep.
+                {settings.name} focuses on stockfish and crayfish — presented simply, clearly, and ready to order. We avoid unnecessary complexity and concentrate on delivering clean, dependable provisions directly to your doorstep.
               </p>
             </div>
 

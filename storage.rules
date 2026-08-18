@@ -1,0 +1,45 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper function to verify administrator authorization
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.admin == true ||
+        request.auth.token.role == 'admin' ||
+        (request.auth.token.email == 'favourbusinessventures@gmail.com' && request.auth.token.email_verified == true)
+      );
+    }
+
+    // Helper function to validate image MIME type and file size (<= 10MB)
+    function isValidImage() {
+      return request.resource.contentType.matches('image/.*')
+        && request.resource.size <= 10 * 1024 * 1024;
+    }
+
+    // 1. Product Images Folder (/products/*)
+    // - Public read for storefront visitors
+    // - Authenticated verified admin ONLY create/update with valid image validation
+    // - Authenticated verified admin ONLY delete
+    match /products/{fileName} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidImage();
+      allow delete: if isAdmin();
+    }
+
+    // 2. Gallery Showcase Images Folder (/gallery/*)
+    // - Public read for storefront visitors
+    // - Authenticated verified admin ONLY create/update with valid image validation
+    // - Authenticated verified admin ONLY delete
+    match /gallery/{fileName} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidImage();
+      allow delete: if isAdmin();
+    }
+
+    // 3. Deny write by default on all other paths
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

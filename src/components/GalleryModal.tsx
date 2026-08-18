@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { X, MessageCircle, ArrowUpRight } from 'lucide-react';
 import { GalleryItem } from '../types';
-import { BUSINESS_CONFIG } from '../config/business';
+import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 interface GalleryModalProps {
@@ -11,6 +11,8 @@ interface GalleryModalProps {
 }
 
 export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose }) => {
+  const { settings } = useBusinessSettings();
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -20,7 +22,8 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose }) => 
   }, [onClose]);
 
   const whatsappUrl = buildWhatsAppUrl(
-    `Hello Favour Business Ventures, I am interested in ordering ${item.title}. Please share available quantities and pricing.`
+    `Hello ${settings.shortName || 'Favour Business Ventures'}, I am interested in ordering ${item.title}. Please share available quantities and pricing.`,
+    settings.whatsappNumberRaw
   );
 
   return (
@@ -88,7 +91,7 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose }) => 
               </a>
 
               <p className="text-[11px] text-center text-[#6B7266] font-sans-clean">
-                Direct inquiry with {BUSINESS_CONFIG.name}
+                Direct inquiry with {settings.name}
               </p>
             </div>
 

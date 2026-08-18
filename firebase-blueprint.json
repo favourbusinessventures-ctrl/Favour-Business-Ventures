@@ -1,59 +1,268 @@
 {
   "entities": {
     "User": {
-      "collection": "users",
-      "description": "Registered system accounts and administrative role assignments",
-      "fields": {
-        "email": { "type": "string", "description": "Email address of user" },
-        "role": { "type": "string", "description": "Authorization role e.g. admin or staff" },
-        "displayName": { "type": "string", "description": "Full name or display label" },
-        "createdAt": { "type": "string", "description": "ISO timestamp of creation" },
-        "lastLoginAt": { "type": "string", "description": "ISO timestamp of last sign in" }
+      "title": "User",
+      "description": "Administrator and system user accounts with authorization roles",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of administrator"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "staff"],
+          "description": "Security authorization role"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Display name of the user"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO format"
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "description": "Last login timestamp in ISO format"
+        }
       },
-      "rules": {
-        "read": "request.auth != null && (request.auth.uid == resource.id || request.auth.token.admin == true || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')",
-        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
-      }
+      "required": ["email", "role"]
     },
     "Product": {
-      "collection": "products",
-      "description": "Stockfish and crayfish product catalog items",
-      "fields": {
-        "name": { "type": "string", "description": "Product display name" },
-        "category": { "type": "string", "description": "Stockfish or Crayfish" },
-        "description": { "type": "string", "description": "Detailed description" },
-        "imageUrl": { "type": "string", "description": "Product photo URL" },
-        "status": { "type": "string", "description": "active or draft" }
+      "title": "Product",
+      "description": "Stockfish and crayfish catalog items",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Product title"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Stockfish", "Crayfish"],
+          "description": "Product category"
+        },
+        "subtitle": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Editorial subtitle"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Full product description"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Direct image URL"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "draft"],
+          "description": "Publication status"
+        },
+        "displayOrder": {
+          "type": "number",
+          "description": "Display sequence number"
+        },
+        "culinaryNotes": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Culinary preparation notes"
+        }
       },
-      "rules": {
-        "read": "true",
-        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
-      }
+      "required": ["name", "category", "status"]
     },
     "Gallery": {
-      "collection": "gallery",
-      "description": "Curated product and bulk photography items",
-      "fields": {
-        "title": { "type": "string", "description": "Photo title" },
-        "category": { "type": "string", "description": "stockfish or crayfish" },
-        "imageUrl": { "type": "string", "description": "Image URL" }
+      "title": "Gallery",
+      "description": "Curated photography showcase items",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Photograph caption or title"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["stockfish", "crayfish"],
+          "description": "Item category"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Caption description"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Direct image URL"
+        },
+        "aspect": {
+          "type": "string",
+          "enum": ["portrait", "landscape", "square"],
+          "description": "Visual aspect ratio"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "draft"],
+          "description": "Publication status"
+        },
+        "displayOrder": {
+          "type": "number",
+          "description": "Display sequence number"
+        }
       },
-      "rules": {
-        "read": "true",
-        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
-      }
+      "required": ["title", "category", "imageUrl", "status"]
     },
-    "Setting": {
-      "collection": "settings",
-      "description": "Global business configuration and WhatsApp messaging defaults",
-      "fields": {
-        "phone": { "type": "string", "description": "Contact phone" },
-        "whatsapp": { "type": "string", "description": "WhatsApp number" }
+    "BusinessSetting": {
+      "title": "BusinessSetting",
+      "description": "Public storefront business configuration and contact details",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Business legal name"
+        },
+        "shortName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Brand short title"
+        },
+        "tagline": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Brand tagline"
+        },
+        "heroSubtitle": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Hero display description"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "About description"
+        },
+        "whatsappNumberRaw": {
+          "type": "string",
+          "pattern": "^[0-9]{8,20}$",
+          "description": "International WhatsApp digits only"
+        },
+        "whatsappNumberDisplay": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Formatted WhatsApp number"
+        },
+        "phoneNumberDisplay": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Formatted phone number"
+        },
+        "phoneCallUrl": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "tel: link target"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Official business email"
+        },
+        "defaultOrderMessage": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Default WhatsApp prefill message"
+        },
+        "stockfishOrderMessage": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Stockfish WhatsApp prefill message"
+        },
+        "crayfishOrderMessage": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Crayfish WhatsApp prefill message"
+        }
       },
-      "rules": {
-        "read": "true",
-        "write": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'"
-      }
+      "required": ["name", "whatsappNumberRaw"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order records and inquiry logs",
+      "type": "object",
+      "properties": {
+        "customerName": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Customer name"
+        },
+        "customerPhone": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Customer phone number"
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Delivery destination"
+        },
+        "productName": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Product ordered"
+        },
+        "sizeOrPackage": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Package specification"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity requested"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Customer special instructions"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "contacted", "completed", "cancelled"],
+          "description": "Order fulfillment status"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Order placement timestamp"
+        }
+      },
+      "required": ["customerName", "productName", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and administrator authorization records"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Stockfish and crayfish product catalog"
+    },
+    "/gallery/{galleryId}": {
+      "schema": { "$ref": "#/entities/Gallery" },
+      "description": "Visual gallery showcase items"
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/BusinessSetting" },
+      "description": "Storefront configuration and contact settings"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders and inquiries"
     }
   }
 }

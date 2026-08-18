@@ -2,38 +2,65 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper to verify admin role in users collection
+    // Helper to check authentication
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Helper to verify administrator authorization in users collection
     function isAdmin() {
-      return request.auth != null && 
+      return isSignedIn() && 
         exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    // Users collection: user can read own doc or admin can read; only admin can write roles
+    // 1. Users Collection
+    // - Individual document: authenticated user can read their own profile, admin can read any
+    // - List query: strictly restricted to verified administrators
+    // - Mutation: strictly restricted to verified administrators (prevents self-assigned admin roles)
     match /users/{userId} {
-      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
       allow write: if isAdmin();
     }
 
-    // Products collection: public read, admin-only write
+    // 2. Products Collection
+    // - Public storefront: can only read published (status == 'active') products
+    // - Draft products & management: strictly accessible to administrators
+    // - Mutations (create, update, delete, status toggle): strictly admin-only
     match /products/{productId} {
-      allow read: if true;
+      allow get: if (resource.data.status == 'active') || isAdmin();
+      allow list: if (resource.data.status == 'active') || isAdmin();
       allow write: if isAdmin();
     }
 
-    // Gallery collection: public read, admin-only write
+    // 3. Gallery Collection
+    // - Public storefront: can only read published (status == 'active') gallery items
+    // - Draft items & management: strictly accessible to administrators
+    // - Mutations (create, update, delete, status toggle): strictly admin-only
     match /gallery/{galleryId} {
-      allow read: if true;
+      allow get: if (resource.data.status == 'active') || isAdmin();
+      allow list: if (resource.data.status == 'active') || isAdmin();
       allow write: if isAdmin();
     }
 
-    // Settings collection: public read, admin-only write
+    // 4. Settings Collection
+    // - Public storefront: can read ONLY the public 'business_info' document
+    // - Other settings documents or listing collection: strictly admin-only
+    // - Mutations: strictly admin-only
     match /settings/{settingId} {
-      allow read: if true;
+      allow get: if settingId == 'business_info' || isAdmin();
+      allow list: if isAdmin();
       allow write: if isAdmin();
     }
 
-    // Default deny all other collections
+    // 5. Orders Collection (Customer Privacy & Data Protection)
+    // - Customer records and inquiry logs: strictly admin-only
+    match /orders/{orderId} {
+      allow read, write: if isAdmin();
+    }
+
+    // 6. Global Catch-All (Default Deny)
     match /{document=**} {
       allow read, write: if false;
     }
