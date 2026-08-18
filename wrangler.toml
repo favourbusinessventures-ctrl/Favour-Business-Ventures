@@ -1,0 +1,12 @@
+name = "favour-business-ventures"
+main = "worker.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+[vars]
+STORAGE_BUCKET = "gen-lang-client-0856184409.firebasestorage.app"
