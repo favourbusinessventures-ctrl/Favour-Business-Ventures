@@ -190,19 +190,34 @@ async function handleImageUpload(request: Request, env: Env): Promise<Response> 
       }
     }
 
-    // 6. Resilient Base64 Data URL fallback for edge compatibility
-    const dataUrl = fileData.startsWith('data:')
-      ? fileData
-      : `data:${declaredMime};base64,${fileData}`;
+    // 6. Try Cloudflare KV if bound
+    const kvStore = env.IMAGES_KV || env.KV;
+    if (kvStore && typeof kvStore.put === 'function') {
+      try {
+        await kvStore.put(storagePath, binaryData, {
+          metadata: { contentType: declaredMime },
+        });
+        return jsonResponse({
+          success: true,
+          url: `/uploads/${storagePath}`,
+          fileName: finalFileName,
+          size: binaryData.length,
+          mimeType: declaredMime,
+          provider: 'cloudflare-kv',
+        });
+      } catch (kvErr) {
+        console.warn('[Cloudflare Worker] KV upload error:', kvErr);
+      }
+    }
 
-    return jsonResponse({
-      success: true,
-      url: dataUrl,
-      fileName: finalFileName,
-      size: binaryData.length,
-      mimeType: declaredMime,
-      provider: 'edge-data-storage',
-    });
+    // Return error if no persistent storage backend succeeded (Never return massive base64 payload)
+    return jsonResponse(
+      {
+        error:
+          'Could not save image to cloud storage. Please check Firebase Storage permissions or Cloudflare R2/KV bindings.',
+      },
+      500
+    );
   } catch (err: any) {
     return jsonResponse({ error: err?.message || 'Server error uploading image' }, 500);
   }
@@ -282,7 +297,37 @@ export default {
       return jsonResponse({ error: `API endpoint "${pathname}" not found.` }, 404);
     }
 
-    // 4. Static Assets & SPA Fallback for all other frontend routes
+    // 4. Serve dynamic uploaded assets if stored in R2 or KV
+    if (pathname.startsWith('/uploads/')) {
+      const storageKey = pathname.replace(/^\/uploads\//, '');
+      if (env.BUCKET && typeof env.BUCKET.get === 'function') {
+        const object = await env.BUCKET.get(storageKey);
+        if (object) {
+          const headers = new Headers();
+          if (object.writeHttpMetadata) object.writeHttpMetadata(headers);
+          if (object.httpEtag) headers.set('etag', object.httpEtag);
+          headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+          return new Response(object.body, { headers });
+        }
+      }
+
+      const kvStore = env.IMAGES_KV || env.KV;
+      if (kvStore && typeof kvStore.get === 'function') {
+        const kvVal = await kvStore.get(storageKey, { type: 'arrayBuffer' });
+        if (kvVal) {
+          const ext = storageKey.split('.').pop()?.toLowerCase();
+          const mime = ext === 'png' ? 'image/png' : ext === 'webp' ? 'image/webp' : ext === 'svg' ? 'image/svg+xml' : 'image/jpeg';
+          return new Response(kvVal, {
+            headers: {
+              'Content-Type': mime,
+              'Cache-Control': 'public, max-age=31536000, immutable',
+            },
+          });
+        }
+      }
+    }
+
+    // 5. Static Assets & SPA Fallback for all other frontend routes
     if (env.ASSETS && typeof env.ASSETS.fetch === 'function') {
       return env.ASSETS.fetch(request);
     }

@@ -213,14 +213,34 @@ export const AdminGallery: React.FC = () => {
 
     setIsProcessing(true);
     try {
+      const cleanImageUrl = formData.imageUrl.trim();
+      
+      // Strict guard against storing raw base64 data in Firestore
+      if (cleanImageUrl.startsWith('data:') && cleanImageUrl.length > 2048) {
+        setIsProcessing(false);
+        showNotification('Raw base64 image data cannot be saved to database. Please upload the photo to storage first.', 'error');
+        return;
+      }
+
       const now = new Date().toISOString();
       const itemId = isEditing && formData.id ? formData.id : `g-${Date.now()}`;
       
-      const payload: any = {
+      // Construct pure metadata payload with zero binary/base64 data
+      const payload: {
+        title: string;
+        category: 'stockfish' | 'crayfish';
+        description: string;
+        imageUrl: string;
+        aspect: 'portrait' | 'landscape' | 'square';
+        status: 'active' | 'draft';
+        displayOrder: number;
+        updatedAt: string;
+        createdAt?: string;
+      } = {
         title: formData.title.trim(),
         category: formData.category,
         description: formData.description.trim(),
-        imageUrl: formData.imageUrl.trim(),
+        imageUrl: cleanImageUrl,
         aspect: formData.aspect,
         status: formData.status,
         displayOrder: Number(formData.displayOrder) || 1,

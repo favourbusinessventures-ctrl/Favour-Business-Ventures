@@ -128,6 +128,10 @@ function uploadToLocalServer(
           try {
             const data = JSON.parse(xhr.responseText);
             if (data.success && data.url) {
+              if (typeof data.url === 'string' && data.url.startsWith('data:') && data.url.length > 2048) {
+                reject(new Error('Image upload failed: Server returned a data URI instead of a storage URL. Please verify server storage configuration.'));
+                return;
+              }
               if (onProgress) onProgress(100, file.size, file.size);
               resolve({
                 url: data.url,

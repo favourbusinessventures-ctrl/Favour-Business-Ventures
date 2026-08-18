@@ -230,6 +230,15 @@ export const AdminProducts: React.FC = () => {
 
     setActionLoading(true);
     try {
+      const cleanImageUrl = formData.imageUrl.trim() || (formData.category === 'Crayfish' ? PRESET_IMAGE_OPTIONS[1].url : PRESET_IMAGE_OPTIONS[0].url);
+
+      // Strict guard against storing raw base64 data in Firestore
+      if (cleanImageUrl.startsWith('data:') && cleanImageUrl.length > 2048) {
+        setActionLoading(false);
+        showFeedback('error', 'Raw base64 image data cannot be saved to database. Please upload the photo to storage first.');
+        return;
+      }
+
       const cleanHighlights = formData.highlights.map(h => h.trim()).filter(Boolean);
       const cleanOptions = formData.options
         .map(o => ({ name: o.name.trim(), description: o.description.trim() }))
@@ -245,7 +254,7 @@ export const AdminProducts: React.FC = () => {
         subtitle: formData.subtitle.trim(),
         description: formData.description.trim(),
         culinaryNotes: formData.culinaryNotes.trim(),
-        imageUrl: formData.imageUrl.trim() || (formData.category === 'Crayfish' ? PRESET_IMAGE_OPTIONS[1].url : PRESET_IMAGE_OPTIONS[0].url),
+        imageUrl: cleanImageUrl,
         highlights: cleanHighlights,
         options: cleanOptions,
         status: formData.status,
