@@ -8,5 +8,9 @@ directory = "./dist"
 binding = "ASSETS"
 not_found_handling = "single-page-application"
 
+[[kv_namespaces]]
+binding = "IMAGES_KV"
+id = "2d971680a51748748ca4fbbb09e6f124"
+
 [vars]
 STORAGE_BUCKET = "gen-lang-client-0856184409.firebasestorage.app"
