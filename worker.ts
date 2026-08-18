@@ -17,6 +17,12 @@ interface Env {
   [key: string]: any;
 }
 
+const FIREBASE_CONFIG = {
+  projectId: 'gen-lang-client-0856184409',
+  apiKey: 'AIzaSyAsKTFdrPDOb3C-bYWvCHrCwiWH06osefI',
+  databaseId: 'ai-studio-favourbusinessve-67e8ce41-b682-4624-bb35-d6c0590b7542',
+};
+
 const CORS_HEADERS: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
@@ -54,12 +60,15 @@ async function handleHealthRequest(): Promise<Response> {
     status: 'ok',
     timestamp: new Date().toISOString(),
     service: 'Favour Business Ventures API (Cloudflare Worker)',
+    storage: 'firestore-cloud-storage',
     endpoints: [
       'GET /api/health',
       'POST /api/images/upload',
       'OPTIONS /api/images/upload',
       'POST /api/images/delete',
       'OPTIONS /api/images/delete',
+      'GET /api/images/raw/:key',
+      'GET /uploads/:path',
     ],
   });
 }
@@ -94,18 +103,24 @@ async function handleImageUpload(request: Request, env: Env): Promise<Response> 
       return jsonResponse({ error: `Invalid image type: ${declaredMime}` }, 400);
     }
 
-    // 3. Convert base64 to binary buffer
+    // 3. Extract raw base64 string and convert to binary buffer
+    let rawBase64 = fileData;
+    if (rawBase64.includes(';base64,')) {
+      rawBase64 = rawBase64.split(';base64,')[1];
+    }
+    rawBase64 = rawBase64.replace(/[\r\n\s]/g, '');
+
     let binaryData: Uint8Array;
     try {
-      binaryData = base64ToUint8Array(fileData);
+      binaryData = base64ToUint8Array(rawBase64);
     } catch (e: any) {
       return jsonResponse({ error: `Base64 decoding failed: ${e?.message || e}` }, 400);
     }
 
-    // Validate size (max 15MB)
-    const MAX_SIZE = 15 * 1024 * 1024;
+    // Validate size (max 10MB)
+    const MAX_SIZE = 10 * 1024 * 1024;
     if (binaryData.length > MAX_SIZE) {
-      return jsonResponse({ error: 'File size exceeds 15MB limit' }, 400);
+      return jsonResponse({ error: 'File size exceeds 10MB limit' }, 400);
     }
 
     // Determine extension
@@ -124,102 +139,104 @@ async function handleImageUpload(request: Request, env: Env): Promise<Response> 
       .replace(/_+/g, '_');
 
     const timestamp = Date.now();
-    const finalFileName = `${timestamp}_${rawName}.${extension}`;
-    const storagePath = `${targetFolder}/${finalFileName}`;
+    const cleanFileName = `${timestamp}_${rawName}.${extension}`;
+    const storageKey = `${targetFolder}_${cleanFileName}`;
 
-    // 4. Try Firebase Storage REST Upload
-    const storageBucket = env.STORAGE_BUCKET || 'gen-lang-client-0856184409.firebasestorage.app';
-    if (storageBucket) {
-      try {
-        const firebaseUrl = `https://firebasestorage.googleapis.com/v0/b/${storageBucket}/o?name=${encodeURIComponent(storagePath)}&uploadType=media`;
-        const headers: Record<string, string> = {
-          'Content-Type': declaredMime,
-        };
-        if (idToken) {
-          headers['Authorization'] = `Bearer ${idToken}`;
-        }
+    // 4. Save to Persistent Firestore Cloud Database (Zero paid tiers, 100% durable across deploys)
+    const firestoreUrl = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/${FIREBASE_CONFIG.databaseId}/documents/uploaded_images/${encodeURIComponent(storageKey)}?key=${FIREBASE_CONFIG.apiKey}`;
 
-        const uploadRes = await fetch(firebaseUrl, {
-          method: 'POST',
-          headers,
-          body: binaryData,
-        });
-
-        if (uploadRes.ok) {
-          const resData: any = await uploadRes.json();
-          const downloadToken = resData.downloadTokens;
-          const publicUrl = downloadToken
-            ? `https://firebasestorage.googleapis.com/v0/b/${storageBucket}/o/${encodeURIComponent(storagePath)}?alt=media&token=${downloadToken}`
-            : `https://firebasestorage.googleapis.com/v0/b/${storageBucket}/o/${encodeURIComponent(storagePath)}?alt=media`;
-
-          return jsonResponse({
-            success: true,
-            url: publicUrl,
-            fileName: finalFileName,
-            size: binaryData.length,
-            mimeType: declaredMime,
-            provider: 'firebase-storage',
-          });
-        }
-      } catch (fbErr) {
-        console.warn('[Cloudflare Worker] Firebase Storage REST upload returned:', fbErr);
-      }
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (idToken) {
+      headers['Authorization'] = `Bearer ${idToken}`;
     }
 
-    // 5. Try Cloudflare R2 if bound
-    if (env.BUCKET && typeof env.BUCKET.put === 'function') {
-      try {
-        await env.BUCKET.put(storagePath, binaryData, {
-          httpMetadata: { contentType: declaredMime },
-        });
-        const publicR2Domain = env.R2_PUBLIC_DOMAIN || '';
-        const publicUrl = publicR2Domain
-          ? `${publicR2Domain}/${storagePath}`
-          : `/uploads/${storagePath}`;
+    const firestorePayload = {
+      fields: {
+        fileName: { stringValue: cleanFileName },
+        folder: { stringValue: targetFolder },
+        mimeType: { stringValue: declaredMime },
+        size: { integerValue: String(binaryData.length) },
+        data: { stringValue: rawBase64 },
+        createdAt: { stringValue: new Date().toISOString() },
+      },
+    };
 
-        return jsonResponse({
-          success: true,
-          url: publicUrl,
-          fileName: finalFileName,
-          size: binaryData.length,
-          mimeType: declaredMime,
-          provider: 'cloudflare-r2',
-        });
-      } catch (r2Err) {
-        console.warn('[Cloudflare Worker] R2 upload error:', r2Err);
-      }
+    const firestoreRes = await fetch(firestoreUrl, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(firestorePayload),
+    });
+
+    if (firestoreRes.ok) {
+      const publicUrl = `/api/images/raw/${storageKey}`;
+      return jsonResponse({
+        success: true,
+        url: publicUrl,
+        fileName: cleanFileName,
+        size: binaryData.length,
+        mimeType: declaredMime,
+        provider: 'firestore-cloud-storage',
+      });
     }
 
-    // 6. Try Cloudflare KV if bound
-    const kvStore = env.IMAGES_KV || env.KV;
-    if (kvStore && typeof kvStore.put === 'function') {
-      try {
-        await kvStore.put(storagePath, binaryData, {
-          metadata: { contentType: declaredMime },
-        });
-        return jsonResponse({
-          success: true,
-          url: `/uploads/${storagePath}`,
-          fileName: finalFileName,
-          size: binaryData.length,
-          mimeType: declaredMime,
-          provider: 'cloudflare-kv',
-        });
-      } catch (kvErr) {
-        console.warn('[Cloudflare Worker] KV upload error:', kvErr);
-      }
-    }
+    const errorDetails = await firestoreRes.text();
+    console.error('[Cloudflare Worker] Firestore storage write failed:', firestoreRes.status, errorDetails);
 
-    // Return error if no persistent storage backend succeeded (Never return massive base64 payload)
     return jsonResponse(
       {
-        error:
-          'Could not save image to cloud storage. Please check Firebase Storage permissions or Cloudflare R2/KV bindings.',
+        error: `Could not save image to cloud storage (Firestore HTTP ${firestoreRes.status}). Please check administrator authentication.`,
       },
-      500
+      firestoreRes.status >= 400 && firestoreRes.status < 500 ? firestoreRes.status : 500
     );
   } catch (err: any) {
     return jsonResponse({ error: err?.message || 'Server error uploading image' }, 500);
+  }
+}
+
+async function handleGetRawImage(storageKey: string): Promise<Response> {
+  try {
+    const cleanKey = decodeURIComponent(storageKey).replace(/[^a-zA-Z0-9_.-]/g, '');
+    if (!cleanKey) {
+      return new Response('Not Found', { status: 404, headers: CORS_HEADERS });
+    }
+
+    const firestoreUrl = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/${FIREBASE_CONFIG.databaseId}/documents/uploaded_images/${encodeURIComponent(cleanKey)}?key=${FIREBASE_CONFIG.apiKey}`;
+
+    const res = await fetch(firestoreUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!res.ok) {
+      return new Response('Image Not Found', { status: 404, headers: CORS_HEADERS });
+    }
+
+    const data: any = await res.json();
+    const fields = data?.fields;
+    if (!fields || !fields.data?.stringValue) {
+      return new Response('Invalid Image Record', { status: 404, headers: CORS_HEADERS });
+    }
+
+    const base64Str = fields.data.stringValue;
+    const mimeType = fields.mimeType?.stringValue || 'image/jpeg';
+    const binaryData = base64ToUint8Array(base64Str);
+
+    return new Response(binaryData, {
+      status: 200,
+      headers: {
+        'Content-Type': mimeType,
+        'Content-Length': String(binaryData.length),
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        ...CORS_HEADERS,
+      },
+    });
+  } catch (err) {
+    console.error('[Cloudflare Worker] Raw image retrieval error:', err);
+    return new Response('Error retrieving image', { status: 500, headers: CORS_HEADERS });
   }
 }
 
@@ -238,17 +255,33 @@ async function handleImageDelete(request: Request, env: Env): Promise<Response> 
     }
 
     const authHeader = request.headers.get('Authorization');
-    if (url.includes('firebasestorage.googleapis.com') && authHeader) {
-      try {
-        await fetch(url, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': authHeader,
-          },
-        });
-      } catch (e) {
-        console.warn('[Cloudflare Worker] Could not delete from Firebase Storage:', e);
+    
+    // Extract storage key from URL (/api/images/raw/key or /uploads/folder/file)
+    let storageKey = '';
+    if (url.includes('/api/images/raw/')) {
+      storageKey = url.split('/api/images/raw/')[1];
+    } else if (url.includes('/uploads/')) {
+      const parts = url.replace(/^\/uploads\//, '').split('/');
+      if (parts.length === 2) {
+        storageKey = `${parts[0]}_${parts[1]}`;
+      } else {
+        storageKey = parts[0];
       }
+    }
+
+    if (storageKey) {
+      const cleanKey = decodeURIComponent(storageKey).replace(/[^a-zA-Z0-9_.-]/g, '');
+      const firestoreUrl = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/${FIREBASE_CONFIG.databaseId}/documents/uploaded_images/${encodeURIComponent(cleanKey)}?key=${FIREBASE_CONFIG.apiKey}`;
+
+      const headers: Record<string, string> = {};
+      if (authHeader) {
+        headers['Authorization'] = authHeader;
+      }
+
+      await fetch(firestoreUrl, {
+        method: 'DELETE',
+        headers,
+      });
     }
 
     return jsonResponse({ success: true, message: 'Image deleted or unlinked successfully' });
@@ -292,38 +325,25 @@ export default {
       return jsonResponse({ error: `Method ${request.method} Not Allowed. Use POST or DELETE.` }, 405);
     }
 
+    if (pathname.startsWith('/api/images/raw/')) {
+      const storageKey = pathname.replace(/^\/api\/images\/raw\//, '');
+      return handleGetRawImage(storageKey);
+    }
+
     // 3. Catch-all for any other unmatched /api/* route -> Return 404 JSON, NOT SPA HTML
     if (pathname.startsWith('/api/')) {
       return jsonResponse({ error: `API endpoint "${pathname}" not found.` }, 404);
     }
 
-    // 4. Serve dynamic uploaded assets if stored in R2 or KV
+    // 4. Serve uploaded images from Firestore (or static fallback)
     if (pathname.startsWith('/uploads/')) {
-      const storageKey = pathname.replace(/^\/uploads\//, '');
-      if (env.BUCKET && typeof env.BUCKET.get === 'function') {
-        const object = await env.BUCKET.get(storageKey);
-        if (object) {
-          const headers = new Headers();
-          if (object.writeHttpMetadata) object.writeHttpMetadata(headers);
-          if (object.httpEtag) headers.set('etag', object.httpEtag);
-          headers.set('Cache-Control', 'public, max-age=31536000, immutable');
-          return new Response(object.body, { headers });
-        }
-      }
-
-      const kvStore = env.IMAGES_KV || env.KV;
-      if (kvStore && typeof kvStore.get === 'function') {
-        const kvVal = await kvStore.get(storageKey, { type: 'arrayBuffer' });
-        if (kvVal) {
-          const ext = storageKey.split('.').pop()?.toLowerCase();
-          const mime = ext === 'png' ? 'image/png' : ext === 'webp' ? 'image/webp' : ext === 'svg' ? 'image/svg+xml' : 'image/jpeg';
-          return new Response(kvVal, {
-            headers: {
-              'Content-Type': mime,
-              'Cache-Control': 'public, max-age=31536000, immutable',
-            },
-          });
-        }
+      const cleanPath = pathname.replace(/^\/uploads\//, '');
+      const parts = cleanPath.split('/');
+      const storageKey = parts.length === 2 ? `${parts[0]}_${parts[1]}` : cleanPath;
+      
+      const firestoreImgRes = await handleGetRawImage(storageKey);
+      if (firestoreImgRes.status === 200) {
+        return firestoreImgRes;
       }
     }
 

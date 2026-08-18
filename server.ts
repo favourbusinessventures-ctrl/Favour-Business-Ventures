@@ -45,20 +45,36 @@ app.use('/uploads', express.static(uploadsBaseDir, {
   }
 }));
 
+const FIREBASE_CONFIG = {
+  projectId: 'gen-lang-client-0856184409',
+  apiKey: 'AIzaSyAsKTFdrPDOb3C-bYWvCHrCwiWH06osefI',
+  databaseId: 'ai-studio-favourbusinessve-67e8ce41-b682-4624-bb35-d6c0590b7542',
+};
+
 // API: Health check
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
     service: 'Favour Business Ventures API',
-    storage: 'local-server-uploads'
+    storage: 'firestore-cloud-storage',
+    endpoints: [
+      'GET /api/health',
+      'POST /api/images/upload',
+      'OPTIONS /api/images/upload',
+      'POST /api/images/delete',
+      'OPTIONS /api/images/delete',
+      'GET /api/images/raw/:key',
+      'GET /uploads/:path',
+    ],
   });
 });
 
-// API: Image Upload Handler (Zero external secrets required, 100% free, 0 CORS issues)
+// API: Image Upload Handler
 app.post('/api/images/upload', async (req: Request, res: Response): Promise<void> => {
   try {
     const { fileData, fileName, folder, mimeType } = req.body;
+    const authHeader = req.headers.authorization;
 
     if (!fileData || typeof fileData !== 'string') {
       res.status(400).json({ error: 'Missing or invalid fileData in request body' });
@@ -76,16 +92,17 @@ app.post('/api/images/upload', async (req: Request, res: Response): Promise<void
     }
 
     // Extract base64 content
-    let base64String = fileData;
+    let rawBase64 = fileData;
     if (fileData.includes(';base64,')) {
-      base64String = fileData.split(';base64,')[1];
+      rawBase64 = fileData.split(';base64,')[1];
     }
+    rawBase64 = rawBase64.replace(/[\r\n\s]/g, '');
 
-    const buffer = Buffer.from(base64String, 'base64');
+    const buffer = Buffer.from(rawBase64, 'base64');
 
-    // Max 15MB validation
-    if (buffer.length > 15 * 1024 * 1024) {
-      res.status(400).json({ error: 'File exceeds 15MB size limit.' });
+    // Max 10MB validation
+    if (buffer.length > 10 * 1024 * 1024) {
+      res.status(400).json({ error: 'File exceeds 10MB size limit.' });
       return;
     }
 
@@ -95,6 +112,7 @@ app.post('/api/images/upload', async (req: Request, res: Response): Promise<void
     else if (declaredMime.includes('webp')) extension = 'webp';
     else if (declaredMime.includes('jpeg') || declaredMime.includes('jpg')) extension = 'jpg';
     else if (declaredMime.includes('svg')) extension = 'svg';
+    else if (declaredMime.includes('gif')) extension = 'gif';
 
     // Sanitize file name
     const rawName = (fileName || 'image')
@@ -105,12 +123,37 @@ app.post('/api/images/upload', async (req: Request, res: Response): Promise<void
 
     const timestamp = Date.now();
     const finalFileName = `${timestamp}_${rawName}.${extension}`;
+    const storageKey = `${targetFolder}_${finalFileName}`;
     const finalFilePath = path.join(targetDir, finalFileName);
 
-    // Write binary file to disk
+    // 1. Write binary file to disk for fast local serving
     await fs.promises.writeFile(finalFilePath, buffer);
 
-    const publicUrl = `/uploads/${targetFolder}/${finalFileName}`;
+    // 2. Persist to Firestore uploaded_images for cloud durability
+    try {
+      const firestoreUrl = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/${FIREBASE_CONFIG.databaseId}/documents/uploaded_images/${encodeURIComponent(storageKey)}?key=${FIREBASE_CONFIG.apiKey}`;
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (authHeader) headers['Authorization'] = authHeader;
+
+      await fetch(firestoreUrl, {
+        method: 'PATCH',
+        headers,
+        body: JSON.stringify({
+          fields: {
+            fileName: { stringValue: finalFileName },
+            folder: { stringValue: targetFolder },
+            mimeType: { stringValue: declaredMime },
+            size: { integerValue: String(buffer.length) },
+            data: { stringValue: rawBase64 },
+            createdAt: { stringValue: new Date().toISOString() },
+          },
+        }),
+      });
+    } catch (fbErr) {
+      console.warn('[Server Storage] Firestore persistence warning:', fbErr);
+    }
+
+    const publicUrl = `/api/images/raw/${storageKey}`;
     console.log(`[Server Storage] Successfully saved image: ${publicUrl} (${buffer.length} bytes)`);
 
     res.json({
@@ -119,13 +162,56 @@ app.post('/api/images/upload', async (req: Request, res: Response): Promise<void
       fileName: finalFileName,
       size: buffer.length,
       mimeType: declaredMime,
-      provider: 'local-server'
+      provider: 'firestore-cloud-storage',
     });
   } catch (err: any) {
     console.error('[Server Storage] Upload Error:', err);
     res.status(500).json({
-      error: err?.message || 'Internal server error while processing image upload'
+      error: err?.message || 'Internal server error while processing image upload',
     });
+  }
+});
+
+// API: Raw Image Delivery Handler
+app.get('/api/images/raw/:key', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const rawKey = req.params.key;
+    const cleanKey = decodeURIComponent(rawKey).replace(/[^a-zA-Z0-9_.-]/g, '');
+
+    // 1. Check local filesystem first
+    const parts = cleanKey.split('_');
+    if (parts.length >= 2) {
+      const folder = parts[0] === 'gallery' ? 'gallery' : 'products';
+      const fileName = parts.slice(1).join('_');
+      const localPath = path.join(uploadsBaseDir, folder, fileName);
+      if (fs.existsSync(localPath)) {
+        res.sendFile(localPath);
+        return;
+      }
+    }
+
+    // 2. Fetch from Firestore uploaded_images
+    const firestoreUrl = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/${FIREBASE_CONFIG.databaseId}/documents/uploaded_images/${encodeURIComponent(cleanKey)}?key=${FIREBASE_CONFIG.apiKey}`;
+    const fbRes = await fetch(firestoreUrl);
+    if (fbRes.ok) {
+      const docData: any = await fbRes.json();
+      const fields = docData?.fields;
+      if (fields && fields.data?.stringValue) {
+        const base64Str = fields.data.stringValue;
+        const mime = fields.mimeType?.stringValue || 'image/jpeg';
+        const buffer = Buffer.from(base64Str, 'base64');
+        res.setHeader('Content-Type', mime);
+        res.setHeader('Content-Length', String(buffer.length));
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        res.send(buffer);
+        return;
+      }
+    }
+
+    res.status(404).send('Image Not Found');
+  } catch (err: any) {
+    console.error('[Server Storage] Raw image error:', err);
+    res.status(500).send('Error retrieving image');
   }
 });
 
@@ -133,29 +219,43 @@ app.post('/api/images/upload', async (req: Request, res: Response): Promise<void
 app.post('/api/images/delete', async (req: Request, res: Response): Promise<void> => {
   try {
     const { url } = req.body;
+    const authHeader = req.headers.authorization;
 
     if (!url || typeof url !== 'string') {
       res.status(400).json({ error: 'Missing image URL parameter' });
       return;
     }
 
-    // Security: Only allow deleting files inside /uploads/ (prevent path traversal)
-    if (!url.startsWith('/uploads/')) {
-      // If external or bundled asset URL, acknowledge safely
-      res.json({ success: true, message: 'External or preset image ignored' });
-      return;
+    let storageKey = '';
+    if (url.includes('/api/images/raw/')) {
+      storageKey = url.split('/api/images/raw/')[1];
+    } else if (url.includes('/uploads/')) {
+      const parts = url.replace(/^\/uploads\//, '').split('/');
+      if (parts.length === 2) {
+        storageKey = `${parts[0]}_${parts[1]}`;
+      } else {
+        storageKey = parts[0];
+      }
     }
 
-    const relativePath = url.replace(/^\/uploads\//, '');
-    if (relativePath.includes('..')) {
-      res.status(400).json({ error: 'Invalid path' });
-      return;
+    // Delete from Firestore
+    if (storageKey) {
+      const cleanKey = decodeURIComponent(storageKey).replace(/[^a-zA-Z0-9_.-]/g, '');
+      const firestoreUrl = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/${FIREBASE_CONFIG.databaseId}/documents/uploaded_images/${encodeURIComponent(cleanKey)}?key=${FIREBASE_CONFIG.apiKey}`;
+      const headers: Record<string, string> = {};
+      if (authHeader) headers['Authorization'] = authHeader;
+      await fetch(firestoreUrl, { method: 'DELETE', headers }).catch(() => {});
     }
 
-    const fullPath = path.join(uploadsBaseDir, relativePath);
-    if (fs.existsSync(fullPath)) {
-      await fs.promises.unlink(fullPath);
-      console.log(`[Server Storage] Deleted file: ${fullPath}`);
+    // Delete from local disk if exists
+    if (url.startsWith('/uploads/')) {
+      const relativePath = url.replace(/^\/uploads\//, '');
+      if (!relativePath.includes('..')) {
+        const fullPath = path.join(uploadsBaseDir, relativePath);
+        if (fs.existsSync(fullPath)) {
+          await fs.promises.unlink(fullPath).catch(() => {});
+        }
+      }
     }
 
     res.json({ success: true, message: 'Image deleted successfully' });

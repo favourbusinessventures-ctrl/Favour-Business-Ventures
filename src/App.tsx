@@ -5,6 +5,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { StickyMobileOrderBar } from './components/StickyMobileOrderBar';
+import { BrandedLoader } from './components/BrandedLoader';
 import { HomeView } from './views/HomeView';
 import { ProductsView } from './views/ProductsView';
 import { AboutView } from './views/AboutView';
@@ -14,6 +15,7 @@ import { AdminRoot } from './admin/AdminRoot';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<NavigationTab>('home');
+  const [isInitialLoading, setIsInitialLoading] = useState<boolean>(true);
   const [isAdminRoute, setIsAdminRoute] = useState<boolean>(() => {
     const path = window.location.pathname;
     const hash = window.location.hash;
@@ -61,6 +63,12 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#071F16] text-[#F5F0E6] selection:bg-[#B8954A]/30 selection:text-[#F5F0E6]">
       
+      {/* Branded Loading Screen on Initial Mount */}
+      <BrandedLoader
+        isLoading={isInitialLoading}
+        onFinish={() => setIsInitialLoading(false)}
+      />
+
       {/* Top Editorial & Mobile-First Navbar */}
       <Navbar
         currentTab={currentTab}

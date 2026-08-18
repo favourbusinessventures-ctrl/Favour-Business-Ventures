@@ -16,7 +16,7 @@
 
 export interface ImageUploadResult {
   url: string;
-  provider: 'local-server' | 'cloudinary' | 'imgbb';
+  provider: 'firestore-cloud-storage' | 'local-server' | 'cloudinary' | 'imgbb';
   fileName: string;
   size: number;
 }
@@ -288,8 +288,8 @@ export function startImageUpload(
 export async function deleteUploadedImage(imageUrl: string, authToken?: string | null): Promise<boolean> {
   if (!imageUrl || typeof imageUrl !== 'string') return true;
 
-  // If it is not a local server upload, safely return true (legacy Firebase / preset assets are kept)
-  if (!imageUrl.startsWith('/uploads/')) {
+  // If it is not an uploaded image, safely return true (preset assets and external URLs are kept)
+  if (!imageUrl.startsWith('/uploads/') && !imageUrl.startsWith('/api/images/raw/')) {
     return true;
   }
 

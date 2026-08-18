@@ -60,7 +60,15 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
-    // 6. Global Catch-All (Default Deny)
+    // 6. Uploaded Images Collection
+    // - Public storefront: can read uploaded images to render in the UI
+    // - Mutations (upload, delete): strictly administrator-only
+    match /uploaded_images/{imageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 7. Global Catch-All (Default Deny)
     match /{document=**} {
       allow read, write: if false;
     }
