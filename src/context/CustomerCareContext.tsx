@@ -163,7 +163,7 @@ export const CustomerCareProvider: React.FC<{ children: React.ReactNode }> = ({ 
         const errorMessage: ChatMessage = {
           id: 'assistant-err-' + Date.now(),
           sender: 'assistant',
-          text: "I'm having a brief connection issue. Please contact our team directly on WhatsApp for immediate help.",
+          text: "Sorry, I couldn't complete that request right now. Please try again or speak with us directly on WhatsApp.",
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           isEscalation: true,
           quickActions: [

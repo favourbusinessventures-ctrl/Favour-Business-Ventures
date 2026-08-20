@@ -1,13 +1,12 @@
 import { FAQItem, QuickAction } from './types';
 
 export const DEFAULT_QUICK_ACTIONS: QuickAction[] = [
-  { id: 'stockfish', label: '🐟 Browse Stockfish', actionType: 'navigate', payload: 'products' },
-  { id: 'crayfish', label: '🦐 Browse Crayfish', actionType: 'navigate', payload: 'products' },
-  { id: 'order_help', label: '🛒 How do I order?', actionType: 'query', payload: 'How do I place an order?' },
-  { id: 'delivery_info', label: '🚚 Delivery & Waybill', actionType: 'query', payload: 'What is your delivery and waybill process?' },
-  { id: 'payment_info', label: '💳 Payment terms', actionType: 'query', payload: 'How do I make payment?' },
-  { id: 'availability', label: '📦 What is in stock?', actionType: 'query', payload: 'What products are available in stock?' },
-  { id: 'whatsapp_direct', label: '💬 Talk to us on WhatsApp', actionType: 'whatsapp', payload: 'Hello Favour Business Ventures, I would like to speak with customer care.' }
+  { id: 'view_products', label: 'View Products', actionType: 'navigate', payload: 'products' },
+  { id: 'stockfish_questions', label: 'Stockfish Questions', actionType: 'query', payload: 'Tell me about your stockfish types and preparation tips.' },
+  { id: 'crayfish_questions', label: 'Crayfish Questions', actionType: 'query', payload: 'Tell me about your crayfish quality and processing.' },
+  { id: 'delivery_info', label: 'Delivery & Waybill', actionType: 'query', payload: 'What is your delivery and waybill process?' },
+  { id: 'payment_info', label: 'Payment Terms', actionType: 'query', payload: 'How do I make payment?' },
+  { id: 'talk_to_person', label: 'Talk to a Person', actionType: 'whatsapp', payload: 'Hello Favour Business Ventures, I would like to speak with customer care.' }
 ];
 
 export const KNOWLEDGE_BASE_FAQS: FAQItem[] = [
