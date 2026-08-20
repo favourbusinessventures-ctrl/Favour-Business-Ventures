@@ -1,3 +1,4 @@
+```tsx
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -14,43 +15,63 @@ const EXIT_DURATION_MS = 600;
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 const EASE_IN_OUT = [0.45, 0, 0.15, 1] as const;
 
-export const BrandedLoader: React.FC<BrandedLoaderProps> = ({ isLoading, onFinish }) => {
+export const BrandedLoader: React.FC<BrandedLoaderProps> = ({
+  isLoading,
+  onFinish,
+}) => {
   const [shouldRender, setShouldRender] = useState(isLoading);
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<'enter' | 'hold' | 'exit'>('enter');
   const finishedRef = useRef(false);
   const startRef = useRef<number>(Date.now());
 
   useEffect(() => {
     startRef.current = Date.now();
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duration = prefersReducedMotion ? 1200 : TARGET_DURATION_MS;
+    finishedRef.current = false;
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    const duration = prefersReducedMotion
+      ? 1200
+      : TARGET_DURATION_MS;
 
     const finish = () => {
       if (finishedRef.current) return;
+
       finishedRef.current = true;
       setProgress(100);
-      setPhase('exit');
+
       setTimeout(() => {
         setShouldRender(false);
-        if (onFinish) onFinish();
+
+        if (onFinish) {
+          onFinish();
+        }
       }, EXIT_DURATION_MS);
     };
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - startRef.current;
-      // Ease-out progress curve for a natural, decelerating fill
+
+      // Ease-out progress curve for a natural fill
       const linear = Math.min(1, elapsed / duration);
       const eased = 1 - Math.pow(1 - linear, 2.2);
       const pct = Math.min(100, Math.floor(eased * 100));
+
       setProgress(pct);
+
       if (elapsed >= duration) {
         clearInterval(interval);
         finish();
       }
     }, 40);
 
-    const failsafe = setTimeout(finish, HARD_MAX_MS);
+    // Absolute failsafe: loader can never remain forever
+    const failsafe = setTimeout(() => {
+      clearInterval(interval);
+      finish();
+    }, HARD_MAX_MS);
 
     return () => {
       clearInterval(interval);
@@ -67,11 +88,14 @@ export const BrandedLoader: React.FC<BrandedLoaderProps> = ({ isLoading, onFinis
           exit={{
             opacity: 0,
             filter: 'blur(8px)',
-            transition: { duration: EXIT_DURATION_MS / 1000, ease: EASE_OUT_EXPO },
+            transition: {
+              duration: EXIT_DURATION_MS / 1000,
+              ease: EASE_OUT_EXPO,
+            },
           }}
           className="fixed inset-0 z-[100] bg-[#071F16] flex flex-col items-center justify-center p-6 text-center select-none overflow-hidden"
         >
-          {/* Subtle premium depth — single soft radial, no particles */}
+          {/* Subtle premium depth */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -80,36 +104,67 @@ export const BrandedLoader: React.FC<BrandedLoaderProps> = ({ isLoading, onFinis
             }}
           />
 
-          {/* Faint glass veil for translucency feel */}
+          {/* Faint glass veil */}
           <div className="absolute inset-0 backdrop-blur-[2px] bg-[#071F16]/20 pointer-events-none" />
 
           {/* Centerpiece */}
           <div className="relative z-10 flex flex-col items-center">
-            {/* ── STAGE 1 & 2: Emblem reveal with light sweep ── */}
+
+            {/* Emblem reveal */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 6 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: EASE_OUT_EXPO, delay: 0.05 }}
+              initial={{
+                opacity: 0,
+                scale: 0.9,
+                y: 6,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.9,
+                ease: EASE_OUT_EXPO,
+                delay: 0.05,
+              }}
               className="relative flex items-center justify-center w-16 h-16 sm:w-[72px] sm:h-[72px]"
             >
+
               {/* Outer hairline ring */}
               <motion.div
-                initial={{ opacity: 0, scale: 1.08 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.1, ease: EASE_OUT_EXPO, delay: 0.1 }}
+                initial={{
+                  opacity: 0,
+                  scale: 1.08,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 1.1,
+                  ease: EASE_OUT_EXPO,
+                  delay: 0.1,
+                }}
                 className="absolute inset-0 rounded-full border border-[#B8954A]/25"
               />
 
               {/* Inner emblem disc */}
               <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0D3325] border border-[#16382A] flex items-center justify-center shadow-[0_4px_24px_rgba(0,0,0,0.5)] overflow-hidden">
+
                 <span className="font-editorial text-lg sm:text-xl font-bold text-[#B8954A] tracking-tighter relative z-10">
                   FBV
                 </span>
 
-                {/* Subtle light pass across the emblem */}
+                {/* Subtle light sweep */}
                 <motion.div
-                  initial={{ x: '-120%', opacity: 0 }}
-                  animate={{ x: '120%', opacity: [0, 0.5, 0] }}
+                  initial={{
+                    x: '-120%',
+                    opacity: 0,
+                  }}
+                  animate={{
+                    x: '120%',
+                    opacity: [0, 0.5, 0],
+                  }}
                   transition={{
                     duration: 1.1,
                     ease: EASE_IN_OUT,
@@ -124,42 +179,81 @@ export const BrandedLoader: React.FC<BrandedLoaderProps> = ({ isLoading, onFinis
                 />
               </div>
 
-              {/* Tiny gold settle tick at base of emblem */}
+              {/* Tiny gold settle tick */}
               <motion.div
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.85 }}
+                initial={{
+                  scaleX: 0,
+                  opacity: 0,
+                }}
+                animate={{
+                  scaleX: 1,
+                  opacity: 1,
+                }}
+                transition={{
+                  duration: 0.7,
+                  ease: EASE_OUT_EXPO,
+                  delay: 0.85,
+                }}
                 className="absolute -bottom-3 w-8 h-px bg-[#B8954A]/70 origin-center"
               />
             </motion.div>
 
-            {/* ── STAGE 3: Brand name reveal with letter-spacing transition ── */}
+            {/* Brand name */}
             <motion.h1
-              initial={{ opacity: 0, y: 10, letterSpacing: '0.28em' }}
-              animate={{ opacity: 1, y: 0, letterSpacing: '0.14em' }}
-              transition={{ duration: 1.0, ease: EASE_OUT_EXPO, delay: 0.45 }}
+              initial={{
+                opacity: 0,
+                y: 10,
+                letterSpacing: '0.28em',
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                letterSpacing: '0.14em',
+              }}
+              transition={{
+                duration: 1.0,
+                ease: EASE_OUT_EXPO,
+                delay: 0.45,
+              }}
               className="font-editorial text-lg sm:text-xl md:text-[22px] font-semibold text-[#F5F0E6] uppercase mt-7 whitespace-nowrap"
             >
               Favour Business Ventures
             </motion.h1>
 
-            {/* ── STAGE 4: Thin elegant gold progress indicator ── */}
+            {/* Progress indicator */}
             <motion.div
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: EASE_OUT_EXPO, delay: 0.75 }}
+              initial={{
+                opacity: 0,
+                y: 4,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                ease: EASE_OUT_EXPO,
+                delay: 0.75,
+              }}
               className="relative w-36 sm:w-44 h-[2px] mt-6 rounded-full bg-[#0D3325] border border-[#16382A]/70 overflow-hidden"
             >
+
               {/* Filled portion */}
               <div
-                style={{ width: `${progress}%` }}
+                style={{
+                  width: `${progress}%`,
+                }}
                 className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#B8954A] to-[#C9A75E] rounded-full transition-all duration-100 ease-out"
               />
 
-              {/* Traveling highlight along the fill */}
+              {/* Traveling highlight */}
               <motion.div
-                initial={{ x: '-100%' }}
-                animate={{ x: '100%' }}
+                initial={{
+                  x: '-100%',
+                }}
+                animate={{
+                  x: '100%',
+                }}
                 transition={{
                   duration: 1.8,
                   ease: 'linear',
@@ -173,9 +267,11 @@ export const BrandedLoader: React.FC<BrandedLoaderProps> = ({ isLoading, onFinis
                 }}
               />
             </motion.div>
+
           </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 };
+```
