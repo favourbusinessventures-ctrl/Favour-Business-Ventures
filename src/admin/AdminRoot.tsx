@@ -6,6 +6,7 @@ import { AdminProducts } from './AdminProducts';
 import { AdminGallery } from './AdminGallery';
 import { AdminOrders } from './AdminOrders';
 import { AdminReviews } from './AdminReviews';
+import { AdminCustomerCare } from './AdminCustomerCare';
 import { AdminSettings } from './AdminSettings';
 import { AdminHeader } from './components/AdminHeader';
 import { AdminSidebar } from './components/AdminSidebar';
@@ -79,6 +80,9 @@ const AdminContent: React.FC<AdminRootProps> = ({ onReturnToStore }) => {
           )}
           {currentTab === 'reviews' && (
             <AdminReviews />
+          )}
+          {currentTab === 'customerCare' && (
+            <AdminCustomerCare />
           )}
           {currentTab === 'settings' && (
             <AdminSettings />

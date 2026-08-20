@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, MessageCircle, ArrowUpRight, Check, Minus, Plus, Star, MessageSquarePlus } from 'lucide-react';
+import { X, MessageCircle, ArrowUpRight, Check, Minus, Plus, Star, MessageSquarePlus, Headphones } from 'lucide-react';
 import { ProductDetail, ProductOption } from '../types';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { useLiveReviews } from '../hooks/useLiveReviews';
+import { useCustomerCare } from '../context/CustomerCareContext';
 import { WriteReviewModal } from './WriteReviewModal';
 import { getCustomOrderWhatsAppUrl } from '../utils/whatsapp';
 
@@ -16,6 +17,7 @@ interface ProductDetailModalProps {
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, onClose }) => {
   const { settings } = useBusinessSettings();
   const { reviews, summary, submitReview } = useLiveReviews(product?.id);
+  const { openAssistant } = useCustomerCare();
   const [selectedOption, setSelectedOption] = useState<ProductOption>(
     product?.options[0] || { name: 'Standard Format', description: '' }
   );
@@ -271,12 +273,25 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-tactile w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-sans-clean font-bold tracking-[0.2em] uppercase shadow-lg group rounded-lg"
+                  className="btn-tactile w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-sans-clean font-bold tracking-[0.2em] uppercase shadow-lg group rounded-lg cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Order on WhatsApp</span>
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
+
+                {/* Secondary Ask Customer Care Action */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    openAssistant(product);
+                  }}
+                  className="btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#FFF9EF] hover:bg-[#F5F0E6] text-[#071F16] border border-[#E5DEC9] hover:border-[#B8954A] text-xs font-sans-clean font-semibold tracking-[0.1em] rounded-lg transition-colors cursor-pointer"
+                >
+                  <Headphones className="w-3.5 h-3.5 text-[#B8954A]" />
+                  <span>Have questions? Ask Customer Care</span>
+                </button>
               </div>
             </div>
 

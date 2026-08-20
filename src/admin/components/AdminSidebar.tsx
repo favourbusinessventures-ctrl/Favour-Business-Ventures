@@ -6,6 +6,7 @@ import {
   Image as ImageIcon, 
   ShoppingBag, 
   Star,
+  Headphones,
   Settings, 
   Lock,
   ExternalLink,
@@ -70,6 +71,12 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       icon: Star,
       enabled: true,
       count: reviewCounts.pending > 0 ? reviewCounts.pending : undefined
+    },
+    {
+      id: 'customerCare',
+      label: 'Customer Care',
+      icon: Headphones,
+      enabled: true
     },
     {
       id: 'settings',

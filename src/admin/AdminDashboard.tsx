@@ -16,7 +16,8 @@ import {
   RefreshCw,
   ExternalLink,
   Lock,
-  Star
+  Star,
+  Headphones
 } from 'lucide-react';
 import { AdminTab } from './types';
 
@@ -355,7 +356,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           
           {/* Action 1: Products */}
           <button
@@ -405,7 +406,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </button>
 
-          {/* Action 3: Gallery */}
+          {/* Action 3: Customer Care Assistant */}
+          <button
+            onClick={() => onNavigateTab ? onNavigateTab('customerCare') : handleQuickAction('Customer Care')}
+            className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[2px] bg-[#0D3325] flex items-center justify-center text-[#B8954A] group-hover:text-[#F5F0E6] transition-colors">
+                <Headphones className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
+                  Customer Care
+                </div>
+                <div className="text-[10px] text-[#A3B899] font-sans-clean">
+                  Knowledge & Tester
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-[9px] font-sans-clean uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-[2px]">
+              <CheckCircle2 className="w-2.5 h-2.5" />
+              <span>Active</span>
+            </div>
+          </button>
+
+          {/* Action 4: Gallery */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('gallery') : handleQuickAction('Gallery')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
@@ -429,7 +454,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </button>
 
-          {/* Action 4: Orders */}
+          {/* Action 5: Orders */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('orders') : handleQuickAction('Orders & Inquiries')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
@@ -453,7 +478,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </button>
 
-          {/* Action 5: Settings */}
+          {/* Action 6: Settings */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('settings') : handleQuickAction('Business Settings')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
