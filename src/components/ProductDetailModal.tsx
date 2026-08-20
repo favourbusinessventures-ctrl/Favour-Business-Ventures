@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, MessageCircle, ArrowUpRight, Check, Minus, Plus } from 'lucide-react';
+import { X, MessageCircle, ArrowUpRight, Check, Minus, Plus, Star, MessageSquarePlus } from 'lucide-react';
 import { ProductDetail, ProductOption } from '../types';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
+import { useLiveReviews } from '../hooks/useLiveReviews';
+import { WriteReviewModal } from './WriteReviewModal';
 import { getCustomOrderWhatsAppUrl } from '../utils/whatsapp';
 
 interface ProductDetailModalProps {
@@ -13,10 +15,12 @@ interface ProductDetailModalProps {
 
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, onClose }) => {
   const { settings } = useBusinessSettings();
+  const { reviews, summary, submitReview } = useLiveReviews(product?.id);
   const [selectedOption, setSelectedOption] = useState<ProductOption>(
     product?.options[0] || { name: 'Standard Format', description: '' }
   );
   const [quantity, setQuantity] = useState<number>(1);
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState<boolean>(false);
 
   // Reset state when product changes
   useEffect(() => {
@@ -101,8 +105,22 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
               {/* Details side */}
               <div className="p-5 sm:p-7 lg:p-9 flex flex-col space-y-5">
-                {/* Title */}
+                {/* Title & Rating Header */}
                 <div className="space-y-2 pb-4 border-b border-[#E5DEC9]">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center text-[#B8954A]">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star key={s} className="w-3.5 h-3.5 fill-[#B8954A] text-[#B8954A]" />
+                      ))}
+                    </div>
+                    <span className="text-xs font-sans-clean font-bold text-[#071F16]">
+                      {summary.averageRating.toFixed(1)}
+                    </span>
+                    <span className="text-[11px] font-sans-clean text-[#6B7266]">
+                      ({summary.totalReviews} verified reviews)
+                    </span>
+                  </div>
+
                   <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-[#071F16] leading-tight pr-10">
                     {product.name}
                   </h2>
@@ -134,11 +152,21 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 )}
 
                 {/* Availability */}
-                <div className="flex items-center gap-2 py-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span className="text-xs font-sans-clean font-medium text-emerald-700">
-                    Available — In Stock
-                  </span>
+                <div className="flex items-center justify-between py-1">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span className="text-xs font-sans-clean font-medium text-emerald-700">
+                      Available — In Stock
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => setIsWriteModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 text-xs font-sans-clean text-[#B8954A] hover:text-[#071F16] font-semibold transition-colors cursor-pointer"
+                  >
+                    <MessageSquarePlus className="w-3.5 h-3.5" />
+                    <span>Rate this provision</span>
+                  </button>
                 </div>
 
                 {/* Format options */}
@@ -251,9 +279,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 </a>
               </div>
             </div>
+
+            {/* Write Review Modal for specific product */}
+            <WriteReviewModal
+              isOpen={isWriteModalOpen}
+              onClose={() => setIsWriteModalOpen(false)}
+              onSubmit={submitReview}
+              defaultProductId={product.id}
+              defaultProductName={product.name}
+            />
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 };
+

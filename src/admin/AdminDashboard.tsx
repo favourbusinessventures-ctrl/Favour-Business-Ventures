@@ -15,7 +15,8 @@ import {
   Sparkles,
   RefreshCw,
   ExternalLink,
-  Lock
+  Lock,
+  Star
 } from 'lucide-react';
 import { AdminTab } from './types';
 
@@ -29,6 +30,8 @@ interface CatalogCounts {
   publishedProducts: number;
   galleryItems: number;
   ordersCount: number;
+  reviewsCount: number;
+  pendingReviewsCount: number;
   loading: boolean;
   hasFirestoreData: boolean;
 }
@@ -43,6 +46,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     publishedProducts: 0,
     galleryItems: 0,
     ordersCount: 0,
+    reviewsCount: 0,
+    pendingReviewsCount: 0,
     loading: true,
     hasFirestoreData: false
   });
@@ -71,7 +76,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           });
         }
       } catch {
-        // Collection might not exist yet in Phase 2
+        // Collection might not exist yet
       }
 
       // 2. Fetch gallery count
@@ -98,11 +103,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         // Collection might not exist yet
       }
 
+      // 4. Fetch reviews count
+      let revCount = 0;
+      let pendingRevCount = 0;
+      try {
+        const revSnap = await getDocs(collection(db, 'reviews'));
+        if (!revSnap.empty) {
+          foundFirestoreData = true;
+          revCount = revSnap.size;
+          revSnap.forEach((d) => {
+            const data = d.data();
+            if (data.status === 'pending') {
+              pendingRevCount++;
+            }
+          });
+        }
+      } catch {
+        // Collection might not exist yet
+      }
+
       setCounts({
         totalProducts: prodCount,
         publishedProducts: pubCount,
         galleryItems: galCount,
         ordersCount: ordCount,
+        reviewsCount: revCount,
+        pendingReviewsCount: pendingRevCount,
         loading: false,
         hasFirestoreData: foundFirestoreData
       });
@@ -119,7 +145,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleQuickAction = (moduleName: string) => {
     setActiveModalMessage(
-      `The "${moduleName}" management module is scheduled for Phase 3. In Phase 2, the public storefront runs securely on the static verified catalog while administrative access and permissions are locked.`
+      `The "${moduleName}" management module is active in the administrative panel.`
     );
   };
 
@@ -145,7 +171,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </h1>
 
             <p className="text-xs sm:text-sm text-[#A3B899] font-sans-clean font-light max-w-2xl">
-              Administrative control center for inventory monitoring, media curation, inquiry logs, and official business configuration.
+              Administrative control center for inventory monitoring, customer reviews moderation, media curation, inquiry logs, and official business configuration.
             </p>
           </div>
 
@@ -169,11 +195,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
       </div>
 
-      {/* 2. CATALOG & ORDERS SUMMARY METRICS */}
+      {/* 2. CATALOG & REVIEWS SUMMARY METRICS */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#A3B899]">
-            Catalog & Inquiry Summary
+            Catalog & Feedback Summary
           </h2>
           <button
             onClick={fetchLiveCounts}
@@ -185,7 +211,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
           
           {/* Total Products Card */}
           <div className="bg-[#0D3325] border border-[#16382A] p-5 rounded-[2px] flex flex-col justify-between space-y-4">
@@ -229,6 +255,39 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div className="text-[11px] text-[#6B7266] font-sans-clean mt-1">
                 Stockfish & Crayfish catalogs
+              </div>
+            </div>
+          </div>
+
+          {/* Customer Reviews & Moderation Queue */}
+          <div 
+            onClick={() => onNavigateTab && onNavigateTab('reviews')}
+            className="bg-[#0D3325] border border-[#16382A] hover:border-[#B8954A]/60 transition-all cursor-pointer p-5 rounded-[2px] flex flex-col justify-between space-y-4 shadow-md"
+          >
+            <div className="flex items-center justify-between">
+              <div className="w-9 h-9 rounded-[2px] bg-[#071F16] border border-[#16382A] flex items-center justify-center text-[#B8954A]">
+                <Star className="w-4 h-4 fill-[#B8954A]" />
+              </div>
+              {counts.pendingReviewsCount > 0 ? (
+                <span className="text-[10px] font-sans-clean text-amber-300 uppercase tracking-wider bg-amber-950/60 px-2 py-0.5 rounded-[2px] border border-amber-800/40 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  {counts.pendingReviewsCount} Pending
+                </span>
+              ) : (
+                <span className="text-[10px] font-sans-clean text-[#6B7266] uppercase tracking-wider">
+                  Reviews
+                </span>
+              )}
+            </div>
+            <div>
+              <div className="text-2xl sm:text-3xl font-editorial font-bold text-[#F5F0E6]">
+                {counts.loading ? '—' : (counts.reviewsCount > 0 ? counts.reviewsCount : '5 (Curated)')}
+              </div>
+              <div className="text-xs text-[#A3B899] font-sans-clean font-medium mt-0.5">
+                Customer Reviews
+              </div>
+              <div className="text-[11px] text-[#6B7266] font-sans-clean mt-1">
+                {counts.pendingReviewsCount > 0 ? 'Action required in moderation queue' : 'All reviews reviewed & live'}
               </div>
             </div>
           </div>
@@ -282,7 +341,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
       </div>
 
-      {/* 3. QUICK ACTIONS & UPCOMING MODULE CONTROLS */}
+      {/* 3. QUICK ACTIONS */}
       <div className="bg-[#0D3325] border border-[#16382A] p-6 sm:p-8 rounded-[2px] space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#16382A]">
           <div className="flex items-center gap-2">
@@ -292,13 +351,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </h3>
           </div>
           <span className="text-[10px] font-sans-clean text-[#A3B899]">
-            Phase 2 Administrative Controls
+            Full Management Suite
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           
-          {/* Action 1: Products (Active in Phase 3A) */}
+          {/* Action 1: Products */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('products') : handleQuickAction('Products')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
@@ -309,10 +368,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div>
                 <div className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
-                  Manage Products
+                  Products
                 </div>
                 <div className="text-[10px] text-[#A3B899] font-sans-clean">
-                  Cuts, portions & status
+                  Cuts & portions
                 </div>
               </div>
             </div>
@@ -322,7 +381,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </button>
 
-          {/* Action 2: Gallery */}
+          {/* Action 2: Customer Reviews Moderation */}
+          <button
+            onClick={() => onNavigateTab ? onNavigateTab('reviews') : handleQuickAction('Customer Reviews')}
+            className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[2px] bg-[#0D3325] flex items-center justify-center text-[#B8954A] group-hover:text-[#F5F0E6] transition-colors">
+                <Star className="w-4 h-4 fill-[#B8954A]" />
+              </div>
+              <div>
+                <div className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
+                  Reviews
+                </div>
+                <div className="text-[10px] text-[#A3B899] font-sans-clean">
+                  Moderation queue
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-[9px] font-sans-clean uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-[2px]">
+              <CheckCircle2 className="w-2.5 h-2.5" />
+              <span>Active</span>
+            </div>
+          </button>
+
+          {/* Action 3: Gallery */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('gallery') : handleQuickAction('Gallery')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
@@ -333,10 +416,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div>
                 <div className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
-                  Manage Gallery
+                  Gallery
                 </div>
                 <div className="text-[10px] text-[#A3B899] font-sans-clean">
-                  Photo curation & order
+                  Photo curation
                 </div>
               </div>
             </div>
@@ -346,7 +429,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </button>
 
-          {/* Action 3: Orders */}
+          {/* Action 4: Orders */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('orders') : handleQuickAction('Orders & Inquiries')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
@@ -357,10 +440,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div>
                 <div className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
-                  Manage Orders
+                  Orders
                 </div>
                 <div className="text-[10px] text-[#A3B899] font-sans-clean">
-                  Inquiry audit & status
+                  Inquiry audit
                 </div>
               </div>
             </div>
@@ -370,7 +453,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </button>
 
-          {/* Action 4: Settings */}
+          {/* Action 5: Settings */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('settings') : handleQuickAction('Business Settings')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
@@ -381,10 +464,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div>
                 <div className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
-                  Business Settings
+                  Settings
                 </div>
                 <div className="text-[10px] text-[#A3B899] font-sans-clean">
-                  WhatsApp & contact info
+                  WhatsApp & contacts
                 </div>
               </div>
             </div>
@@ -448,7 +531,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     </span>
                   </div>
                   <div className="text-[11px] font-sans-clean text-[#A3B899]">
-                    Database provisioned with strict security rules deployed.
+                    Reviews, Products, Gallery, Orders & Settings collections live.
                   </div>
                 </div>
               </div>
@@ -471,20 +554,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
               </div>
 
-              {/* Storefront Connection */}
+              {/* Customer Reviews Moderation */}
               <div className="flex items-start gap-3 p-3 bg-[#071F16] border border-[#16382A] rounded-[2px]">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <div className="flex-1 space-y-0.5">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
-                      Storefront Connection
+                      Customer Review Security
                     </span>
                     <span className="text-[10px] text-emerald-400 font-sans-clean font-medium">
-                      Protected
+                      Enforced
                     </span>
                   </div>
                   <div className="text-[11px] font-sans-clean text-[#A3B899]">
-                    Public storefront remains 100% operational with verified static fallback.
+                    Only approved reviews are surfaced publicly; pending submissions protected.
                   </div>
                 </div>
               </div>
@@ -493,7 +576,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           <div className="pt-3 border-t border-[#16382A] flex items-center justify-between text-[11px] font-sans-clean text-[#6B7266]">
-            <span>Security Rules: Active</span>
+            <span>Security Rules: Deployed & Active</span>
             {onReturnToStore && (
               <button
                 onClick={onReturnToStore}
@@ -524,7 +607,25 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             {/* Structured Activity List */}
             <div className="divide-y divide-[#16382A]">
               
-              {/* Event 1: Current Session */}
+              {/* Event 1: Customer Reviews Integration */}
+              <div className="py-3.5 flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-[#B8954A] mt-1.5 shrink-0" />
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
+                      Reviews System & Moderation Deployed
+                    </span>
+                    <span className="text-[10px] font-sans-clean text-[#6B7266]">
+                      Phase 1
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#A3B899] font-sans-clean mt-0.5">
+                    Customer reviews collection and admin moderation queue initialized with real-time Firestore sync.
+                  </p>
+                </div>
+              </div>
+
+              {/* Event 2: Current Session */}
               <div className="py-3.5 flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
                 <div className="flex-1">
@@ -542,38 +643,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
               </div>
 
-              {/* Event 2: Firestore Provisioning */}
+              {/* Event 3: Firestore Security Rules */}
               <div className="py-3.5 flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-[#B8954A] mt-1.5 shrink-0" />
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
-                      Firestore Security Rules Deployed
+                      Firestore Security Rules Enforced
                     </span>
                     <span className="text-[10px] font-sans-clean text-[#6B7266]">
-                      Phase 2
+                      Pillars 1-8
                     </span>
                   </div>
                   <p className="text-xs text-[#A3B899] font-sans-clean mt-0.5">
-                    Production access policies applied for collections: <code className="text-[10px] font-mono text-[#B8954A]">users</code>, <code className="text-[10px] font-mono text-[#B8954A]">products</code>, <code className="text-[10px] font-mono text-[#B8954A]">gallery</code>, <code className="text-[10px] font-mono text-[#B8954A]">settings</code>.
-                  </p>
-                </div>
-              </div>
-
-              {/* Event 3: Admin Foundation Ready */}
-              <div className="py-3.5 flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-[#6B7266] mt-1.5 shrink-0" />
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
-                      Admin Architecture Initialized
-                    </span>
-                    <span className="text-[10px] font-sans-clean text-[#6B7266]">
-                      Phase 2B
-                    </span>
-                  </div>
-                  <p className="text-xs text-[#A3B899] font-sans-clean mt-0.5">
-                    Isolated <code className="text-[10px] font-mono text-[#B8954A]">/admin</code> route active with protected role verification.
+                    Production access policies applied for <code className="text-[10px] font-mono text-[#B8954A]">users</code>, <code className="text-[10px] font-mono text-[#B8954A]">products</code>, <code className="text-[10px] font-mono text-[#B8954A]">gallery</code>, <code className="text-[10px] font-mono text-[#B8954A]">orders</code>, <code className="text-[10px] font-mono text-[#B8954A]">reviews</code>, <code className="text-[10px] font-mono text-[#B8954A]">settings</code>.
                   </p>
                 </div>
               </div>
@@ -598,7 +681,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <Lock className="w-4 h-4" />
               </div>
               <h4 className="font-editorial text-xl font-bold text-[#F5F0E6]">
-                Upcoming Phase 3 Module
+                System Notification
               </h4>
             </div>
 
@@ -621,3 +704,4 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     </div>
   );
 };
+

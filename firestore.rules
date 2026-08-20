@@ -68,7 +68,37 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // 7. Global Catch-All (Default Deny)
+    // Helper for Document ID validation
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Helper for validating public review submissions
+    function isValidReviewCreate(data) {
+      return data.keys().hasAll(['customerName', 'rating', 'reviewTitle', 'comment', 'productId', 'productName', 'status', 'createdAt']) &&
+        data.customerName is string && data.customerName.size() >= 2 && data.customerName.size() <= 100 &&
+        data.rating is number && data.rating >= 1 && data.rating <= 5 &&
+        data.reviewTitle is string && data.reviewTitle.size() <= 150 &&
+        data.comment is string && data.comment.size() <= 1500 &&
+        data.productId is string && data.productId.size() <= 128 &&
+        data.productName is string && data.productName.size() <= 150 &&
+        (!('location' in data) || (data.location is string && data.location.size() <= 100)) &&
+        data.status == 'pending' &&
+        data.createdAt == request.time;
+    }
+
+    // 7. Customer Reviews Collection
+    // - Public storefront: can read approved reviews ONLY
+    // - Public creation: can submit pending reviews with strict schema and timestamp validation
+    // - Moderation (approval, rejection, deletion): strictly admin-only
+    match /reviews/{reviewId} {
+      allow get: if (resource.data.status == 'approved') || isAdmin();
+      allow list: if (resource.data.status == 'approved') || isAdmin();
+      allow create: if isValidId(reviewId) && isValidReviewCreate(request.resource.data);
+      allow update, delete: if isAdmin();
+    }
+
+    // 8. Global Catch-All (Default Deny)
     match /{document=**} {
       allow read, write: if false;
     }

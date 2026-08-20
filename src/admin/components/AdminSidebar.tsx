@@ -5,11 +5,13 @@ import {
   Package, 
   Image as ImageIcon, 
   ShoppingBag, 
+  Star,
   Settings, 
   Lock,
   ExternalLink,
   X
 } from 'lucide-react';
+import { useAdminReviews } from '../../hooks/useAdminReviews';
 
 interface AdminSidebarProps {
   currentTab: AdminTab;
@@ -25,6 +27,7 @@ interface NavItem {
   icon: React.ComponentType<{ className?: string }>;
   enabled: boolean;
   badge?: string;
+  count?: number;
 }
 
 export const AdminSidebar: React.FC<AdminSidebarProps> = ({
@@ -34,6 +37,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   onCloseMobile,
   onReturnToStore
 }) => {
+  const { counts: reviewCounts } = useAdminReviews();
+
   const navItems: NavItem[] = [
     {
       id: 'dashboard',
@@ -58,6 +63,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       label: 'Orders',
       icon: ShoppingBag,
       enabled: true
+    },
+    {
+      id: 'reviews',
+      label: 'Customer Reviews',
+      icon: Star,
+      enabled: true,
+      count: reviewCounts.pending > 0 ? reviewCounts.pending : undefined
     },
     {
       id: 'settings',
@@ -116,7 +128,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                   <div
                     key={item.id}
                     className="flex items-center justify-between px-3.5 py-3 rounded-[2px] text-[#6B7266] opacity-60 cursor-not-allowed select-none bg-[#071F16]/30 border border-transparent"
-                    title={`${item.label} will be enabled in Phase 3`}
+                    title={`${item.label} will be enabled in future phase`}
                   >
                     <div className="flex items-center gap-3">
                       <Icon className="w-4 h-4 text-[#6B7266]" />
@@ -159,9 +171,18 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                     </span>
                   </div>
 
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#071F16]" />
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    {typeof item.count === 'number' && item.count > 0 && (
+                      <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full font-bold ${
+                        isActive ? 'bg-[#071F16] text-[#B8954A]' : 'bg-amber-500 text-[#071F16]'
+                      }`}>
+                        {item.count}
+                      </span>
+                    )}
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#071F16]" />
+                    )}
+                  </div>
                 </button>
               );
             })}
@@ -174,14 +195,14 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           
           <button
             onClick={onReturnToStore}
-            className="w-full flex items-center justify-center gap-2 text-xs font-sans-clean text-[#A3B899] hover:text-[#B8954A] transition-colors py-2 px-3 rounded-[2px] border border-[#16382A] hover:border-[#B8954A]/40"
+            className="w-full flex items-center justify-center gap-2 text-xs font-sans-clean text-[#A3B899] hover:text-[#B8954A] transition-colors py-2 px-3 rounded-[2px] border border-[#16382A] hover:border-[#B8954A]/40 cursor-pointer"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Customer Storefront</span>
           </button>
 
           <div className="text-[10px] text-center text-[#6B7266] font-sans-clean">
-            Favour Admin v1.0 • Phase 4
+            Favour Admin v1.1 • Reviews Enabled
           </div>
         </div>
 
@@ -189,3 +210,4 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
     </>
   );
 };
+

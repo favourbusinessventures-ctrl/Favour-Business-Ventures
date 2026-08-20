@@ -87,6 +87,22 @@ export interface AdminUserData {
   lastLoginAt?: string;
 }
 
+export type ReviewModerationStatus = 'pending' | 'approved' | 'rejected';
+
+export interface AdminReview {
+  id: string;
+  customerName: string;
+  rating: number; // 1 to 5
+  reviewTitle: string;
+  comment: string;
+  productId: string;
+  productName: string;
+  location?: string;
+  status: ReviewModerationStatus;
+  createdAt: string;
+  updatedAt?: string;
+}
+
 export interface AdminAuthContextType {
   user: FirebaseUser | null;
   adminData: AdminUserData | null;
@@ -97,4 +113,4 @@ export interface AdminAuthContextType {
   clearError: () => void;
 }
 
-export type AdminTab = 'dashboard' | 'products' | 'gallery' | 'orders' | 'settings';
+export type AdminTab = 'dashboard' | 'products' | 'gallery' | 'orders' | 'reviews' | 'settings';

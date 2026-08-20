@@ -4,6 +4,7 @@ import { TrustValueStrip } from '../components/TrustValueStrip';
 import { FeaturedProducts } from '../components/FeaturedProducts';
 import { WhyChooseUs } from '../components/WhyChooseUs';
 import { GalleryPreview } from '../components/GalleryPreview';
+import { CustomerReviews } from '../components/CustomerReviews';
 import { WhatsAppCTASection } from '../components/WhatsAppCTASection';
 import { NavigationTab } from '../types';
 
@@ -30,9 +31,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       {/* 5. CULINARY GALLERY PREVIEW: Real Firestore Gallery Data with Modal Zooming */}
       <GalleryPreview onNavigate={onNavigate} />
 
-      {/* 6. WHATSAPP & DIRECT ORDER CTA: Immediate Ordering with Pre-Formatted Inquiries */}
+      {/* 6. CUSTOMER REVIEWS & RATINGS: Verified Customer Feedback & Write-a-Review System */}
+      <CustomerReviews className="py-20 sm:py-28 bg-[#071F16] border-b border-[#16382A]" />
+
+      {/* 7. WHATSAPP & DIRECT ORDER CTA: Immediate Ordering with Pre-Formatted Inquiries */}
       <WhatsAppCTASection />
 
     </div>
   );
 };
+

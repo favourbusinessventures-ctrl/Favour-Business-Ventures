@@ -241,6 +241,62 @@
         }
       },
       "required": ["customerName", "productName", "status", "createdAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer reviews and product rating submissions",
+      "type": "object",
+      "properties": {
+        "customerName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Name of the customer providing review"
+        },
+        "rating": {
+          "type": "number",
+          "description": "Star rating from 1 to 5"
+        },
+        "reviewTitle": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Headline or brief title of the review"
+        },
+        "comment": {
+          "type": "string",
+          "maxLength": 1500,
+          "description": "Full customer review narrative"
+        },
+        "productId": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Target product identifier or 'general'"
+        },
+        "productName": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Name of the reviewed product"
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Optional customer location"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "approved", "rejected"],
+          "description": "Moderation status of the review"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Moderation or update timestamp"
+        }
+      },
+      "required": ["customerName", "rating", "reviewTitle", "comment", "productId", "productName", "status", "createdAt"]
     }
   },
   "firestore": {
@@ -263,6 +319,10 @@
     "/orders/{orderId}": {
       "schema": { "$ref": "#/entities/Order" },
       "description": "Customer orders and inquiries"
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews and moderated rating records"
     }
   }
 }
