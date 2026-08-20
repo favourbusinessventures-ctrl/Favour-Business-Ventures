@@ -62,24 +62,24 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
               ? 'bg-[#071F16]/95 backdrop-blur-md border-b border-[#16382A] shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-3 sm:py-3.5'
               : 'bg-[#071F16] border-b border-[#16382A]/80 py-4 sm:py-4.5'
             : isScrolled
-              ? 'bg-[#FFF9EF]/95 backdrop-blur-md border-b border-[#E5DEC9] shadow-[0_8px_30px_rgba(7,31,22,0.06)] py-3 sm:py-3.5'
-              : 'bg-[#FFF9EF] border-b border-[#E5DEC9]/80 py-4 sm:py-4.5'
+              ? 'bg-[#FAFAFA]/95 backdrop-blur-md border-b border-[#E5E7EB] shadow-[0_4px_20px_rgba(0,0,0,0.05)] py-3 sm:py-3.5'
+              : 'bg-[#FAFAFA] border-b border-[#E5E7EB] py-4 sm:py-4.5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 flex items-center justify-between gap-2">
           
           {/* Brand Wordmark (Left) */}
           <button
             onClick={() => handleNavClick('home')}
-            className="text-left group cursor-pointer focus:outline-none"
+            className="text-left group cursor-pointer focus:outline-none shrink-0"
           >
             <div className="flex flex-col">
-              <span className={`font-editorial text-lg sm:text-xl md:text-2xl font-bold tracking-[0.16em] uppercase transition-colors ${
-                isDark ? 'text-[#F5F0E6] group-hover:text-[#B8954A]' : 'text-[#071F16] group-hover:text-[#B8954A]'
+              <span className={`font-editorial text-base sm:text-xl md:text-2xl font-bold tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-colors leading-tight ${
+                isDark ? 'text-[#EDEDED] group-hover:text-[#B8954A]' : 'text-[#1A1A1A] group-hover:text-[#1E5631]'
               }`}>
                 {settings.name}
               </span>
-              <span className="text-[8.5px] sm:text-[9px] font-sans-clean font-semibold tracking-[0.32em] text-[#B8954A] uppercase">
+              <span className="text-[8px] sm:text-[9px] font-sans-clean font-semibold tracking-[0.24em] sm:tracking-[0.32em] text-[#B8954A] uppercase">
                 Stockfish & Crayfish Provisions
               </span>
             </div>
@@ -95,15 +95,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                   onClick={() => handleNavClick(item.id)}
                   className={`text-[11px] font-medium uppercase tracking-[0.22em] transition-colors relative py-2 px-1 cursor-pointer focus:outline-none ${
                     isActive
-                      ? isDark ? 'text-[#F5F0E6] font-semibold' : 'text-[#071F16] font-semibold'
-                      : isDark ? 'text-[#F5F0E6]/70 hover:text-[#F5F0E6]' : 'text-[#6B7266] hover:text-[#071F16]'
+                      ? isDark ? 'text-[#EDEDED] font-semibold' : 'text-[#1A1A1A] font-semibold'
+                      : isDark ? 'text-[#EDEDED]/70 hover:text-[#EDEDED]' : 'text-[#525252] hover:text-[#1A1A1A]'
                   }`}
                 >
                   {item.label}
                   {isActive && (
                     <motion.span
                       layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-0 w-full h-[2px] bg-[#B8954A] rounded-full"
+                      className={`absolute bottom-0 left-0 w-full h-[2px] rounded-full ${
+                        isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'
+                      }`}
                       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                     />
                   )}
@@ -129,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
           </div>
 
           {/* Mobile Actions (Toggle + Menu Button) */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex md:hidden items-center gap-2 shrink-0">
             <ThemeToggle />
 
             <button
@@ -137,8 +139,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               className={`w-11 h-11 flex items-center justify-center transition-colors cursor-pointer rounded-xl border focus:outline-none ${
                 isDark
-                  ? 'text-[#F5F0E6] hover:text-[#B8954A] border-[#16382A] bg-[#0D3325]/50'
-                  : 'text-[#071F16] hover:text-[#B8954A] border-[#E5DEC9] bg-[#FFF9EF]'
+                  ? 'text-[#EDEDED] hover:text-[#B8954A] border-[#16382A] bg-[#0D3325]/50'
+                  : 'text-[#1A1A1A] hover:text-[#1E5631] border-[#E5E7EB] bg-white shadow-xs'
               }`}
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -158,19 +160,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             transition={{ duration: 0.25 }}
             className={`fixed inset-0 top-[60px] z-40 backdrop-blur-lg flex flex-col justify-between p-6 sm:p-10 md:hidden border-t overflow-y-auto ${
               isDark 
-                ? 'bg-[#071F16]/98 border-[#16382A] text-[#F5F0E6]' 
-                : 'bg-[#FFF9EF]/98 border-[#E5DEC9] text-[#071F16]'
+                ? 'bg-[#071F16]/98 border-[#16382A] text-[#EDEDED]' 
+                : 'bg-[#FAFAFA]/98 border-[#E5E7EB] text-[#1A1A1A]'
             }`}
           >
             <div className="space-y-6 pt-2">
               <div className={`flex items-center justify-between pb-3 border-b ${
-                isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+                isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
               }`}>
                 <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.32em] text-[#B8954A]">
                   Navigation Directory
                 </span>
                 <span className={`text-[10px] font-sans-clean uppercase tracking-[0.2em] ${
-                  isDark ? 'text-[#F5F0E6]/50' : 'text-[#6B7266]'
+                  isDark ? 'text-[#EDEDED]/50' : 'text-[#6B7266]'
                 }`}>
                   Favour Ventures
                 </span>
@@ -189,15 +191,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                       className={`w-full text-left py-4 px-4 flex items-center justify-between rounded-xl transition-all cursor-pointer min-h-[52px] ${
                         isActive
                           ? isDark 
-                            ? 'bg-[#0D3325] border border-[#B8954A]/40 text-[#F5F0E6]'
-                            : 'bg-[#F5F0E6] border border-[#B8954A]/40 text-[#071F16]'
+                            ? 'bg-[#0D3325] border border-[#B8954A]/40 text-[#EDEDED]'
+                            : 'bg-white border border-[#1E5631]/30 text-[#1A1A1A] shadow-xs'
                           : isDark
-                            ? 'bg-transparent text-[#F5F0E6]/80 hover:bg-[#0D3325]/40 hover:text-[#F5F0E6]'
-                            : 'bg-transparent text-[#6B7266] hover:bg-[#F5F0E6] hover:text-[#071F16]'
+                            ? 'bg-transparent text-[#EDEDED]/80 hover:bg-[#0D3325]/40 hover:text-[#EDEDED]'
+                            : 'bg-transparent text-[#525252] hover:bg-white hover:text-[#1A1A1A]'
                       }`}
                     >
                       <div className="flex items-center gap-4">
-                        <span className="text-[11px] font-sans-clean font-semibold tracking-wider text-[#B8954A]">
+                        <span className={`text-[11px] font-sans-clean font-semibold tracking-wider ${
+                          isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                        }`}>
                           {item.num}
                         </span>
                         <span className="font-editorial text-2xl font-bold tracking-wide">
@@ -206,11 +210,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                       </div>
 
                       {isActive ? (
-                        <span className="text-[9.5px] font-sans-clean uppercase tracking-[0.2em] text-[#B8954A] font-semibold">
+                        <span className={`text-[9.5px] font-sans-clean uppercase tracking-[0.2em] font-semibold ${
+                          isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                        }`}>
                           Active
                         </span>
                       ) : (
-                        <ArrowUpRight className={`w-4 h-4 ${isDark ? 'text-[#F5F0E6]/40' : 'text-[#6B7266]/50'}`} />
+                        <ArrowUpRight className={`w-4 h-4 ${isDark ? 'text-[#EDEDED]/40' : 'text-[#6B7266]/50'}`} />
                       )}
                     </motion.button>
                   );
@@ -219,7 +225,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             </div>
 
             <div className={`pt-6 pb-4 space-y-4 border-t ${
-              isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+              isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
             }`}>
               <a
                 href={whatsappUrl}
@@ -232,7 +238,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
               </a>
               <div className="text-center">
                 <span className={`text-[11px] font-sans-clean ${
-                  isDark ? 'text-[#F5F0E6]/60' : 'text-[#6B7266]'
+                  isDark ? 'text-[#EDEDED]/60' : 'text-[#6B7266]'
                 }`}>
                   Direct Line: {settings.whatsappNumberDisplay}
                 </span>

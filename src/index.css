@@ -13,18 +13,27 @@
     --color-brass-hover: #C9A75E;
     --color-ivory: #F5F0E6;
     --color-cream: #FFF9EF;
-    --color-charcoal: #111511;
+    --color-charcoal: #1A1A1A;
     --color-muted: #6B7266;
-    --color-border-light: #E5DEC9;
+    --color-border-light: #E5E7EB;
     --color-border-dark: #16382A;
   }
 
   html {
     font-family: var(--font-body);
     scroll-behavior: smooth;
-    background-color: #071F16;
-    color: #111511;
     -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html.dark {
+    background-color: #071F16;
+    color: #EDEDED;
+  }
+
+  html.light {
+    background-color: #FAFAFA;
+    color: #1A1A1A;
   }
 
   h1, h2, h3, h4, .font-editorial {
@@ -47,12 +56,20 @@
   height: 5px;
 }
 
-::-webkit-scrollbar-track {
+.dark ::-webkit-scrollbar-track {
   background: #071F16;
 }
 
-::-webkit-scrollbar-thumb {
+.dark ::-webkit-scrollbar-thumb {
   background: #16382A;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #FAFAFA;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -61,7 +78,7 @@
 
 /* Tactile app-like button feedback & WhatsApp focus */
 .btn-tactile {
-  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
   min-height: 44px;
   will-change: transform, box-shadow;
 }
@@ -78,12 +95,12 @@
 .btn-whatsapp-gold {
   background: linear-gradient(135deg, #C9A75E 0%, #B8954A 50%, #A68339 100%);
   color: #071F16;
-  box-shadow: 0 4px 20px rgba(184, 149, 74, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 18px rgba(184, 149, 74, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .btn-whatsapp-gold:hover {
   background: linear-gradient(135deg, #D4B46E 0%, #C9A75E 50%, #B8954A 100%);
-  box-shadow: 0 6px 28px rgba(184, 149, 74, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 6px 24px rgba(184, 149, 74, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 /* Editorial card glassmorphic hover lift */
@@ -94,7 +111,14 @@
 
 .card-glass-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.5), 0 0 20px -4px rgba(184, 149, 74, 0.15);
+}
+
+.dark .card-glass-hover:hover {
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 0 18px -4px rgba(184, 149, 74, 0.2);
+}
+
+.light .card-glass-hover:hover {
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.08), 0 0 14px -2px rgba(30, 86, 49, 0.1);
 }
 
 /* Editorial image zoom interaction */

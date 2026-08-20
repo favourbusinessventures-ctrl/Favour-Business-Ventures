@@ -186,21 +186,27 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className={`relative w-full max-w-lg rounded-2xl border shadow-2xl overflow-hidden z-10 my-8 ${
             isDark 
-              ? 'bg-[#0D3325] border-[#16382A] text-[#F5F0E6]' 
-              : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16]'
+              ? 'bg-[#0D3325] border-[#16382A] text-[#EDEDED]' 
+              : 'bg-white border-[#E5E7EB] text-[#1A1A1A]'
           }`}
         >
-          {/* Top Gold Accent Bar */}
-          <div className="h-1.5 w-full bg-gradient-to-r from-[#B8954A] via-[#E8D49E] to-[#B8954A]" />
+          {/* Top Accent Bar */}
+          <div className={`h-1.5 w-full ${
+            isDark 
+              ? 'bg-gradient-to-r from-[#B8954A] via-[#E8D49E] to-[#B8954A]' 
+              : 'bg-gradient-to-r from-[#1E5631] via-[#8A9A5B] to-[#1E5631]'
+          }`} />
 
           {/* Modal Header */}
           <div className={`p-6 border-b flex items-start justify-between gap-4 ${
-            isDark ? 'border-[#16382A] bg-[#071F16]/50' : 'border-[#E5DEC9] bg-[#F5F0E6]/50'
+            isDark ? 'border-[#16382A] bg-[#071F16]/50' : 'border-[#E5E7EB] bg-[#F5F5F0]'
           }`}>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="w-4 h-[1.5px] bg-[#B8954A]" />
-                <span className="text-[10px] font-sans-clean font-semibold tracking-[0.25em] uppercase text-[#B8954A]">
+                <span className={`w-4 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
+                <span className={`text-[10px] font-sans-clean font-semibold tracking-[0.25em] uppercase ${
+                  isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                }`}>
                   Direct Inquiry & Order
                 </span>
               </div>
@@ -213,10 +219,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
               onClick={onClose}
               type="button"
               aria-label="Close modal"
-              className={`p-2 rounded-lg border transition-colors cursor-pointer ${
+              className={`p-2 rounded-xl border transition-colors cursor-pointer ${
                 isDark
-                  ? 'border-[#16382A] text-[#A3B899] hover:text-[#F5F0E6] hover:bg-[#16382A]'
-                  : 'border-[#E5DEC9] text-[#6B7266] hover:text-[#071F16] hover:bg-[#F5F0E6]'
+                  ? 'border-[#16382A] text-[#A3B899] hover:text-[#EDEDED] hover:bg-[#16382A]'
+                  : 'border-[#E5E7EB] text-[#6B7266] hover:text-[#1A1A1A] hover:bg-white'
               }`}
             >
               <X className="w-5 h-5" />
@@ -228,7 +234,7 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
             {isSuccess ? (
               /* Success View */
               <div className="space-y-6 text-center py-4">
-                <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
 
@@ -237,15 +243,17 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                     Thank you, {customerName}!
                   </h3>
                   <p className={`text-xs sm:text-sm font-sans-clean font-light leading-relaxed max-w-sm mx-auto ${
-                    isDark ? 'text-[#F5F0E6]/75' : 'text-[#6B7266]'
+                    isDark ? 'text-[#EDEDED]/75' : 'text-[#525252]'
                   }`}>
-                    We have received your inquiry for <strong className="font-semibold text-[#B8954A]">{selectedProductName}</strong> ({selectedOption || 'Standard'}). Our team will reach out to you promptly.
+                    We have received your inquiry for <strong className={`font-semibold ${
+                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    }`}>{selectedProductName}</strong> ({selectedOption || 'Standard'}). Our team will reach out to you promptly.
                   </p>
                 </div>
 
                 {/* Instant WhatsApp Action */}
                 <div className={`p-4 rounded-xl border space-y-3 ${
-                  isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F5F0E6] border-[#E5DEC9]'
+                  isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F5F5F0] border-[#E5E7EB]'
                 }`}>
                   <p className="text-[11px] font-sans-clean font-medium">
                     Need instant confirmation? Click below to send this directly on WhatsApp:
@@ -254,11 +262,15 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                     href={generateWhatsAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-tactile btn-whatsapp-gold w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-bold tracking-wider uppercase rounded-xl shadow-md"
+                    className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-bold tracking-wider uppercase rounded-xl shadow-md cursor-pointer ${
+                      isDark
+                        ? 'bg-[#0D3325] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/50'
+                        : 'bg-[#25D366] hover:bg-[#20bd5a] text-white'
+                    }`}
                   >
-                    <MessageCircle className="w-4 h-4 text-[#071F16]" />
+                    <MessageCircle className="w-4 h-4" />
                     <span>Continue on WhatsApp</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16]" />
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
 
@@ -266,10 +278,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                   <button
                     onClick={onClose}
                     type="button"
-                    className={`px-6 py-2.5 text-xs font-sans-clean font-semibold tracking-wider uppercase rounded-lg border transition-colors cursor-pointer ${
+                    className={`px-6 py-2.5 text-xs font-sans-clean font-semibold tracking-wider uppercase rounded-xl border transition-colors cursor-pointer ${
                       isDark
-                        ? 'border-[#16382A] text-[#A3B899] hover:text-[#F5F0E6] hover:bg-[#16382A]'
-                        : 'border-[#E5DEC9] text-[#6B7266] hover:text-[#071F16] hover:bg-[#E5DEC9]'
+                        ? 'border-[#16382A] text-[#A3B899] hover:text-[#EDEDED] hover:bg-[#16382A]'
+                        : 'border-[#E5E7EB] text-[#525252] hover:text-[#1A1A1A] hover:bg-[#F5F5F0]'
                     }`}
                   >
                     Close
@@ -280,15 +292,17 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
               /* Inquiry Form */
               <form onSubmit={handleSubmit} className="space-y-4">
                 {errorMessage && (
-                  <div className="p-3.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2.5">
-                    <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+                  <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-300 text-xs flex items-center gap-2.5">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
                     <span>{errorMessage}</span>
                   </div>
                 )}
 
                 {/* Customer Name */}
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-sans-clean font-semibold uppercase tracking-wider text-[#B8954A] flex items-center gap-1.5">
+                  <label className={`text-[11px] font-sans-clean font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+                    isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                  }`}>
                     <User className="w-3 h-3" />
                     <span>Full Name *</span>
                   </label>
@@ -298,10 +312,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder="e.g. Chief Emeka Okonkwo"
-                    className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all ${
+                    className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
                       isDark
-                        ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6] placeholder-[#A3B899]/40'
-                        : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16] placeholder-[#6B7266]/60'
+                        ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] placeholder-[#EDEDED]/40 focus:border-[#B8954A]'
+                        : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] placeholder-[#9CA3AF] focus:border-[#1E5631]'
                     }`}
                   />
                 </div>
@@ -309,7 +323,9 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                 {/* Customer Phone & Email Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-sans-clean font-semibold uppercase tracking-wider text-[#B8954A] flex items-center gap-1.5">
+                    <label className={`text-[11px] font-sans-clean font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    }`}>
                       <Phone className="w-3 h-3" />
                       <span>Phone / WhatsApp *</span>
                     </label>
@@ -319,17 +335,17 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       placeholder="e.g. 0803 123 4567"
-                      className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all ${
+                      className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
                         isDark
-                          ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6] placeholder-[#A3B899]/40'
-                          : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16] placeholder-[#6B7266]/60'
+                          ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] placeholder-[#EDEDED]/40 focus:border-[#B8954A]'
+                          : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] placeholder-[#9CA3AF] focus:border-[#1E5631]'
                       }`}
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <label className={`text-[11px] font-sans-clean font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
-                      isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                      isDark ? 'text-[#EDEDED]/70' : 'text-[#525252]'
                     }`}>
                       <span>Email (Optional)</span>
                     </label>
@@ -338,10 +354,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                       value={customerEmail}
                       onChange={(e) => setCustomerEmail(e.target.value)}
                       placeholder="e.g. emeka@gmail.com"
-                      className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all ${
+                      className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
                         isDark
-                          ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6] placeholder-[#A3B899]/40'
-                          : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16] placeholder-[#6B7266]/60'
+                          ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] placeholder-[#EDEDED]/40 focus:border-[#B8954A]'
+                          : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] placeholder-[#9CA3AF] focus:border-[#1E5631]'
                       }`}
                     />
                   </div>
@@ -349,17 +365,19 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
 
                 {/* Product Selection */}
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-sans-clean font-semibold uppercase tracking-wider text-[#B8954A] flex items-center gap-1.5">
+                  <label className={`text-[11px] font-sans-clean font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+                    isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                  }`}>
                     <Package className="w-3 h-3" />
                     <span>Select Product *</span>
                   </label>
                   <select
                     value={selectedProductName}
                     onChange={(e) => handleProductChange(e.target.value)}
-                    className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all cursor-pointer ${
+                    className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all cursor-pointer min-h-[42px] ${
                       isDark
-                        ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6]'
-                        : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16]'
+                        ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] focus:border-[#B8954A]'
+                        : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] focus:border-[#1E5631]'
                     }`}
                   >
                     {products.map((prod) => (
@@ -375,7 +393,7 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                   {/* Option/Cut */}
                   <div className="space-y-1.5">
                     <label className={`text-[11px] font-sans-clean font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
-                      isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                      isDark ? 'text-[#EDEDED]/70' : 'text-[#525252]'
                     }`}>
                       <span>Portion / Cut</span>
                     </label>
@@ -383,10 +401,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                       <select
                         value={selectedOption}
                         onChange={(e) => setSelectedOption(e.target.value)}
-                        className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all cursor-pointer ${
+                        className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all cursor-pointer min-h-[42px] ${
                           isDark
-                            ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6]'
-                            : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16]'
+                            ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] focus:border-[#B8954A]'
+                            : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] focus:border-[#1E5631]'
                         }`}
                       >
                         {currentOptions.map((opt, i) => (
@@ -401,10 +419,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                         value={selectedOption}
                         onChange={(e) => setSelectedOption(e.target.value)}
                         placeholder="Standard"
-                        className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all ${
+                        className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
                           isDark
-                            ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6]'
-                            : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16]'
+                            ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] focus:border-[#B8954A]'
+                            : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] focus:border-[#1E5631]'
                         }`}
                       />
                     )}
@@ -412,7 +430,9 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
 
                   {/* Quantity */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-sans-clean font-semibold uppercase tracking-wider text-[#B8954A] flex items-center gap-1.5">
+                    <label className={`text-[11px] font-sans-clean font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    }`}>
                       <span>Quantity / Volume *</span>
                     </label>
                     <input
@@ -421,10 +441,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                       placeholder="e.g. 1 bag, 2 cartons, 5 kg"
-                      className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all ${
+                      className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all ${
                         isDark
-                          ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6] placeholder-[#A3B899]/40'
-                          : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16] placeholder-[#6B7266]/60'
+                          ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] placeholder-[#EDEDED]/40 focus:border-[#B8954A]'
+                          : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] placeholder-[#9CA3AF] focus:border-[#1E5631]'
                       }`}
                     />
                   </div>
@@ -433,7 +453,7 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                 {/* Delivery Destination or Special Notes */}
                 <div className="space-y-1.5">
                   <label className={`text-[11px] font-sans-clean font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
-                    isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                    isDark ? 'text-[#EDEDED]/70' : 'text-[#525252]'
                   }`}>
                     <MapPin className="w-3 h-3" />
                     <span>Delivery Location & Special Instructions</span>
@@ -443,10 +463,10 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                     value={customerMessage}
                     onChange={(e) => setCustomerMessage(e.target.value)}
                     placeholder="e.g. Delivery to Lekki Phase 1, Lagos. Need by Friday."
-                    className={`w-full px-3.5 py-2.5 text-xs rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#B8954A]/50 transition-all resize-none ${
+                    className={`w-full px-3.5 py-2.5 text-xs rounded-xl border focus:outline-none transition-all resize-none ${
                       isDark
-                        ? 'bg-[#071F16] border-[#16382A] text-[#F5F0E6] placeholder-[#A3B899]/40'
-                        : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16] placeholder-[#6B7266]/60'
+                        ? 'bg-[#071F16] border-[#16382A] text-[#EDEDED] placeholder-[#EDEDED]/40 focus:border-[#B8954A]'
+                        : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] placeholder-[#9CA3AF] focus:border-[#1E5631]'
                     }`}
                   />
                 </div>
@@ -456,7 +476,11 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn-tactile flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-bold tracking-wider uppercase rounded-xl transition-all cursor-pointer disabled:opacity-60 min-h-[44px] shadow-md"
+                    className={`btn-tactile flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-bold tracking-wider uppercase rounded-xl transition-all cursor-pointer disabled:opacity-60 min-h-[44px] shadow-md ${
+                      isDark
+                        ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
+                        : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                    }`}
                   >
                     {isSubmitting ? (
                       <>
@@ -475,9 +499,13 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
                     href={generateWhatsAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-tactile btn-whatsapp-gold sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 text-xs font-bold tracking-wider uppercase rounded-xl transition-all min-h-[44px]"
+                    className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 text-xs font-bold tracking-wider uppercase rounded-xl transition-all min-h-[44px] cursor-pointer shadow-md ${
+                      isDark
+                        ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/50'
+                        : 'bg-[#25D366] hover:bg-[#20bd5a] text-white'
+                    }`}
                   >
-                    <MessageCircle className="w-4 h-4 text-[#071F16]" />
+                    <MessageCircle className="w-4 h-4" />
                     <span>WhatsApp Directly</span>
                   </a>
                 </div>

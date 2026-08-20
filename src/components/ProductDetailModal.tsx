@@ -80,8 +80,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className={`relative w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl rounded-t-2xl sm:rounded-2xl border ${
               isDark 
-                ? 'bg-[#0D3325] border-[#16382A] text-[#F5F0E6]' 
-                : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16]'
+                ? 'bg-[#0D3325] border-[#16382A] text-[#EDEDED]' 
+                : 'bg-white border-[#E5E7EB] text-[#1A1A1A]'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
@@ -89,10 +89,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
             <button
               onClick={onClose}
               aria-label="Close product details"
-              className={`absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center transition-colors rounded-lg cursor-pointer border shadow-md ${
+              className={`absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center transition-colors rounded-xl cursor-pointer border shadow-md ${
                 isDark
-                  ? 'bg-[#071F16] text-[#F5F0E6] hover:bg-[#B8954A] hover:text-[#071F16] border-[#B8954A]/30'
-                  : 'bg-[#071F16] text-[#F5F0E6] hover:bg-[#B8954A] hover:text-[#071F16] border-[#B8954A]/30'
+                  ? 'bg-[#071F16] text-[#EDEDED] hover:bg-[#B8954A] hover:text-[#071F16] border-[#16382A]'
+                  : 'bg-[#F5F5F0] text-[#1A1A1A] hover:bg-[#1E5631] hover:text-white border-[#E5E7EB]'
               }`}
             >
               <X className="w-5 h-5" />
@@ -100,7 +100,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
               {/* Image side */}
-              <div className="relative bg-[#071F16] p-5 sm:p-8 flex items-center justify-center">
+              <div className={`relative p-5 sm:p-8 flex items-center justify-center ${
+                isDark ? 'bg-[#071F16]' : 'bg-[#F5F5F0]'
+              }`}>
                 <div className="w-full overflow-hidden rounded-xl">
                   <ImageWithPlaceholder
                     src={product.imageUrl}
@@ -112,7 +114,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   />
                 </div>
                 {/* Category badge */}
-                <div className="absolute top-5 sm:top-6 left-5 sm:left-6 bg-[#071F16]/90 backdrop-blur-sm text-[#F5F0E6] px-3 py-1.5 text-[9px] font-sans-clean font-semibold tracking-[0.2em] uppercase border border-[#B8954A]/40 rounded">
+                <div className={`absolute top-5 sm:top-6 left-5 sm:left-6 px-3 py-1.5 text-[9px] font-sans-clean font-semibold tracking-[0.2em] uppercase border rounded-md shadow-sm ${
+                  isDark 
+                    ? 'bg-[#071F16]/90 backdrop-blur-sm text-[#EDEDED] border-[#B8954A]/40' 
+                    : 'bg-white/90 backdrop-blur-sm text-[#1A1A1A] border-[#E5E7EB]'
+                }`}>
                   {product.category}
                 </div>
               </div>
@@ -121,7 +127,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
               <div className="p-5 sm:p-7 lg:p-9 flex flex-col space-y-5">
                 {/* Title & Rating Header */}
                 <div className={`space-y-2 pb-4 border-b ${
-                  isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+                  isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
                 }`}>
                   <div className="flex items-center gap-2">
                     <div className="flex items-center text-[#B8954A]">
@@ -130,24 +136,24 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                       ))}
                     </div>
                     <span className={`text-xs font-sans-clean font-bold ${
-                      isDark ? 'text-[#F5F0E6]' : 'text-[#071F16]'
+                      isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
                     }`}>
                       {summary.averageRating.toFixed(1)}
                     </span>
                     <span className={`text-[11px] font-sans-clean ${
-                      isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                      isDark ? 'text-[#EDEDED]/60' : 'text-[#6B7266]'
                     }`}>
                       ({summary.totalReviews} verified reviews)
                     </span>
                   </div>
 
                   <h2 className={`font-editorial text-2xl sm:text-3xl font-bold leading-tight pr-10 ${
-                    isDark ? 'text-[#F5F0E6]' : 'text-[#071F16]'
+                    isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
                   }`}>
                     {product.name}
                   </h2>
                   <p className={`font-editorial italic text-sm sm:text-base leading-relaxed ${
-                    isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                    isDark ? 'text-[#A3B899]' : 'text-[#525252]'
                   }`}>
                     {product.subtitle}
                   </p>
@@ -155,7 +161,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
                 {/* Description */}
                 <p className={`text-sm font-sans-clean font-light leading-relaxed ${
-                  isDark ? 'text-[#F5F0E6]/80' : 'text-[#111511]'
+                  isDark ? 'text-[#EDEDED]/80' : 'text-[#1A1A1A]'
                 }`}>
                   {product.description}
                 </p>
@@ -163,15 +169,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 {/* Highlights */}
                 {product.highlights && product.highlights.length > 0 && (
                   <div className="space-y-2.5">
-                    <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A] block">
+                    <span className={`text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] block ${
+                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    }`}>
                       Key Qualities
                     </span>
                     <ul className="space-y-2">
                       {product.highlights.map((hl, idx) => (
                         <li key={idx} className={`flex items-start gap-2 text-xs font-sans-clean ${
-                          isDark ? 'text-[#F5F0E6]/85' : 'text-[#111511]'
+                          isDark ? 'text-[#EDEDED]/85' : 'text-[#1A1A1A]'
                         }`}>
-                          <Check className="w-3.5 h-3.5 text-[#B8954A] shrink-0 mt-0.5" />
+                          <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${
+                            isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                          }`} />
                           <span className="leading-relaxed">{hl}</span>
                         </li>
                       ))}
@@ -183,15 +193,15 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 <div className="flex items-center justify-between py-1">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    <span className="text-xs font-sans-clean font-medium text-emerald-400">
+                    <span className="text-xs font-sans-clean font-medium text-emerald-600 dark:text-emerald-400">
                       Available — In Stock
                     </span>
                   </div>
 
                   <button
                     onClick={() => setIsWriteModalOpen(true)}
-                    className={`inline-flex items-center gap-1.5 text-xs font-sans-clean text-[#B8954A] hover:underline font-semibold transition-colors cursor-pointer ${
-                      isDark ? 'hover:text-[#F5F0E6]' : 'hover:text-[#071F16]'
+                    className={`inline-flex items-center gap-1.5 text-xs font-sans-clean hover:underline font-semibold transition-colors cursor-pointer ${
+                      isDark ? 'text-[#B8954A] hover:text-[#EDEDED]' : 'text-[#1E5631] hover:text-[#1A1A1A]'
                     }`}
                   >
                     <MessageSquarePlus className="w-3.5 h-3.5" />
@@ -202,7 +212,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 {/* Format options */}
                 {product.options && product.options.length > 0 && (
                   <div className="space-y-2.5">
-                    <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A] block">
+                    <span className={`text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] block ${
+                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    }`}>
                       Choose Your Format
                     </span>
                     <div className="grid grid-cols-1 gap-2">
@@ -213,14 +225,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                             key={option.name}
                             type="button"
                             onClick={() => setSelectedOption(option)}
-                            className={`text-left p-3 rounded-lg transition-all duration-200 cursor-pointer min-h-[48px] flex items-center justify-between gap-3 ${
+                            className={`text-left p-3 rounded-xl transition-all duration-200 cursor-pointer min-h-[48px] flex items-center justify-between gap-3 ${
                               isSelected
                                 ? isDark
-                                  ? 'bg-[#16382A] text-[#F5F0E6] border border-[#B8954A] shadow-md'
-                                  : 'bg-[#071F16] text-[#F5F0E6] border border-[#071F16] shadow-md'
+                                  ? 'bg-[#16382A] text-[#EDEDED] border border-[#B8954A] shadow-md'
+                                  : 'bg-[#1E5631] text-white border border-[#1E5631] shadow-md'
                                 : isDark
-                                  ? 'bg-[#071F16]/60 text-[#F5F0E6] border border-[#16382A] hover:border-[#B8954A]/40'
-                                  : 'bg-[#F5F0E6] text-[#071F16] border border-[#E5DEC9] hover:border-[#071F16]/30'
+                                  ? 'bg-[#071F16]/60 text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/40'
+                                  : 'bg-[#F5F5F0] text-[#1A1A1A] border border-[#E5E7EB] hover:border-[#1E5631]/40'
                             }`}
                           >
                             <div className="flex-1 min-w-0">
@@ -229,14 +241,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                               </span>
                               <span className={`text-[11px] font-sans-clean font-light leading-snug block mt-0.5 ${
                                 isSelected 
-                                  ? isDark ? 'text-[#F5F0E6]/85' : 'text-[#F5F0E6]/75' 
+                                  ? isDark ? 'text-[#EDEDED]/85' : 'text-white/85' 
                                   : isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
                               }`}>
                                 {option.description}
                               </span>
                             </div>
                             <span className={`w-2 h-2 rounded-full shrink-0 ${
-                              isSelected ? 'bg-[#B8954A]' : isDark ? 'bg-[#16382A]' : 'bg-[#E5DEC9]'
+                              isSelected ? isDark ? 'bg-[#B8954A]' : 'bg-white' : isDark ? 'bg-[#16382A]' : 'bg-[#E5E7EB]'
                             }`} />
                           </button>
                         );
@@ -247,12 +259,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
                 {/* Quantity selector */}
                 <div className="space-y-2">
-                  <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A] block">
+                  <span className={`text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] block ${
+                    isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                  }`}>
                     Select Quantity
                   </span>
                   <div className="flex items-center gap-3">
-                    <div className={`inline-flex items-center border rounded-lg p-1 ${
-                      isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F5F0E6] border-[#E5DEC9]'
+                    <div className={`inline-flex items-center border rounded-xl p-1 ${
+                      isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F5F5F0] border-[#E5E7EB]'
                     }`}>
                       <button
                         type="button"
@@ -261,14 +275,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                         aria-label="Decrease quantity"
                         className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed ${
                           isDark 
-                            ? 'text-[#F5F0E6] hover:bg-[#16382A] hover:text-[#B8954A]' 
-                            : 'text-[#071F16] hover:bg-[#FFF9EF] hover:text-[#B8954A]'
+                            ? 'text-[#EDEDED] hover:bg-[#16382A] hover:text-[#B8954A]' 
+                            : 'text-[#1A1A1A] hover:bg-white hover:text-[#1E5631]'
                         }`}
                       >
                         <Minus className="w-3.5 h-3.5" />
                       </button>
                       <span className={`w-12 text-center text-sm font-sans-clean font-semibold tabular-nums ${
-                        isDark ? 'text-[#F5F0E6]' : 'text-[#071F16]'
+                        isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
                       }`}>
                         {quantity}
                       </span>
@@ -279,8 +293,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                         aria-label="Increase quantity"
                         className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed ${
                           isDark 
-                            ? 'text-[#F5F0E6] hover:bg-[#16382A] hover:text-[#B8954A]' 
-                            : 'text-[#071F16] hover:bg-[#FFF9EF] hover:text-[#B8954A]'
+                            ? 'text-[#EDEDED] hover:bg-[#16382A] hover:text-[#B8954A]' 
+                            : 'text-[#1A1A1A] hover:bg-white hover:text-[#1E5631]'
                         }`}
                       >
                         <Plus className="w-3.5 h-3.5" />
@@ -295,31 +309,35 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 </div>
 
                 {/* Selection summary */}
-                <div className={`p-3.5 rounded-lg border ${
-                  isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F5F0E6] border-[#E5DEC9]'
+                <div className={`p-3.5 rounded-xl border ${
+                  isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F5F5F0] border-[#E5E7EB]'
                 }`}>
                   <div className={`flex items-center justify-between pb-2 mb-2 border-b ${
-                    isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+                    isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
                   }`}>
-                    <span className="text-[9.5px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A]">
+                    <span className={`text-[9.5px] font-sans-clean font-semibold uppercase tracking-[0.2em] ${
+                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    }`}>
                       Your Selection
                     </span>
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <div className="min-w-0">
                       <span className={`font-editorial text-sm font-bold ${
-                        isDark ? 'text-[#F5F0E6]' : 'text-[#071F16]'
+                        isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
                       }`}>
                         {product.name}
                       </span>
-                      <span className="text-xs font-sans-clean text-[#B8954A] ml-1.5">
+                      <span className={`text-xs font-sans-clean ml-1.5 ${
+                        isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                      }`}>
                         • {selectedOption.name}
                       </span>
                     </div>
-                    <span className={`text-xs font-sans-clean font-semibold px-2.5 py-1 rounded border shrink-0 ${
+                    <span className={`text-xs font-sans-clean font-semibold px-2.5 py-1 rounded-lg border shrink-0 ${
                       isDark 
-                        ? 'bg-[#16382A] border-[#B8954A]/30 text-[#F5F0E6]' 
-                        : 'bg-[#FFF9EF] border-[#E5DEC9] text-[#071F16]'
+                        ? 'bg-[#16382A] border-[#B8954A]/30 text-[#EDEDED]' 
+                        : 'bg-white border-[#E5E7EB] text-[#1A1A1A]'
                     }`}>
                       Qty: {quantity}
                     </span>
@@ -332,7 +350,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   <button
                     type="button"
                     onClick={() => setIsInquiryModalOpen(true)}
-                    className="btn-tactile w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-sans-clean font-bold tracking-[0.2em] uppercase rounded-xl transition-all cursor-pointer shadow-md"
+                    className={`btn-tactile w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs font-sans-clean font-bold tracking-[0.2em] uppercase rounded-xl transition-all cursor-pointer shadow-md ${
+                      isDark
+                        ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
+                        : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                    }`}
                   >
                     <FileText className="w-4 h-4" />
                     <span>Make an Inquiry / Order</span>
@@ -343,11 +365,15 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-tactile btn-whatsapp-gold w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-[#071F16] text-xs font-sans-clean font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer shadow-md"
+                    className={`btn-tactile w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs font-sans-clean font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer shadow-md ${
+                      isDark
+                        ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/50'
+                        : 'bg-[#25D366] hover:bg-[#20bd5a] text-white'
+                    }`}
                   >
-                    <MessageCircle className="w-4 h-4 text-[#071F16]" />
+                    <MessageCircle className="w-4 h-4" />
                     <span>Order on WhatsApp</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
 
                   {/* Secondary: Ask Customer Care */}
@@ -359,11 +385,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                     }}
                     className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 border text-xs font-sans-clean font-semibold tracking-[0.1em] rounded-xl transition-colors cursor-pointer ${
                       isDark
-                        ? 'bg-[#071F16] text-[#F5F0E6] border-[#16382A] hover:border-[#B8954A]'
-                        : 'bg-[#FFF9EF] text-[#071F16] border-[#E5DEC9] hover:border-[#B8954A]'
+                        ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]'
+                        : 'bg-[#F5F5F0] text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]'
                     }`}
                   >
-                    <Headphones className="w-3.5 h-3.5 text-[#B8954A]" />
+                    <Headphones className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
                     <span>Have questions? Ask Customer Care</span>
                   </button>
                 </div>

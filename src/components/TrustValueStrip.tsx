@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Award, Sparkles, ShieldCheck, Truck } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export const TrustValueStrip: React.FC = () => {
+  const { isDark } = useTheme();
+
   const values = [
     {
       id: 'val-quality',
@@ -40,9 +43,15 @@ export const TrustValueStrip: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="bg-[#0D3325]/90 backdrop-blur-md border border-[#16382A] rounded-2xl shadow-2xl p-5 sm:p-7 lg:p-8"
+        className={`backdrop-blur-md rounded-2xl p-5 sm:p-7 lg:p-8 transition-colors duration-300 border ${
+          isDark 
+            ? 'bg-[#0D3325]/90 border-[#16382A] shadow-2xl' 
+            : 'bg-white border-[#E5E7EB] shadow-lg'
+        }`}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x-0 lg:divide-x divide-[#16382A]">
+        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x-0 lg:divide-x ${
+          isDark ? 'divide-[#16382A]' : 'divide-[#E5E7EB]'
+        }`}>
           {values.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -58,16 +67,26 @@ export const TrustValueStrip: React.FC = () => {
                 }`}
               >
                 {/* Icon Badge */}
-                <div className="w-11 h-11 shrink-0 rounded-xl bg-[#071F16] border border-[#B8954A]/30 flex items-center justify-center text-[#B8954A] shadow-inner group-hover:border-[#B8954A] group-hover:bg-[#071F16]/90 transition-all duration-300">
+                <div className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 border shadow-xs ${
+                  isDark
+                    ? 'bg-[#071F16] border-[#B8954A]/30 text-[#B8954A] group-hover:border-[#B8954A]'
+                    : 'bg-[#FAFAFA] border-[#E5E7EB] text-[#1E5631] group-hover:border-[#1E5631] group-hover:bg-[#F3F4F6]'
+                }`}>
                   <Icon className="w-5 h-5 transition-transform group-hover:scale-110" />
                 </div>
 
                 {/* Content */}
                 <div className="space-y-1">
-                  <h3 className="font-editorial text-base sm:text-lg font-bold text-[#F5F0E6] tracking-wide group-hover:text-[#B8954A] transition-colors">
+                  <h3 className={`font-editorial text-base sm:text-lg font-bold tracking-wide transition-colors ${
+                    isDark
+                      ? 'text-[#EDEDED] group-hover:text-[#B8954A]'
+                      : 'text-[#1A1A1A] group-hover:text-[#1E5631]'
+                  }`}>
                     {item.title}
                   </h3>
-                  <p className="text-xs text-[#F5F0E6]/70 font-sans-clean font-light leading-relaxed">
+                  <p className={`text-xs font-sans-clean font-light leading-relaxed ${
+                    isDark ? 'text-[#EDEDED]/70' : 'text-[#525252]'
+                  }`}>
                     {item.subtitle}
                   </p>
                 </div>

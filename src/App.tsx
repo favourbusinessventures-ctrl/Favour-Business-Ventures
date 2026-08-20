@@ -40,8 +40,8 @@ const StorefrontContent: React.FC<StorefrontContentProps> = ({
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
-      isDark ? 'bg-[#071F16] text-[#F5F0E6]' : 'bg-[#FFF9EF] text-[#071F16]'
-    } selection:bg-[#B8954A]/30 selection:text-[#F5F0E6]`}>
+      isDark ? 'bg-[#071F16] text-[#EDEDED]' : 'bg-[#FAFAFA] text-[#1A1A1A]'
+    } selection:bg-[#B8954A]/30 selection:text-[#1A1A1A]`}>
       
       {/* Branded Loading Screen on Initial Mount */}
       <BrandedLoader

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Star, X, CheckCircle2, AlertCircle, Loader2, MessageSquare, ShieldCheck, Sparkles } from 'lucide-react';
+import { Star, X, CheckCircle2, AlertCircle, Loader2, ShieldCheck, Sparkles } from 'lucide-react';
 import { ReviewSubmissionData } from '../types';
 import { useLiveProducts } from '../hooks/useLiveProducts';
+import { useTheme } from '../context/ThemeContext';
 
 interface WriteReviewModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
   defaultProductId,
   defaultProductName
 }) => {
+  const { isDark } = useTheme();
   const { products } = useLiveProducts();
 
   const [rating, setRating] = useState<number>(5);
@@ -101,28 +103,44 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
         id="write-review-modal"
-        className="bg-[#0D3325] border border-[#16382A] text-[#F5F0E6] w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+        className={`w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border ${
+          isDark
+            ? 'bg-[#0D3325] border-[#16382A] text-[#EDEDED]'
+            : 'bg-white border-[#E5E7EB] text-[#1A1A1A]'
+        }`}
       >
         {/* Header */}
-        <div className="p-5 sm:p-6 bg-[#071F16] border-b border-[#16382A] flex items-center justify-between relative">
+        <div className={`p-5 sm:p-6 border-b flex items-center justify-between relative ${
+          isDark
+            ? 'bg-[#071F16] border-[#16382A]'
+            : 'bg-[#F5F5F0] border-[#E5E7EB]'
+        }`}>
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2">
-              <span className="w-4 h-[1.5px] bg-[#B8954A]" />
-              <span className="text-[10px] font-sans-clean font-semibold tracking-[0.25em] uppercase text-[#B8954A]">
+              <span className={`w-4 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
+              <span className={`text-[10px] font-sans-clean font-semibold tracking-[0.25em] uppercase ${
+                isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+              }`}>
                 Customer Feedback
               </span>
             </div>
-            <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#F5F0E6]">
+            <h3 className={`font-editorial text-xl sm:text-2xl font-bold ${
+              isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+            }`}>
               Share Your Culinary Experience
             </h3>
           </div>
 
           <button
             onClick={handleResetAndClose}
-            className="p-2 text-[#A3B899] hover:text-[#F5F0E6] hover:bg-[#0D3325] rounded-xl transition-colors cursor-pointer"
+            className={`p-2 rounded-xl transition-colors cursor-pointer border ${
+              isDark
+                ? 'border-[#16382A] text-[#A3B899] hover:text-[#EDEDED] hover:bg-[#071F16]'
+                : 'border-[#E5E7EB] text-[#6B7266] hover:text-[#1A1A1A] hover:bg-white'
+            }`}
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -133,29 +151,45 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
         <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1">
           {isSuccess ? (
             <div className="text-center py-8 px-4 space-y-4 animate-in zoom-in-95 duration-200">
-              <div className="w-16 h-16 rounded-full bg-[#16382A] border border-[#B8954A]/50 flex items-center justify-center text-[#B8954A] mx-auto shadow-xl">
+              <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 mx-auto shadow-xl">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <div className="space-y-2 max-w-md mx-auto">
-                <h4 className="font-editorial text-2xl font-bold text-[#F5F0E6]">
+                <h4 className={`font-editorial text-2xl font-bold ${
+                  isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+                }`}>
                   Review Submitted for Moderation
                 </h4>
-                <p className="text-xs sm:text-sm text-[#A3B899] font-sans-clean leading-relaxed">
-                  Thank you, <strong className="text-[#F5F0E6]">{customerName}</strong>! Your review for{' '}
-                  <strong className="text-[#B8954A]">{productName}</strong> has been received. To ensure authentic customer feedback, our team verifies submissions before displaying them on the public website.
+                <p className={`text-xs sm:text-sm font-sans-clean leading-relaxed ${
+                  isDark ? 'text-[#EDEDED]/75' : 'text-[#525252]'
+                }`}>
+                  Thank you, <strong className={isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'}>{customerName}</strong>! Your review for{' '}
+                  <strong className={isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}>{productName}</strong> has been received. To ensure authentic customer feedback, our team verifies submissions before displaying them on the public website.
                 </p>
               </div>
 
-              <div className="p-3.5 bg-[#071F16] border border-[#16382A] rounded-xl text-left flex items-start gap-3 max-w-sm mx-auto">
-                <ShieldCheck className="w-5 h-5 text-[#B8954A] shrink-0 mt-0.5" />
-                <p className="text-[11px] text-[#A3B899] font-sans-clean">
+              <div className={`p-3.5 rounded-xl text-left flex items-start gap-3 max-w-sm mx-auto border ${
+                isDark
+                  ? 'bg-[#071F16] border-[#16382A]'
+                  : 'bg-[#F5F5F0] border-[#E5E7EB]'
+              }`}>
+                <ShieldCheck className={`w-5 h-5 shrink-0 mt-0.5 ${
+                  isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                }`} />
+                <p className={`text-[11px] font-sans-clean ${
+                  isDark ? 'text-[#A3B899]' : 'text-[#525252]'
+                }`}>
                   Authenticity Guarantee: All reviews undergo strict quality moderation to maintain premium Nigerian seafood standards.
                 </p>
               </div>
 
               <button
                 onClick={handleResetAndClose}
-                className="btn-tactile px-6 py-3 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.16em] uppercase rounded-xl transition-all cursor-pointer font-sans-clean shadow-lg"
+                className={`btn-tactile px-6 py-3 text-xs font-semibold tracking-[0.16em] uppercase rounded-xl transition-all cursor-pointer font-sans-clean shadow-lg ${
+                  isDark
+                    ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
+                    : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                }`}
               >
                 Close & Return
               </button>
@@ -163,15 +197,19 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
-                <div className="p-3.5 bg-red-950/60 border border-red-800/60 rounded-xl text-xs font-sans-clean text-red-200 flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs font-sans-clean text-rose-600 dark:text-rose-300 flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                   <span>{error}</span>
                 </div>
               )}
 
               {/* 1. Rating Stars Picker */}
-              <div className="space-y-2 text-center sm:text-left bg-[#071F16] p-4 rounded-xl border border-[#16382A]">
-                <label className="block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A]">
+              <div className={`space-y-2 text-center sm:text-left p-4 rounded-xl border ${
+                isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F5F5F0] border-[#E5E7EB]'
+              }`}>
+                <label className={`block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.2em] ${
+                  isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                }`}>
                   Overall Rating *
                 </label>
                 <div className="flex items-center justify-center sm:justify-start gap-2 pt-1">
@@ -191,27 +229,37 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
                           className={`w-7 h-7 sm:w-8 sm:h-8 transition-colors ${
                             isFilled
                               ? 'text-[#B8954A] fill-[#B8954A]'
-                              : 'text-[#16382A] hover:text-[#B8954A]/50'
+                              : isDark
+                                ? 'text-[#16382A] hover:text-[#B8954A]/50'
+                                : 'text-[#E5E7EB] hover:text-[#B8954A]/50'
                           }`}
                         />
                       </button>
                     );
                   })}
                 </div>
-                <div className="text-[11px] font-sans-clean text-[#A3B899] italic">
+                <div className={`text-[11px] font-sans-clean italic ${
+                  isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                }`}>
                   {ratingLabels[hoverRating !== null ? hoverRating : rating]}
                 </div>
               </div>
 
               {/* 2. Product Selector */}
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] text-[#A3B899]">
+                <label className={`block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] ${
+                  isDark ? 'text-[#EDEDED]/80' : 'text-[#1A1A1A]'
+                }`}>
                   Select Provision / Item *
                 </label>
                 <select
                   value={productId}
                   onChange={(e) => handleProductSelect(e.target.value)}
-                  className="w-full bg-[#071F16] border border-[#16382A] focus:border-[#B8954A] text-xs font-sans-clean text-[#F5F0E6] px-3.5 py-3 rounded-xl outline-none cursor-pointer"
+                  className={`w-full text-xs font-sans-clean px-3.5 py-3 rounded-xl outline-none cursor-pointer border transition-colors ${
+                    isDark
+                      ? 'bg-[#071F16] border-[#16382A] focus:border-[#B8954A] text-[#EDEDED]'
+                      : 'bg-[#F5F5F0] border-[#E5E7EB] focus:border-[#1E5631] text-[#1A1A1A]'
+                  }`}
                 >
                   <option value="norwegian-stockfish">Norwegian Stockfish (Torsk / Cod)</option>
                   <option value="oron-crayfish">Oron Crayfish (Sun-Cured / Stone-Free)</option>
@@ -229,7 +277,9 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
               {/* 3. Reviewer Name & Location */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div className="space-y-1.5">
-                  <label className="block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] text-[#A3B899]">
+                  <label className={`block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] ${
+                    isDark ? 'text-[#EDEDED]/80' : 'text-[#1A1A1A]'
+                  }`}>
                     Your Name / Title *
                   </label>
                   <input
@@ -239,12 +289,18 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder="e.g. Chief Emeka O. or Chef Anita"
                     maxLength={100}
-                    className="w-full bg-[#071F16] border border-[#16382A] focus:border-[#B8954A] text-xs font-sans-clean text-[#F5F0E6] px-3.5 py-3 rounded-xl outline-none placeholder:text-[#6B7266]"
+                    className={`w-full text-xs font-sans-clean px-3.5 py-3 rounded-xl outline-none border transition-colors ${
+                      isDark
+                        ? 'bg-[#071F16] border-[#16382A] focus:border-[#B8954A] text-[#EDEDED] placeholder-[#EDEDED]/40'
+                        : 'bg-[#F5F5F0] border-[#E5E7EB] focus:border-[#1E5631] text-[#1A1A1A] placeholder-[#9CA3AF]'
+                    }`}
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] text-[#A3B899]">
+                  <label className={`block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] ${
+                    isDark ? 'text-[#EDEDED]/80' : 'text-[#1A1A1A]'
+                  }`}>
                     Location / City (Optional)
                   </label>
                   <input
@@ -253,14 +309,20 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="e.g. Lagos, Abuja, London UK"
                     maxLength={100}
-                    className="w-full bg-[#071F16] border border-[#16382A] focus:border-[#B8954A] text-xs font-sans-clean text-[#F5F0E6] px-3.5 py-3 rounded-xl outline-none placeholder:text-[#6B7266]"
+                    className={`w-full text-xs font-sans-clean px-3.5 py-3 rounded-xl outline-none border transition-colors ${
+                      isDark
+                        ? 'bg-[#071F16] border-[#16382A] focus:border-[#B8954A] text-[#EDEDED] placeholder-[#EDEDED]/40'
+                        : 'bg-[#F5F5F0] border-[#E5E7EB] focus:border-[#1E5631] text-[#1A1A1A] placeholder-[#9CA3AF]'
+                    }`}
                   />
                 </div>
               </div>
 
               {/* 4. Review Headline / Title */}
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] text-[#A3B899]">
+                <label className={`block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] ${
+                  isDark ? 'text-[#EDEDED]/80' : 'text-[#1A1A1A]'
+                }`}>
                   Review Headline / Summary *
                 </label>
                 <input
@@ -270,17 +332,25 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
                   onChange={(e) => setReviewTitle(e.target.value)}
                   placeholder="e.g. Sand-free and incredibly sweet aroma in our soup"
                   maxLength={150}
-                  className="w-full bg-[#071F16] border border-[#16382A] focus:border-[#B8954A] text-xs font-sans-clean text-[#F5F0E6] px-3.5 py-3 rounded-xl outline-none placeholder:text-[#6B7266]"
+                  className={`w-full text-xs font-sans-clean px-3.5 py-3 rounded-xl outline-none border transition-colors ${
+                    isDark
+                      ? 'bg-[#071F16] border-[#16382A] focus:border-[#B8954A] text-[#EDEDED] placeholder-[#EDEDED]/40'
+                      : 'bg-[#F5F5F0] border-[#E5E7EB] focus:border-[#1E5631] text-[#1A1A1A] placeholder-[#9CA3AF]'
+                  }`}
                 />
               </div>
 
               {/* 5. Detailed Review Narrative */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] text-[#A3B899]">
+                  <label className={`block text-[11px] font-sans-clean font-semibold uppercase tracking-[0.16em] ${
+                    isDark ? 'text-[#EDEDED]/80' : 'text-[#1A1A1A]'
+                  }`}>
                     Detailed Review *
                   </label>
-                  <span className="text-[10px] text-[#6B7266] font-sans-clean">
+                  <span className={`text-[10px] font-sans-clean ${
+                    isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                  }`}>
                     {comment.length}/1500 chars
                   </span>
                 </div>
@@ -291,16 +361,26 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
                   onChange={(e) => setComment(e.target.value)}
                   placeholder="Describe the aroma, texture, cleanliness, cooking results, or delivery experience..."
                   maxLength={1500}
-                  className="w-full bg-[#071F16] border border-[#16382A] focus:border-[#B8954A] text-xs font-sans-clean text-[#F5F0E6] p-3.5 rounded-xl outline-none placeholder:text-[#6B7266] resize-none leading-relaxed"
+                  className={`w-full text-xs font-sans-clean p-3.5 rounded-xl outline-none border transition-colors resize-none leading-relaxed ${
+                    isDark
+                      ? 'bg-[#071F16] border-[#16382A] focus:border-[#B8954A] text-[#EDEDED] placeholder-[#EDEDED]/40'
+                      : 'bg-[#F5F5F0] border-[#E5E7EB] focus:border-[#1E5631] text-[#1A1A1A] placeholder-[#9CA3AF]'
+                  }`}
                 />
               </div>
 
               {/* Submit Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-[#16382A]">
+              <div className={`pt-2 flex flex-col sm:flex-row items-center justify-end gap-3 border-t ${
+                isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
+              }`}>
                 <button
                   type="button"
                   onClick={handleResetAndClose}
-                  className="w-full sm:w-auto px-5 py-3 bg-transparent hover:bg-[#071F16] text-[#A3B899] hover:text-[#F5F0E6] border border-[#16382A] text-xs font-semibold tracking-[0.14em] uppercase rounded-xl transition-colors cursor-pointer"
+                  className={`w-full sm:w-auto px-5 py-3 text-xs font-semibold tracking-[0.14em] uppercase rounded-xl transition-colors cursor-pointer border ${
+                    isDark
+                      ? 'bg-transparent hover:bg-[#071F16] text-[#A3B899] hover:text-[#EDEDED] border-[#16382A]'
+                      : 'bg-transparent hover:bg-[#F5F5F0] text-[#525252] hover:text-[#1A1A1A] border-[#E5E7EB]'
+                  }`}
                 >
                   Cancel
                 </button>
@@ -308,7 +388,11 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full sm:w-auto btn-tactile inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-bold tracking-[0.18em] uppercase rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50"
+                  className={`w-full sm:w-auto btn-tactile inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-bold tracking-[0.18em] uppercase rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50 ${
+                    isDark
+                      ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
+                      : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                  }`}
                 >
                   {submitting ? (
                     <>
