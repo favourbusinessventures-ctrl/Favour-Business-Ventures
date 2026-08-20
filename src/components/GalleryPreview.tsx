@@ -23,8 +23,14 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
     <section id="gallery-preview-section" className="py-20 sm:py-28 bg-[#071F16] text-[#F5F0E6] relative border-b border-[#16382A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 space-y-12 sm:space-y-16">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#16382A]/80">
+        {/* Section Header with Scroll Trigger */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#16382A]/80"
+        >
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2.5">
               <span className="w-6 h-[1.5px] bg-[#B8954A]" />
@@ -44,28 +50,28 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
 
           <button
             onClick={() => onNavigate('gallery')}
-            className="btn-tactile inline-flex items-center gap-2 px-6 py-3 bg-[#0D3325] hover:bg-[#164936] text-[#F5F0E6] border border-[#16382A] hover:border-[#B8954A]/50 text-xs font-semibold tracking-[0.18em] uppercase rounded-lg cursor-pointer shrink-0 self-start md:self-auto"
+            className="btn-tactile inline-flex items-center gap-2 px-6 py-3.5 bg-[#0D3325] hover:bg-[#164936] text-[#F5F0E6] border border-[#16382A] hover:border-[#B8954A]/50 text-xs font-semibold tracking-[0.18em] uppercase rounded-xl cursor-pointer shrink-0 self-start md:self-auto shadow-md"
           >
             <span>View Full Gallery</span>
             <ArrowRight className="w-3.5 h-3.5 text-[#B8954A]" />
           </button>
-        </div>
+        </motion.div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid with Scroll Trigger & Card Hover Lift */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {previewItems.map((item, idx) => (
             <motion.div
               key={item.id}
               id={`gallery-preview-card-${item.id}`}
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => setActiveModalItem(item)}
-              className="bg-[#0D3325]/70 backdrop-blur-sm border border-[#16382A] hover:border-[#B8954A]/50 p-3.5 rounded-xl shadow-lg transition-all duration-300 group cursor-pointer flex flex-col justify-between"
+              className="card-glass-hover bg-[#0D3325]/75 backdrop-blur-md border border-[#16382A] hover:border-[#B8954A]/50 p-3.5 rounded-2xl shadow-xl group cursor-pointer flex flex-col justify-between"
             >
               {/* Image Frame */}
-              <div className="relative overflow-hidden rounded-lg bg-[#071F16] aspect-4/3">
+              <div className="relative overflow-hidden rounded-xl bg-[#071F16] aspect-4/3">
                 <ImageWithPlaceholder
                   src={item.imageUrl}
                   alt={item.title}
@@ -76,7 +82,7 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
 
                 {/* Translucent Zoom Overlay */}
                 <div className="absolute inset-0 bg-[#071F16]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                  <span className="px-3.5 py-1.5 bg-[#071F16]/90 backdrop-blur-xs text-[#F5F0E6] text-[10px] font-sans-clean font-semibold tracking-[0.2em] uppercase rounded-md border border-[#B8954A]/40 flex items-center gap-1.5 shadow-md">
+                  <span className="px-3.5 py-1.5 bg-[#071F16]/90 backdrop-blur-xs text-[#F5F0E6] text-[10px] font-sans-clean font-semibold tracking-[0.2em] uppercase rounded-lg border border-[#B8954A]/40 flex items-center gap-1.5 shadow-md">
                     <ZoomIn className="w-3.5 h-3.5 text-[#B8954A]" />
                     Expand
                   </span>

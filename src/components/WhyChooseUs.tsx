@@ -16,7 +16,7 @@ export const WhyChooseUs: React.FC = () => {
       icon: CheckCircle2,
       num: '02',
       title: 'Authentic Grade-A Sourcing',
-      description: 'We source only genuine high-grade stockfish and coastal crayfish, ensuring rich umami richness and optimal texture in your soups and stews.'
+      description: 'We source only genuine high-grade stockfish and coastal crayfish, ensuring rich umami depth and optimal texture in your soups and stews.'
     },
     {
       id: 'why-3',
@@ -30,7 +30,7 @@ export const WhyChooseUs: React.FC = () => {
       icon: MessageSquare,
       num: '04',
       title: 'Direct WhatsApp Desk',
-      description: 'Clear pricing, swift portion advice, live stock confirmation, and seamless nationwide logistics delivered with personal care.'
+      description: 'Clear pricing, swift portion advice, live stock confirmation, and seamless dispatch delivered with personal care.'
     }
   ];
 
@@ -38,8 +38,14 @@ export const WhyChooseUs: React.FC = () => {
     <section id="why-choose-us-section" className="py-20 sm:py-28 bg-[#0D3325]/40 text-[#F5F0E6] relative border-b border-[#16382A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 relative z-10 space-y-12 sm:space-y-16">
         
-        {/* Section Header */}
-        <div className="max-w-3xl space-y-3 sm:space-y-4">
+        {/* Section Header with Scroll Trigger */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl space-y-3 sm:space-y-4"
+        >
           <div className="inline-flex items-center gap-2.5">
             <span className="w-6 h-[1.5px] bg-[#B8954A]" />
             <span className="text-[10px] sm:text-[11px] font-sans-clean font-semibold tracking-[0.32em] uppercase text-[#B8954A]">
@@ -52,11 +58,11 @@ export const WhyChooseUs: React.FC = () => {
           </h2>
 
           <p className="text-sm sm:text-base text-[#F5F0E6]/75 font-sans-clean font-light leading-relaxed">
-            We focus exclusively on two essential Nigerian staples, guaranteeing unwavering quality, clean preparation, and honest customer service.
+            We focus exclusively on two essential staples, guaranteeing unwavering quality, clean preparation, and honest customer service.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 4 Crisp Pillars Grid */}
+        {/* 4 Crisp Pillars Grid with Glass Hover */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {points.map((pt, idx) => {
             const Icon = pt.icon;
@@ -64,11 +70,11 @@ export const WhyChooseUs: React.FC = () => {
               <motion.div
                 key={pt.id}
                 id={pt.id}
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="bg-[#071F16]/80 backdrop-blur-sm border border-[#16382A] hover:border-[#B8954A]/40 p-6 sm:p-7 rounded-xl shadow-lg transition-all duration-300 flex flex-col justify-between space-y-6 group"
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="card-glass-hover bg-[#071F16]/90 backdrop-blur-sm border border-[#16382A] hover:border-[#B8954A]/50 p-6 sm:p-7 rounded-2xl shadow-lg flex flex-col justify-between space-y-6 group"
               >
                 <div className="space-y-4">
                   {/* Top Bar with Number and Icon */}
@@ -76,7 +82,7 @@ export const WhyChooseUs: React.FC = () => {
                     <span className="font-editorial text-2xl font-bold text-[#B8954A]">
                       {pt.num}
                     </span>
-                    <div className="w-9 h-9 rounded-lg bg-[#0D3325] border border-[#16382A] flex items-center justify-center text-[#B8954A] group-hover:border-[#B8954A]/30 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-[#0D3325] border border-[#16382A] flex items-center justify-center text-[#B8954A] group-hover:border-[#B8954A]/40 group-hover:scale-105 transition-all duration-300">
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>

@@ -115,11 +115,11 @@ export const AboutSection: React.FC = () => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-tactile inline-flex items-center gap-2.5 px-8 py-3.5 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/30 text-xs font-semibold tracking-[0.2em] uppercase shadow-sm group rounded-[2px]"
+                className="btn-tactile inline-flex items-center gap-2.5 px-8 py-4 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/40 text-xs font-bold tracking-[0.2em] uppercase shadow-md group rounded-xl"
               >
                 <MessageCircle className="w-4 h-4 text-[#B8954A]" />
                 <span>Order on WhatsApp</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#F5F0E6]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#F5F0E6]/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
           </div>

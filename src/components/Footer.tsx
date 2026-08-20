@@ -35,11 +35,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-tactile inline-flex items-center gap-3 px-8 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.2em] uppercase shadow-md group shrink-0 rounded-[2px]"
+            className="btn-tactile btn-whatsapp-gold inline-flex items-center gap-3 px-8 py-4 text-[#071F16] text-xs font-bold tracking-[0.2em] uppercase rounded-xl shadow-lg group shrink-0"
           >
             <MessageCircle className="w-4 h-4 text-[#071F16]" />
             <span>Order on WhatsApp</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16]/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
       </div>

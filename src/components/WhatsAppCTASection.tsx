@@ -1,5 +1,6 @@
 import React from 'react';
-import { MessageCircle, Phone, Mail, ArrowUpRight, CheckCircle } from 'lucide-react';
+import { motion } from 'motion/react';
+import { MessageCircle, Phone, Mail, ArrowUpRight, CheckCircle, ShieldCheck } from 'lucide-react';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
@@ -17,19 +18,25 @@ export const WhatsAppCTASection: React.FC = () => {
   return (
     <section id="order-cta-section" className="py-20 sm:py-28 bg-[#071F16] text-[#F5F0E6] relative overflow-hidden">
       {/* Ambient background glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] bg-[#0D3325]/80 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#B8954A]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[38rem] h-[38rem] bg-[#0D3325]/80 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#B8954A]/12 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 relative z-10">
         
-        {/* Central Glassmorphic Order Banner */}
-        <div className="bg-gradient-to-br from-[#0D3325]/90 via-[#071F16]/95 to-[#0D3325]/90 border border-[#B8954A]/40 rounded-2xl p-8 sm:p-12 lg:p-16 shadow-2xl space-y-10">
+        {/* Central Glassmorphic Order Banner with Scroll Entrance */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-gradient-to-br from-[#0D3325]/95 via-[#071F16]/95 to-[#0D3325]/95 border border-[#B8954A]/40 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl space-y-10"
+        >
           
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#071F16]/80 border border-[#B8954A]/40 shadow-inner">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#071F16]/90 border border-[#B8954A]/40 shadow-inner">
               <span className="w-2 h-2 rounded-full bg-[#B8954A] animate-pulse" />
               <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.25em] text-[#B8954A]">
-                READY TO ORDER?
+                FAST DISPATCH & DIRECT QUOTES
               </span>
             </div>
 
@@ -50,7 +57,7 @@ export const WhatsAppCTASection: React.FC = () => {
               href={stockfishWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tactile bg-[#071F16]/80 hover:bg-[#071F16] border border-[#16382A] hover:border-[#B8954A]/60 p-5 rounded-xl text-left flex flex-col justify-between space-y-4 group transition-all"
+              className="btn-tactile card-glass-hover bg-[#071F16]/85 hover:bg-[#071F16] border border-[#16382A] hover:border-[#B8954A]/60 p-5 rounded-2xl text-left flex flex-col justify-between space-y-4 group"
             >
               <div className="space-y-1">
                 <span className="text-[9.5px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A] block">
@@ -59,7 +66,7 @@ export const WhatsAppCTASection: React.FC = () => {
                 <h3 className="font-editorial text-xl font-bold text-[#F5F0E6] group-hover:text-[#B8954A] transition-colors">
                   Order Stockfish
                 </h3>
-                <p className="text-xs text-[#F5F0E6]/60 font-sans-clean font-light">
+                <p className="text-xs text-[#F5F0E6]/65 font-sans-clean font-light">
                   Body cuts, bone collars, heads & bulk packs.
                 </p>
               </div>
@@ -75,7 +82,7 @@ export const WhatsAppCTASection: React.FC = () => {
               href={crayfishWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tactile bg-[#071F16]/80 hover:bg-[#071F16] border border-[#16382A] hover:border-[#B8954A]/60 p-5 rounded-xl text-left flex flex-col justify-between space-y-4 group transition-all"
+              className="btn-tactile card-glass-hover bg-[#071F16]/85 hover:bg-[#071F16] border border-[#16382A] hover:border-[#B8954A]/60 p-5 rounded-2xl text-left flex flex-col justify-between space-y-4 group"
             >
               <div className="space-y-1">
                 <span className="text-[9.5px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A] block">
@@ -84,7 +91,7 @@ export const WhatsAppCTASection: React.FC = () => {
                 <h3 className="font-editorial text-xl font-bold text-[#F5F0E6] group-hover:text-[#B8954A] transition-colors">
                   Order Crayfish
                 </h3>
-                <p className="text-xs text-[#F5F0E6]/60 font-sans-clean font-light">
+                <p className="text-xs text-[#F5F0E6]/65 font-sans-clean font-light">
                   Cleaned sun-dried whole or 100% pure ground powder.
                 </p>
               </div>
@@ -100,7 +107,7 @@ export const WhatsAppCTASection: React.FC = () => {
               href={wholesaleWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tactile bg-[#071F16]/80 hover:bg-[#071F16] border border-[#16382A] hover:border-[#B8954A]/60 p-5 rounded-xl text-left flex flex-col justify-between space-y-4 group transition-all"
+              className="btn-tactile card-glass-hover bg-[#071F16]/85 hover:bg-[#071F16] border border-[#16382A] hover:border-[#B8954A]/60 p-5 rounded-2xl text-left flex flex-col justify-between space-y-4 group"
             >
               <div className="space-y-1">
                 <span className="text-[9.5px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A] block">
@@ -109,7 +116,7 @@ export const WhatsAppCTASection: React.FC = () => {
                 <h3 className="font-editorial text-xl font-bold text-[#F5F0E6] group-hover:text-[#B8954A] transition-colors">
                   Wholesale & Catering
                 </h3>
-                <p className="text-xs text-[#F5F0E6]/60 font-sans-clean font-light">
+                <p className="text-xs text-[#F5F0E6]/65 font-sans-clean font-light">
                   Large bags, event caterer supplies & bulk sacks.
                 </p>
               </div>
@@ -122,13 +129,13 @@ export const WhatsAppCTASection: React.FC = () => {
 
           </div>
 
-          {/* Primary High-Visibility WhatsApp Action Bar */}
+          {/* Primary High-Visibility WhatsApp Action Bar — Visual Focal Point */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <a
               href={generalWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tactile w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.22em] uppercase rounded-xl shadow-xl group cursor-pointer"
+              className="btn-tactile btn-whatsapp-gold w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4.5 text-xs font-bold tracking-[0.22em] uppercase rounded-2xl group cursor-pointer"
             >
               <MessageCircle className="w-5 h-5 text-[#071F16]" />
               <span>Chat Directly on WhatsApp ({settings.whatsappNumberDisplay})</span>
@@ -137,10 +144,10 @@ export const WhatsAppCTASection: React.FC = () => {
           </div>
 
           {/* Direct Phone & Email Fallback Contacts */}
-          <div className="pt-6 border-t border-[#16382A] flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-[#F5F0E6]/70 font-sans-clean">
+          <div className="pt-6 border-t border-[#16382A] flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-[#F5F0E6]/75 font-sans-clean">
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-[#B8954A]" />
-              <span>Instant Response Desk</span>
+              <ShieldCheck className="w-4 h-4 text-[#B8954A]" />
+              <span>Direct Inquiries Desk</span>
             </div>
 
             <a
@@ -160,7 +167,7 @@ export const WhatsAppCTASection: React.FC = () => {
             </a>
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>

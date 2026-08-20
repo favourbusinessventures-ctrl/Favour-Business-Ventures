@@ -22,12 +22,18 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
     <section id="featured-products-section" className="py-20 sm:py-28 bg-[#071F16] text-[#F5F0E6] relative overflow-hidden border-b border-[#16382A]">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#0D3325]/50 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-0 w-80 h-80 bg-[#B8954A]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-80 h-80 bg-[#B8954A]/8 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 relative z-10 space-y-12 sm:space-y-16">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#16382A]/80">
+        {/* Section Header with Scroll Trigger */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#16382A]/80"
+        >
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2.5">
               <span className="w-6 h-[1.5px] bg-[#B8954A]" />
@@ -41,20 +47,20 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
             </h2>
 
             <p className="text-sm sm:text-base text-[#F5F0E6]/75 font-sans-clean font-light leading-relaxed">
-              Carefully sorted and packaged to give your everyday cooking and celebration dishes authentic flavor and rich aroma.
+              Carefully sorted, hygienic, and packaged to give your everyday cooking and celebration dishes authentic flavor and rich aroma.
             </p>
           </div>
 
           <button
             onClick={() => onNavigate('products')}
-            className="btn-tactile inline-flex items-center gap-2 px-6 py-3 bg-[#0D3325] hover:bg-[#164936] text-[#F5F0E6] border border-[#16382A] hover:border-[#B8954A]/50 text-xs font-semibold tracking-[0.18em] uppercase rounded-lg cursor-pointer shrink-0 self-start md:self-auto"
+            className="btn-tactile inline-flex items-center gap-2 px-6 py-3.5 bg-[#0D3325] hover:bg-[#164936] text-[#F5F0E6] border border-[#16382A] hover:border-[#B8954A]/50 text-xs font-semibold tracking-[0.18em] uppercase rounded-xl cursor-pointer shrink-0 self-start md:self-auto shadow-md"
           >
             <span>View All Options</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#B8954A]" />
+            <ArrowRight className="w-4 h-4 text-[#B8954A]" />
           </button>
-        </div>
+        </motion.div>
 
-        {/* 2-Column Responsive Featured Grid */}
+        {/* 2-Column Responsive Featured Grid with Hover Lift & Subtle Zoom */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
           {featured.map((product, idx) => {
             const productWhatsAppUrl = buildWhatsAppUrl(
@@ -66,11 +72,11 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
               <motion.div
                 key={product.id}
                 id={`featured-card-${product.id}`}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: idx * 0.1 }}
-                className="bg-[#0D3325]/75 backdrop-blur-md border border-[#16382A] hover:border-[#B8954A]/40 rounded-xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group"
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.55, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                className="card-glass-hover bg-[#0D3325]/80 backdrop-blur-md border border-[#16382A] hover:border-[#B8954A]/50 rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between group"
               >
                 {/* Product Image Frame with Glass Tag */}
                 <div className="relative overflow-hidden bg-[#071F16] aspect-16/10">
@@ -84,12 +90,12 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                   />
                   
                   {/* Subtle Translucent Category Tag */}
-                  <div className="absolute top-4 left-4 bg-[#071F16]/85 backdrop-blur-sm px-3.5 py-1.5 rounded-md border border-[#B8954A]/40 text-[#F5F0E6] text-[9.5px] font-sans-clean font-semibold tracking-[0.25em] uppercase">
+                  <div className="absolute top-4 left-4 bg-[#071F16]/90 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-[#B8954A]/40 text-[#F5F0E6] text-[9.5px] font-sans-clean font-semibold tracking-[0.25em] uppercase shadow-md">
                     {product.category}
                   </div>
 
                   {/* Index Pill */}
-                  <div className="absolute top-4 right-4 bg-[#0D3325]/90 backdrop-blur-sm w-7 h-7 rounded-full border border-[#16382A] flex items-center justify-center text-[10px] font-editorial font-bold text-[#B8954A]">
+                  <div className="absolute top-4 right-4 bg-[#0D3325]/90 backdrop-blur-sm w-8 h-8 rounded-full border border-[#16382A] flex items-center justify-center text-[11px] font-editorial font-bold text-[#B8954A] shadow-md">
                     0{idx + 1}
                   </div>
                 </div>
@@ -97,7 +103,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                 {/* Card Body */}
                 <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
                   <div className="space-y-3">
-                    <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#F5F0E6] group-hover:text-[#B8954A] transition-colors">
+                    <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#F5F0E6] group-hover:text-[#B8954A] transition-colors leading-snug">
                       {product.name}
                     </h3>
                     
@@ -111,7 +117,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                         {product.highlights.slice(0, 3).map((hl, hIdx) => (
                           <span
                             key={hIdx}
-                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#071F16]/70 border border-[#16382A] rounded-full text-[10.5px] text-[#F5F0E6]/85 font-sans-clean"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#071F16]/80 border border-[#16382A] rounded-full text-[10.5px] text-[#F5F0E6]/90 font-sans-clean"
                           >
                             <Check className="w-3 h-3 text-[#B8954A]" />
                             {hl}
@@ -128,27 +134,28 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                         <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] text-[#B8954A]">
                           Available Portions / Cuts:
                         </span>
-                        <p className="text-xs text-[#F5F0E6]/60 font-sans-clean">
+                        <p className="text-xs text-[#F5F0E6]/65 font-sans-clean">
                           {product.options.map(opt => opt.name).join(' • ')}
                         </p>
                       </div>
                     )}
 
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+                      {/* WhatsApp CTA — Visual Focal Point */}
                       <a
                         href={productWhatsAppUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-tactile flex-1 inline-flex items-center justify-center gap-2.5 px-5 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.18em] uppercase rounded-lg shadow-md group/btn"
+                        className="btn-tactile btn-whatsapp-gold flex-1 inline-flex items-center justify-center gap-2.5 px-5 py-3.5 text-xs font-bold tracking-[0.18em] uppercase rounded-xl group/btn"
                       >
                         <MessageCircle className="w-4 h-4 text-[#071F16]" />
                         <span>Order on WhatsApp</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16]/80 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                       </a>
 
                       <button
                         onClick={() => onNavigate('products')}
-                        className="btn-tactile inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#071F16] hover:bg-[#16382A] text-[#F5F0E6] border border-[#16382A] hover:border-[#B8954A]/40 text-xs font-semibold tracking-[0.16em] uppercase rounded-lg cursor-pointer"
+                        className="btn-tactile inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#071F16] hover:bg-[#16382A] text-[#F5F0E6] border border-[#16382A] hover:border-[#B8954A]/40 text-xs font-semibold tracking-[0.16em] uppercase rounded-xl cursor-pointer"
                       >
                         <span>Details</span>
                       </button>

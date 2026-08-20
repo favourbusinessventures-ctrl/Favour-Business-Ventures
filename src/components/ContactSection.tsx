@@ -139,9 +139,9 @@ export const ContactSection: React.FC = () => {
               {/* Submit CTA */}
               <button
                 type="submit"
-                className="btn-tactile w-full inline-flex items-center justify-center gap-3 py-4 px-6 bg-[#071F16] hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/40 text-xs font-semibold tracking-[0.2em] uppercase shadow-md cursor-pointer group rounded-[2px]"
+                className="btn-tactile btn-whatsapp-gold w-full inline-flex items-center justify-center gap-3 py-4 px-6 text-[#071F16] text-xs font-bold tracking-[0.2em] uppercase shadow-lg cursor-pointer group rounded-xl"
               >
-                <Send className="w-4 h-4 text-[#B8954A]" />
+                <Send className="w-4 h-4 text-[#071F16]" />
                 <span>Send via WhatsApp ({settings.whatsappNumberDisplay})</span>
               </button>
 

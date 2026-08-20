@@ -143,7 +143,7 @@ export const GallerySection: React.FC = () => {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-tactile inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.2em] uppercase shadow-md shrink-0 rounded-[2px]"
+            className="btn-tactile btn-whatsapp-gold inline-flex items-center justify-center gap-3 px-8 py-4 text-[#071F16] text-xs font-bold tracking-[0.2em] uppercase shadow-lg shrink-0 rounded-xl"
           >
             <MessageCircle className="w-4 h-4 text-[#071F16]" />
             <span>Chat on WhatsApp</span>

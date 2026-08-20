@@ -71,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                 {settings.name}
               </span>
               <span className="text-[8.5px] sm:text-[9px] font-sans-clean font-semibold tracking-[0.32em] text-[#B8954A] uppercase">
-                Stockfish & Crayfish
+                Stockfish & Crayfish Provisions
               </span>
             </div>
           </button>
@@ -94,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                   {isActive && (
                     <motion.span
                       layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B8954A]"
+                      className="absolute bottom-0 left-0 w-full h-[2px] bg-[#B8954A] rounded-full"
                       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                     />
                   )}
@@ -109,11 +109,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tactile inline-flex items-center gap-2 px-5 py-2.5 bg-[#0D3325] hover:bg-[#164936] text-[#F5F0E6] border border-[#B8954A]/40 hover:border-[#B8954A] text-[10.5px] font-semibold tracking-[0.2em] uppercase shadow-sm group rounded-[2px]"
+              className="btn-tactile btn-whatsapp-gold inline-flex items-center gap-2 px-5 py-2.5 text-[#071F16] text-[10.5px] font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer shadow-md"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-[#B8954A]" />
+              <MessageCircle className="w-3.5 h-3.5 text-[#071F16]" />
               <span>Order</span>
-              <ArrowUpRight className="w-3 h-3 text-[#F5F0E6]/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
 
@@ -122,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-              className="w-11 h-11 flex items-center justify-center text-[#F5F0E6] hover:text-[#B8954A] transition-colors cursor-pointer rounded-[2px] border border-[#16382A] bg-[#0D3325]/50 focus:outline-none"
+              className="w-11 h-11 flex items-center justify-center text-[#F5F0E6] hover:text-[#B8954A] transition-colors cursor-pointer rounded-xl border border-[#16382A] bg-[#0D3325]/50 focus:outline-none"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -161,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.25, delay: idx * 0.04 }}
                       onClick={() => handleNavClick(item.id)}
-                      className={`w-full text-left py-4 px-4 flex items-center justify-between rounded-[2px] transition-all cursor-pointer min-h-[52px] ${
+                      className={`w-full text-left py-4 px-4 flex items-center justify-between rounded-xl transition-all cursor-pointer min-h-[52px] ${
                         isActive
                           ? 'bg-[#0D3325] border border-[#B8954A]/40 text-[#F5F0E6]'
                           : 'bg-transparent text-[#F5F0E6]/80 hover:bg-[#0D3325]/40 hover:text-[#F5F0E6]'
@@ -194,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-tactile w-full flex items-center justify-center gap-3 py-4 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-[0.2em] uppercase shadow-lg rounded-[2px]"
+                className="btn-tactile btn-whatsapp-gold w-full flex items-center justify-center gap-3 py-4 text-[#071F16] text-xs font-bold tracking-[0.2em] uppercase rounded-xl shadow-lg"
               >
                 <MessageCircle className="w-4 h-4 text-[#071F16]" />
                 <span>Order on WhatsApp</span>

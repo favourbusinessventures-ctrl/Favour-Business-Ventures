@@ -14,12 +14,10 @@ export const WhatsAppFloatingButton: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Direct WhatsApp Order"
-        className="btn-tactile flex items-center gap-2 px-4 py-2.5 bg-[#071F16]/95 hover:bg-[#0D3325] text-[#F5F0E6] border border-[#B8954A]/50 shadow-2xl backdrop-blur-xs group hover:border-[#B8954A] rounded-[2px]"
+        className="btn-tactile btn-whatsapp-gold flex items-center gap-2.5 px-4.5 py-3 rounded-full text-[#071F16] font-sans-clean font-bold text-xs tracking-[0.18em] uppercase group shadow-2xl"
       >
-        <MessageCircle className="w-4 h-4 text-[#B8954A] transition-transform group-hover:scale-110" />
-        <span className="text-[10px] font-sans-clean font-semibold tracking-[0.2em] uppercase text-[#F5F0E6]/90 group-hover:text-[#F5F0E6] transition-colors">
-          WhatsApp
-        </span>
+        <MessageCircle className="w-4 h-4 text-[#071F16] transition-transform group-hover:scale-110" />
+        <span>WhatsApp</span>
       </a>
     </div>
   );

@@ -59,18 +59,42 @@
   background: #B8954A;
 }
 
-/* Tactile app-like button feedback */
+/* Tactile app-like button feedback & WhatsApp focus */
 .btn-tactile {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
   min-height: 44px;
+  will-change: transform, box-shadow;
 }
 
 .btn-tactile:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
 }
 
 .btn-tactile:active {
-  transform: scale(0.98);
+  transform: scale(0.98) translateY(0);
+}
+
+/* WhatsApp high-conversion glowing CTA styling */
+.btn-whatsapp-gold {
+  background: linear-gradient(135deg, #C9A75E 0%, #B8954A 50%, #A68339 100%);
+  color: #071F16;
+  box-shadow: 0 4px 20px rgba(184, 149, 74, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-whatsapp-gold:hover {
+  background: linear-gradient(135deg, #D4B46E 0%, #C9A75E 50%, #B8954A 100%);
+  box-shadow: 0 6px 28px rgba(184, 149, 74, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Editorial card glassmorphic hover lift */
+.card-glass-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.card-glass-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.5), 0 0 20px -4px rgba(184, 149, 74, 0.15);
 }
 
 /* Editorial image zoom interaction */
@@ -80,7 +104,7 @@
 }
 
 .img-editorial-zoom:hover {
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 /* Smooth keyframes */
