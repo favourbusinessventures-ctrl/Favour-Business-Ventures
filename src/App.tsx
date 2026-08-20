@@ -8,6 +8,7 @@ import { StickyMobileOrderBar } from './components/StickyMobileOrderBar';
 import { BrandedLoader } from './components/BrandedLoader';
 import { CustomerCareFloatingButton, CustomerCareChatModal } from './components/CustomerCare';
 import { CustomerCareProvider, useCustomerCare } from './context/CustomerCareContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { HomeView } from './views/HomeView';
 import { ProductsView } from './views/ProductsView';
 import { AboutView } from './views/AboutView';
@@ -30,6 +31,7 @@ const StorefrontContent: React.FC<StorefrontContentProps> = ({
   isInitialLoading,
   onFinishLoading
 }) => {
+  const { isDark } = useTheme();
   const { setNavigationHandler } = useCustomerCare();
 
   useEffect(() => {
@@ -37,7 +39,9 @@ const StorefrontContent: React.FC<StorefrontContentProps> = ({
   }, [setNavigationHandler, onNavigate]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#071F16] text-[#F5F0E6] selection:bg-[#B8954A]/30 selection:text-[#F5F0E6]">
+    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
+      isDark ? 'bg-[#071F16] text-[#F5F0E6]' : 'bg-[#FFF9EF] text-[#071F16]'
+    } selection:bg-[#B8954A]/30 selection:text-[#F5F0E6]`}>
       
       {/* Branded Loading Screen on Initial Mount */}
       <BrandedLoader
@@ -142,18 +146,24 @@ export default function App() {
 
   // If URL indicates Admin portal, render isolated Admin Application
   if (isAdminRoute) {
-    return <AdminRoot onReturnToStore={handleReturnToStore} />;
+    return (
+      <ThemeProvider>
+        <AdminRoot onReturnToStore={handleReturnToStore} />
+      </ThemeProvider>
+    );
   }
 
   return (
-    <CustomerCareProvider>
-      <StorefrontContent
-        currentTab={currentTab}
-        onNavigate={handleNavigate}
-        onNavigateToAdmin={handleNavigateToAdmin}
-        isInitialLoading={isInitialLoading}
-        onFinishLoading={() => setIsInitialLoading(false)}
-      />
-    </CustomerCareProvider>
+    <ThemeProvider>
+      <CustomerCareProvider>
+        <StorefrontContent
+          currentTab={currentTab}
+          onNavigate={handleNavigate}
+          onNavigateToAdmin={handleNavigateToAdmin}
+          isInitialLoading={isInitialLoading}
+          onFinishLoading={() => setIsInitialLoading(false)}
+        />
+      </CustomerCareProvider>
+    </ThemeProvider>
   );
 }
