@@ -1,21 +1,25 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, ArrowUpRight, Package } from 'lucide-react';
+import { MessageCircle, ArrowUpRight, Package, FileText } from 'lucide-react';
 import { useLiveProducts } from '../hooks/useLiveProducts';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
+import { useTheme } from '../context/ThemeContext';
 import { getCustomOrderWhatsAppUrl } from '../utils/whatsapp';
 import { ProductDetail } from '../types';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 import { ProductCardSkeleton } from './ProductCardSkeleton';
 import { ProductDetailModal } from './ProductDetailModal';
+import { CustomerInquiryModal } from './CustomerInquiryModal';
 
 type CategoryFilter = 'all' | 'Stockfish' | 'Crayfish';
 
 export const ProductSection: React.FC = () => {
   const { products, loading } = useLiveProducts();
   const { settings } = useBusinessSettings();
+  const { isDark } = useTheme();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
   const [selectedProduct, setSelectedProduct] = useState<ProductDetail | null>(null);
+  const [inquiryProduct, setInquiryProduct] = useState<ProductDetail | null>(null);
 
   const filteredProducts = useMemo(() => {
     if (activeCategory === 'all') return products;
@@ -29,9 +33,13 @@ export const ProductSection: React.FC = () => {
   ];
 
   return (
-    <section id="products-section" className="bg-[#F5F0E6] text-[#071F16]">
+    <section id="products-section" className={`transition-colors duration-300 ${
+      isDark ? 'bg-[#071F16] text-[#F5F0E6]' : 'bg-[#F5F0E6] text-[#071F16]'
+    }`}>
       {/* ── Page Header ── */}
-      <div className="pt-14 sm:pt-20 pb-10 sm:pb-14 border-b border-[#E5DEC9]">
+      <div className={`pt-14 sm:pt-20 pb-10 sm:pb-14 border-b ${
+        isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+      }`}>
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
           <div className="max-w-2xl space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
@@ -40,11 +48,15 @@ export const ProductSection: React.FC = () => {
                 Our Products
               </span>
             </div>
-            <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#071F16] leading-[1.04]">
+            <h1 className={`font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.04] ${
+              isDark ? 'text-[#F5F0E6]' : 'text-[#071F16]'
+            }`}>
               Stockfish & Crayfish
             </h1>
-            <p className="text-sm sm:text-base text-[#6B7266] font-sans-clean font-light leading-relaxed">
-              Quality provisions for everyday cooking and special occasions. Browse our selection and order directly on WhatsApp.
+            <p className={`text-sm sm:text-base font-sans-clean font-light leading-relaxed ${
+              isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+            }`}>
+              Quality provisions for everyday cooking and special occasions. Browse our selection, make an inquiry, or order directly on WhatsApp.
             </p>
           </div>
         </div>
@@ -62,8 +74,12 @@ export const ProductSection: React.FC = () => {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`relative px-5 py-2.5 text-[11px] font-sans-clean font-semibold tracking-[0.15em] uppercase whitespace-nowrap rounded-lg transition-all duration-200 cursor-pointer min-h-[44px] flex items-center ${
                   isActive
-                    ? 'bg-[#071F16] text-[#F5F0E6] border border-[#071F16] shadow-sm'
-                    : 'bg-[#FFF9EF] border border-[#E5DEC9] text-[#6B7266] hover:text-[#071F16] hover:border-[#071F16]/30'
+                    ? isDark 
+                      ? 'bg-[#16382A] text-[#F5F0E6] border border-[#B8954A] shadow-sm'
+                      : 'bg-[#071F16] text-[#F5F0E6] border border-[#071F16] shadow-sm'
+                    : isDark
+                      ? 'bg-[#0D3325] border border-[#16382A] text-[#A3B899] hover:text-[#F5F0E6] hover:border-[#B8954A]/40'
+                      : 'bg-[#FFF9EF] border border-[#E5DEC9] text-[#6B7266] hover:text-[#071F16] hover:border-[#071F16]/30'
                 }`}
               >
                 {cat.label}
@@ -83,13 +99,19 @@ export const ProductSection: React.FC = () => {
         ) : filteredProducts.length === 0 ? (
           /* Empty state */
           <div className="flex flex-col items-center justify-center py-16 sm:py-24 text-center">
-            <div className="w-14 h-14 rounded-full bg-[#FFF9EF] border border-[#E5DEC9] flex items-center justify-center text-[#B8954A] mb-4">
+            <div className={`w-14 h-14 rounded-full border flex items-center justify-center text-[#B8954A] mb-4 ${
+              isDark ? 'bg-[#0D3325] border-[#16382A]' : 'bg-[#FFF9EF] border-[#E5DEC9]'
+            }`}>
               <Package className="w-6 h-6" />
             </div>
-            <h3 className="font-editorial text-xl font-bold text-[#071F16] mb-1">
+            <h3 className={`font-editorial text-xl font-bold mb-1 ${
+              isDark ? 'text-[#F5F0E6]' : 'text-[#071F16]'
+            }`}>
               No products available
             </h3>
-            <p className="text-sm text-[#6B7266] font-sans-clean font-light max-w-sm">
+            <p className={`text-sm font-sans-clean font-light max-w-sm ${
+              isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+            }`}>
               We're currently restocking our selection. Please check back shortly or contact us directly on WhatsApp.
             </p>
           </div>
@@ -120,7 +142,11 @@ export const ProductSection: React.FC = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                    className="bg-[#FFF9EF] border border-[#E5DEC9] rounded-xl overflow-hidden flex flex-col group hover:border-[#B8954A]/40 hover:shadow-[0_8px_30px_rgba(7,31,22,0.08)] transition-all duration-300"
+                    className={`border rounded-xl overflow-hidden flex flex-col group transition-all duration-300 ${
+                      isDark 
+                        ? 'bg-[#0D3325] border-[#16382A] hover:border-[#B8954A]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]'
+                        : 'bg-[#FFF9EF] border-[#E5DEC9] hover:border-[#B8954A]/40 hover:shadow-[0_8px_30px_rgba(7,31,22,0.08)]'
+                    }`}
                   >
                     {/* Product image — click opens detail modal */}
                     <button
@@ -132,7 +158,7 @@ export const ProductSection: React.FC = () => {
                         src={product.imageUrl}
                         alt={`${product.name} — ${product.subtitle}`}
                         aspectRatioClass="aspect-4/3"
-                        theme="light"
+                        theme={isDark ? 'dark' : 'light'}
                         priority={idx < 3}
                         className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                       />
@@ -146,10 +172,14 @@ export const ProductSection: React.FC = () => {
                     <div className="p-5 sm:p-6 flex flex-col flex-1 space-y-3">
                       {/* Title + subtitle */}
                       <div className="space-y-1">
-                        <h3 className="font-editorial text-lg sm:text-xl font-bold text-[#071F16] leading-tight">
+                        <h3 className={`font-editorial text-lg sm:text-xl font-bold leading-tight ${
+                          isDark ? 'text-[#F5F0E6]' : 'text-[#071F16]'
+                        }`}>
                           {product.name}
                         </h3>
-                        <p className="text-xs text-[#6B7266] font-sans-clean font-light leading-snug line-clamp-2">
+                        <p className={`text-xs font-sans-clean font-light leading-snug line-clamp-2 ${
+                          isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                        }`}>
                           {product.subtitle}
                         </p>
                       </div>
@@ -157,20 +187,24 @@ export const ProductSection: React.FC = () => {
                       {/* Availability indicator */}
                       <div className="flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        <span className="text-[10px] font-sans-clean font-medium text-emerald-700 uppercase tracking-wider">
+                        <span className="text-[10px] font-sans-clean font-medium text-emerald-400 uppercase tracking-wider">
                           Available
                         </span>
                       </div>
 
                       {/* Options preview */}
                       {product.options && product.options.length > 0 && (
-                        <p className="text-[11px] text-[#6B7266] font-sans-clean font-light leading-relaxed">
+                        <p className={`text-[11px] font-sans-clean font-light leading-relaxed ${
+                          isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
+                        }`}>
                           {product.options.length} formats: {product.options.map((o) => o.name).join(' • ')}
                         </p>
                       )}
 
-                      {/* Actions — primary: Order on WhatsApp, secondary: View Details */}
-                      <div className="flex flex-col sm:flex-row items-stretch gap-2 pt-3 mt-auto border-t border-[#E5DEC9]">
+                      {/* Actions — primary: Order on WhatsApp, secondary: Make Inquiry / Details */}
+                      <div className={`flex flex-col sm:flex-row items-stretch gap-2 pt-3 mt-auto border-t ${
+                        isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+                      }`}>
                         {/* Primary: Order on WhatsApp */}
                         <a
                           href={quickOrderUrl}
@@ -183,12 +217,30 @@ export const ProductSection: React.FC = () => {
                           <span>Order on WhatsApp</span>
                         </a>
 
-                        {/* Secondary: View Details */}
+                        {/* Secondary: Inquiry Modal */}
+                        <button
+                          onClick={() => setInquiryProduct(product)}
+                          title="Submit an order inquiry form"
+                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.12em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
+                            isDark
+                              ? 'bg-[#071F16] hover:bg-[#16382A] text-[#F5F0E6] border-[#16382A] hover:border-[#B8954A]/40'
+                              : 'bg-[#F5F0E6] hover:bg-[#071F16] text-[#071F16] hover:text-[#F5F0E6] border-[#E5DEC9] hover:border-[#071F16]'
+                          }`}
+                        >
+                          <FileText className="w-3 h-3 text-[#B8954A]" />
+                          <span>Inquire</span>
+                        </button>
+
+                        {/* Details */}
                         <button
                           onClick={() => setSelectedProduct(product)}
-                          className="btn-tactile sm:w-auto inline-flex items-center justify-center px-4 py-3 bg-[#F5F0E6] hover:bg-[#071F16] text-[#071F16] hover:text-[#F5F0E6] border border-[#E5DEC9] hover:border-[#071F16] text-[10px] font-sans-clean font-semibold tracking-[0.15em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px]"
+                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-3.5 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.12em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
+                            isDark
+                              ? 'bg-[#071F16] hover:bg-[#16382A] text-[#F5F0E6] border-[#16382A]'
+                              : 'bg-[#F5F0E6] hover:bg-[#071F16] text-[#071F16] hover:text-[#F5F0E6] border-[#E5DEC9]'
+                          }`}
                         >
-                          View Details
+                          Details
                         </button>
                       </div>
                     </div>
@@ -204,6 +256,19 @@ export const ProductSection: React.FC = () => {
       <ProductDetailModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
+      />
+
+      {/* Direct Customer Inquiry Modal */}
+      <CustomerInquiryModal
+        isOpen={!!inquiryProduct}
+        onClose={() => setInquiryProduct(null)}
+        initialData={inquiryProduct ? {
+          product: inquiryProduct,
+          productName: inquiryProduct.name,
+          category: inquiryProduct.category === 'Crayfish' ? 'crayfish' : 'stockfish',
+          option: inquiryProduct.options[0]?.name || 'Standard Format',
+          quantity: '1'
+        } : undefined}
       />
     </section>
   );

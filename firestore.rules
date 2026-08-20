@@ -54,10 +54,30 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Helper for validating public order/inquiry submissions
+    function isValidOrderCreate(data) {
+      return data.keys().hasAll(['customerName', 'customerPhone', 'productName', 'status', 'createdAt']) &&
+        data.customerName is string && data.customerName.size() >= 2 && data.customerName.size() <= 150 &&
+        data.customerPhone is string && data.customerPhone.size() >= 5 && data.customerPhone.size() <= 50 &&
+        data.productName is string && data.productName.size() <= 200 &&
+        (!('customerEmail' in data) || (data.customerEmail is string && data.customerEmail.size() <= 150)) &&
+        (!('category' in data) || (data.category is string && data.category.size() <= 50)) &&
+        (!('option' in data) || (data.option is string && data.option.size() <= 100)) &&
+        (!('quantity' in data) || (data.quantity is string && data.quantity.size() <= 50)) &&
+        (!('customerMessage' in data) || (data.customerMessage is string && data.customerMessage.size() <= 2000)) &&
+        (!('source' in data) || (data.source is string && data.source.size() <= 50)) &&
+        (!('updatedAt' in data) || data.updatedAt == request.time) &&
+        data.status in ['new', 'pending'] &&
+        data.createdAt == request.time;
+    }
+
     // 5. Orders Collection (Customer Privacy & Data Protection)
-    // - Customer records and inquiry logs: strictly admin-only
+    // - Customer records and inquiry logs: strictly admin-only for reading & updates
+    // - Public creation: verified safe schema submission
     match /orders/{orderId} {
-      allow read, write: if isAdmin();
+      allow read: if isAdmin();
+      allow create: if isValidId(orderId) && isValidOrderCreate(request.resource.data);
+      allow update, delete: if isAdmin();
     }
 
     // 6. Uploaded Images Collection

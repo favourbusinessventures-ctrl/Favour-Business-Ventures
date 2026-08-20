@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, Menu, X, ArrowUpRight } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
+import { useTheme } from '../context/ThemeContext';
+import { ThemeToggle } from './ThemeToggle';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
 interface NavbarProps {
@@ -12,6 +14,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
   const { settings } = useBusinessSettings();
+  const { isDark } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -54,9 +57,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
     <>
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-[#071F16]/95 backdrop-blur-md border-b border-[#16382A] shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-3 sm:py-3.5'
-            : 'bg-[#071F16] border-b border-[#16382A]/80 py-4 sm:py-4.5'
+          isDark
+            ? isScrolled
+              ? 'bg-[#071F16]/95 backdrop-blur-md border-b border-[#16382A] shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-3 sm:py-3.5'
+              : 'bg-[#071F16] border-b border-[#16382A]/80 py-4 sm:py-4.5'
+            : isScrolled
+              ? 'bg-[#FFF9EF]/95 backdrop-blur-md border-b border-[#E5DEC9] shadow-[0_8px_30px_rgba(7,31,22,0.06)] py-3 sm:py-3.5'
+              : 'bg-[#FFF9EF] border-b border-[#E5DEC9]/80 py-4 sm:py-4.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14 flex items-center justify-between">
@@ -67,7 +74,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             className="text-left group cursor-pointer focus:outline-none"
           >
             <div className="flex flex-col">
-              <span className="font-editorial text-lg sm:text-xl md:text-2xl font-bold tracking-[0.16em] text-[#F5F0E6] uppercase transition-colors group-hover:text-[#B8954A]">
+              <span className={`font-editorial text-lg sm:text-xl md:text-2xl font-bold tracking-[0.16em] uppercase transition-colors ${
+                isDark ? 'text-[#F5F0E6] group-hover:text-[#B8954A]' : 'text-[#071F16] group-hover:text-[#B8954A]'
+              }`}>
                 {settings.name}
               </span>
               <span className="text-[8.5px] sm:text-[9px] font-sans-clean font-semibold tracking-[0.32em] text-[#B8954A] uppercase">
@@ -86,8 +95,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                   onClick={() => handleNavClick(item.id)}
                   className={`text-[11px] font-medium uppercase tracking-[0.22em] transition-colors relative py-2 px-1 cursor-pointer focus:outline-none ${
                     isActive
-                      ? 'text-[#F5F0E6] font-semibold'
-                      : 'text-[#F5F0E6]/70 hover:text-[#F5F0E6]'
+                      ? isDark ? 'text-[#F5F0E6] font-semibold' : 'text-[#071F16] font-semibold'
+                      : isDark ? 'text-[#F5F0E6]/70 hover:text-[#F5F0E6]' : 'text-[#6B7266] hover:text-[#071F16]'
                   }`}
                 >
                   {item.label}
@@ -103,8 +112,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             })}
           </nav>
 
-          {/* Action CTA (Right Desktop) */}
-          <div className="hidden sm:flex items-center">
+          {/* Action CTA & Theme Toggle (Right Desktop) */}
+          <div className="hidden sm:flex items-center gap-3">
+            <ThemeToggle />
+
             <a
               href={whatsappUrl}
               target="_blank"
@@ -117,12 +128,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             </a>
           </div>
 
-          {/* Mobile Menu Toggle Button (Touch Target >= 44px) */}
-          <div className="flex md:hidden items-center">
+          {/* Mobile Actions (Toggle + Menu Button) */}
+          <div className="flex md:hidden items-center gap-2">
+            <ThemeToggle />
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-              className="w-11 h-11 flex items-center justify-center text-[#F5F0E6] hover:text-[#B8954A] transition-colors cursor-pointer rounded-xl border border-[#16382A] bg-[#0D3325]/50 focus:outline-none"
+              className={`w-11 h-11 flex items-center justify-center transition-colors cursor-pointer rounded-xl border focus:outline-none ${
+                isDark
+                  ? 'text-[#F5F0E6] hover:text-[#B8954A] border-[#16382A] bg-[#0D3325]/50'
+                  : 'text-[#071F16] hover:text-[#B8954A] border-[#E5DEC9] bg-[#FFF9EF]'
+              }`}
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -139,14 +156,22 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 top-[60px] z-40 bg-[#071F16]/98 backdrop-blur-lg flex flex-col justify-between p-6 sm:p-10 md:hidden border-t border-[#16382A] overflow-y-auto"
+            className={`fixed inset-0 top-[60px] z-40 backdrop-blur-lg flex flex-col justify-between p-6 sm:p-10 md:hidden border-t overflow-y-auto ${
+              isDark 
+                ? 'bg-[#071F16]/98 border-[#16382A] text-[#F5F0E6]' 
+                : 'bg-[#FFF9EF]/98 border-[#E5DEC9] text-[#071F16]'
+            }`}
           >
             <div className="space-y-6 pt-2">
-              <div className="flex items-center justify-between pb-3 border-b border-[#16382A]">
+              <div className={`flex items-center justify-between pb-3 border-b ${
+                isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+              }`}>
                 <span className="text-[10px] font-sans-clean font-semibold uppercase tracking-[0.32em] text-[#B8954A]">
                   Navigation Directory
                 </span>
-                <span className="text-[10px] font-sans-clean text-[#F5F0E6]/50 uppercase tracking-[0.2em]">
+                <span className={`text-[10px] font-sans-clean uppercase tracking-[0.2em] ${
+                  isDark ? 'text-[#F5F0E6]/50' : 'text-[#6B7266]'
+                }`}>
                   Favour Ventures
                 </span>
               </div>
@@ -163,8 +188,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                       onClick={() => handleNavClick(item.id)}
                       className={`w-full text-left py-4 px-4 flex items-center justify-between rounded-xl transition-all cursor-pointer min-h-[52px] ${
                         isActive
-                          ? 'bg-[#0D3325] border border-[#B8954A]/40 text-[#F5F0E6]'
-                          : 'bg-transparent text-[#F5F0E6]/80 hover:bg-[#0D3325]/40 hover:text-[#F5F0E6]'
+                          ? isDark 
+                            ? 'bg-[#0D3325] border border-[#B8954A]/40 text-[#F5F0E6]'
+                            : 'bg-[#F5F0E6] border border-[#B8954A]/40 text-[#071F16]'
+                          : isDark
+                            ? 'bg-transparent text-[#F5F0E6]/80 hover:bg-[#0D3325]/40 hover:text-[#F5F0E6]'
+                            : 'bg-transparent text-[#6B7266] hover:bg-[#F5F0E6] hover:text-[#071F16]'
                       }`}
                     >
                       <div className="flex items-center gap-4">
@@ -181,7 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                           Active
                         </span>
                       ) : (
-                        <ArrowUpRight className="w-4 h-4 text-[#F5F0E6]/40" />
+                        <ArrowUpRight className={`w-4 h-4 ${isDark ? 'text-[#F5F0E6]/40' : 'text-[#6B7266]/50'}`} />
                       )}
                     </motion.button>
                   );
@@ -189,7 +218,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
               </div>
             </div>
 
-            <div className="pt-6 pb-4 space-y-4 border-t border-[#16382A]">
+            <div className={`pt-6 pb-4 space-y-4 border-t ${
+              isDark ? 'border-[#16382A]' : 'border-[#E5DEC9]'
+            }`}>
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -200,7 +231,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                 <span>Order on WhatsApp</span>
               </a>
               <div className="text-center">
-                <span className="text-[11px] text-[#F5F0E6]/60 font-sans-clean">
+                <span className={`text-[11px] font-sans-clean ${
+                  isDark ? 'text-[#F5F0E6]/60' : 'text-[#6B7266]'
+                }`}>
                   Direct Line: {settings.whatsappNumberDisplay}
                 </span>
               </div>

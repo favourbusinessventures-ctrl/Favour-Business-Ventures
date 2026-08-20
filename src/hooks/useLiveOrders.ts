@@ -28,6 +28,24 @@ export function useLiveOrders(): UseLiveOrdersReturn {
           const list: AdminOrder[] = [];
           snapshot.forEach((doc) => {
             const data = doc.data();
+            const parseDate = (val: any): string => {
+              if (!val) return new Date().toISOString();
+              if (typeof val?.toDate === 'function') {
+                return val.toDate().toISOString();
+              }
+              if (val?.seconds) {
+                return new Date(val.seconds * 1000).toISOString();
+              }
+              if (typeof val === 'string') {
+                const parsed = new Date(val);
+                return isNaN(parsed.getTime()) ? new Date().toISOString() : parsed.toISOString();
+              }
+              return new Date().toISOString();
+            };
+
+            const createdStr = parseDate(data.createdAt);
+            const updatedStr = parseDate(data.updatedAt || data.createdAt);
+
             list.push({
               id: doc.id,
               customerName: data.customerName || 'Unknown Customer',
@@ -40,8 +58,8 @@ export function useLiveOrders(): UseLiveOrdersReturn {
               customerMessage: data.customerMessage || '',
               source: (data.source === 'whatsapp' ? 'whatsapp' : data.source === 'website' ? 'website' : 'admin'),
               status: (['new', 'contacted', 'confirmed', 'completed', 'cancelled'].includes(data.status) ? data.status : 'new'),
-              createdAt: data.createdAt || new Date().toISOString(),
-              updatedAt: data.updatedAt || data.createdAt || new Date().toISOString(),
+              createdAt: createdStr,
+              updatedAt: updatedStr,
             });
           });
 
