@@ -1,4 +1,3 @@
-```tsx
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -274,4 +273,3 @@ export const BrandedLoader: React.FC<BrandedLoaderProps> = ({
     </AnimatePresence>
   );
 };
-```
