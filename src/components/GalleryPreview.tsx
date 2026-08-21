@@ -18,21 +18,20 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
   const [activeModalItem, setActiveModalItem] = useState<GalleryItem | null>(null);
 
   const displayList = galleryItems && galleryItems.length > 0 ? galleryItems : GALLERY_ITEMS;
-  // Take up to 4 preview items for the homepage
   const previewItems = displayList.slice(0, 4);
 
   return (
-    <section 
-      id="gallery-preview-section" 
+    <section
+      id="gallery-preview-section"
       className={`py-20 sm:py-28 relative border-b transition-colors duration-300 ${
-        isDark 
-          ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]' 
+        isDark
+          ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]'
           : 'bg-[#FAFAFA] text-[#1A1A1A] border-[#E5E7EB]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 space-y-12 sm:space-y-16">
-        
-        {/* Section Header with Scroll Trigger */}
+
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -78,7 +77,7 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
           </button>
         </motion.div>
 
-        {/* Gallery Grid with Scroll Trigger & Card Hover Lift */}
+        {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {previewItems.map((item, idx) => (
             <motion.div
@@ -92,7 +91,7 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
               className={`card-glass-hover p-3.5 rounded-2xl group cursor-pointer flex flex-col justify-between border transition-all duration-300 ${
                 isDark
                   ? 'bg-[#0D3325]/75 backdrop-blur-md border-[#16382A] hover:border-[#B8954A]/50 shadow-xl'
-                  : 'bg-white border-[#E5E7EB] hover:border-[#1E5631]/40 shadow-sm'
+                  : 'bg-white border-[#E5E7EB] hover:border-[#1E5631]/40 shadow-sm hover:shadow-lg'
               }`}
             >
               {/* Image Frame */}
@@ -104,12 +103,12 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
                   alt={item.title}
                   aspectRatioClass="aspect-[4/3]"
                   theme={isDark ? 'dark' : 'light'}
-                  className="w-full h-full object-cover img-editorial-zoom group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover img-editorial-zoom group-hover:scale-105 transition-transform duration-700"
                 />
 
-                {/* Translucent Zoom Overlay */}
+                {/* Zoom Overlay */}
                 <div className="absolute inset-0 bg-[#071F16]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                  <span className="px-3.5 py-1.5 bg-[#071F16]/90 backdrop-blur-xs text-[#F5F0E6] text-[10px] font-sans-clean font-semibold tracking-[0.2em] uppercase rounded-lg border border-[#B8954A]/40 flex items-center gap-1.5 shadow-md">
+                  <span className="px-3.5 py-1.5 bg-[#071F16]/90 backdrop-blur-sm text-[#F5F0E6] text-[10px] font-sans-clean font-semibold tracking-[0.2em] uppercase rounded-lg border border-[#B8954A]/40 flex items-center gap-1.5 shadow-md">
                     <ZoomIn className="w-3.5 h-3.5 text-[#B8954A]" />
                     Expand
                   </span>
@@ -151,7 +150,7 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
 
       </div>
 
-      {/* Interactive Lightbox Modal */}
+      {/* Lightbox Modal */}
       {activeModalItem && (
         <GalleryModal
           item={activeModalItem}

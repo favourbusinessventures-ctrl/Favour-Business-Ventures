@@ -43,10 +43,10 @@ export const TrustValueStrip: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`backdrop-blur-md rounded-2xl p-5 sm:p-7 lg:p-8 transition-colors duration-300 border ${
-          isDark 
-            ? 'bg-[#0D3325]/90 border-[#16382A] shadow-2xl' 
-            : 'bg-white border-[#E5E7EB] shadow-lg'
+        className={`backdrop-blur-xl rounded-2xl p-5 sm:p-7 lg:p-8 transition-colors duration-300 border shadow-2xl ${
+          isDark
+            ? 'bg-[#0D3325]/90 border-[#16382A]'
+            : 'bg-white/95 border-[#E5E7EB] shadow-lg'
         }`}
       >
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x-0 lg:divide-x ${
@@ -63,13 +63,13 @@ export const TrustValueStrip: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className={`flex items-start gap-4 group ${
-                  index > 0 ? 'pt-4 sm:pt-0 lg:pl-6' : ''
+                  index > 0 ? 'pt-5 sm:pt-0 lg:pl-6' : ''
                 }`}
               >
                 {/* Icon Badge */}
-                <div className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 border shadow-xs ${
+                <div className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 border ${
                   isDark
-                    ? 'bg-[#071F16] border-[#B8954A]/30 text-[#B8954A] group-hover:border-[#B8954A]'
+                    ? 'bg-[#071F16] border-[#B8954A]/30 text-[#B8954A] group-hover:border-[#B8954A] group-hover:shadow-[0_0_16px_-2px_rgba(184,149,74,0.3)]'
                     : 'bg-[#FAFAFA] border-[#E5E7EB] text-[#1E5631] group-hover:border-[#1E5631] group-hover:bg-[#F3F4F6]'
                 }`}>
                   <Icon className="w-5 h-5 transition-transform group-hover:scale-110" />

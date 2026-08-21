@@ -18,11 +18,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
 
   return (
     <footer className={`border-t transition-colors duration-300 ${
-      isDark 
-        ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]' 
+      isDark
+        ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]'
         : 'bg-white text-[#1A1A1A] border-[#E5E7EB]'
     }`}>
-      
+
       {/* Upper Footer Action Banner */}
       <div className={`py-14 sm:py-18 border-b ${
         isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
             }`}>
               Stockfish & Crayfish Provisions
             </span>
-            <h3 className={`font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold ${
+            <h3 className={`font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight ${
               isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
             }`}>
               {settings.name}
@@ -51,8 +51,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
             target="_blank"
             rel="noopener noreferrer"
             className={`btn-tactile inline-flex items-center gap-3 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded-xl shadow-lg group shrink-0 cursor-pointer ${
-              isDark 
-                ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/50' 
+              isDark
+                ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/50'
                 : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white border border-[#1E5631]'
             }`}
           >
@@ -66,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
       {/* Main Links */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14 py-14 sm:py-18">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 lg:gap-12">
-          
+
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-3.5">
             <span className={`font-editorial text-2xl font-bold tracking-[0.1em] uppercase ${
