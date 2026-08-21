@@ -46,7 +46,14 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   });
 
   return (
-    <section id="customer-reviews-section" className={`relative overflow-hidden ${className}`}>
+    <section 
+      id="customer-reviews-section" 
+      className={`relative overflow-hidden transition-colors duration-300 ${
+        isDark 
+          ? 'bg-[#071F16] text-[#EDEDED] border-b border-[#16382A]' 
+          : 'bg-[#FAFAFA] text-[#1A1A1A] border-b border-[#E5E7EB]'
+      } ${className}`}
+    >
       {/* Background ambience */}
       {isDark ? (
         <>

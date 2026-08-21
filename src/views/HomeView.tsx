@@ -32,7 +32,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
       <GalleryPreview onNavigate={onNavigate} />
 
       {/* 6. CUSTOMER REVIEWS & RATINGS: Verified Customer Feedback & Write-a-Review System */}
-      <CustomerReviews className="py-20 sm:py-28 bg-[#071F16] border-b border-[#16382A]" />
+      <CustomerReviews className="py-20 sm:py-28" />
 
       {/* 7. WHATSAPP & DIRECT ORDER CTA: Immediate Ordering with Pre-Formatted Inquiries */}
       <WhatsAppCTASection />

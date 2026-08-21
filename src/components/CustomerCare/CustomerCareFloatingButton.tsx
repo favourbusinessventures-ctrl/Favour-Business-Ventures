@@ -8,7 +8,7 @@ export const CustomerCareFloatingButton: React.FC = () => {
   const { isDark } = useTheme();
 
   return (
-    <div className="fixed bottom-20 sm:bottom-6 right-5 sm:right-40 z-40">
+    <div className="fixed bottom-22 sm:bottom-6 right-4 sm:right-48 z-40">
       <button
         onClick={toggleAssistant}
         aria-label={isOpen ? "Close Customer Care" : "Open Customer Care Assistant"}
