@@ -1,19 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { ProductDetail } from '../types';
 import { PRODUCTS_DATA } from '../data/products';
 
-export function useLiveProducts(): { products: ProductDetail[]; loading: boolean } {
+export interface UseLiveProductsReturn {
+  products: ProductDetail[];
+  loading: boolean;
+  error: string | null;
+  refetch: () => void;
+}
+
+export function useLiveProducts(): UseLiveProductsReturn {
   const [products, setProducts] = useState<ProductDetail[]>(PRODUCTS_DATA);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [reloadCounter, setReloadCounter] = useState<number>(0);
+
+  const refetch = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    setReloadCounter((prev) => prev + 1);
+  }, []);
 
   useEffect(() => {
+    let unsubscribe: () => void = () => {};
+    let isMounted = true;
+
+    // Timeout safety to ensure loading never hangs indefinitely
+    const timeoutId = setTimeout(() => {
+      if (isMounted && loading) {
+        setLoading(false);
+      }
+    }, 4000);
+
     try {
       const q = query(collection(db, 'products'), where('status', '==', 'active'));
-      const unsubscribe = onSnapshot(
+      unsubscribe = onSnapshot(
         q,
         (snapshot) => {
+          if (!isMounted) return;
+          clearTimeout(timeoutId);
+
           if (!snapshot.empty) {
             const list: (ProductDetail & { displayOrder: number })[] = [];
             snapshot.forEach((doc) => {
@@ -40,21 +68,33 @@ export function useLiveProducts(): { products: ProductDetail[]; loading: boolean
           } else {
             setProducts(PRODUCTS_DATA);
           }
+          setError(null);
           setLoading(false);
         },
-        (error) => {
-          // Graceful fallback to verified static data if rules / network disconnect
-          console.warn('Live products fallback active:', error.message);
+        (err) => {
+          if (!isMounted) return;
+          clearTimeout(timeoutId);
+          // Graceful fallback to verified static data
+          console.warn('Live products fallback active:', err.message);
           setProducts(PRODUCTS_DATA);
+          setError(null); // Keep error non-blocking because verified static catalog is rendered
           setLoading(false);
         }
       );
-      return () => unsubscribe();
     } catch {
-      setProducts(PRODUCTS_DATA);
-      setLoading(false);
+      if (isMounted) {
+        clearTimeout(timeoutId);
+        setProducts(PRODUCTS_DATA);
+        setLoading(false);
+      }
     }
-  }, []);
 
-  return { products, loading };
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+      unsubscribe();
+    };
+  }, [reloadCounter]);
+
+  return { products, loading, error, refetch };
 }

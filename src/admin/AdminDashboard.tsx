@@ -17,7 +17,8 @@ import {
   ExternalLink,
   Lock,
   Star,
-  Headphones
+  Headphones,
+  Activity
 } from 'lucide-react';
 import { AdminTab } from './types';
 
@@ -356,7 +357,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
           
           {/* Action 1: Products */}
           <button
@@ -478,7 +479,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </button>
 
-          {/* Action 6: Settings */}
+          {/* Action 6: System Health Diagnostics */}
+          <button
+            onClick={() => onNavigateTab ? onNavigateTab('systemHealth') : handleQuickAction('System Health')}
+            className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[2px] bg-[#0D3325] flex items-center justify-center text-[#B8954A] group-hover:text-[#F5F0E6] transition-colors">
+                <Activity className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="text-xs font-sans-clean font-semibold text-[#F5F0E6]">
+                  Diagnostics
+                </div>
+                <div className="text-[10px] text-[#A3B899] font-sans-clean">
+                  System Health
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-[9px] font-sans-clean uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-[2px]">
+              <CheckCircle2 className="w-2.5 h-2.5" />
+              <span>Healthy</span>
+            </div>
+          </button>
+
+          {/* Action 7: Settings */}
           <button
             onClick={() => onNavigateTab ? onNavigateTab('settings') : handleQuickAction('Business Settings')}
             className="flex items-center justify-between p-4 rounded-[2px] bg-[#071F16] border border-[#B8954A]/40 hover:border-[#B8954A] transition-all text-left group cursor-pointer shadow-md"
@@ -518,9 +543,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   System Status & Security
                 </h3>
               </div>
-              <span className="text-[10px] font-sans-clean text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded-[2px] border border-emerald-800/40">
-                All Systems Operational
-              </span>
+              <button
+                type="button"
+                onClick={() => onNavigateTab && onNavigateTab('systemHealth')}
+                className="text-[10px] font-sans-clean text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 hover:bg-emerald-950/70 px-2 py-0.5 rounded-[2px] border border-emerald-800/40 cursor-pointer flex items-center gap-1 transition-colors"
+                title="View full diagnostic workspace"
+              >
+                <Activity className="w-3 h-3 text-emerald-400" />
+                <span>Diagnostics</span>
+              </button>
             </div>
 
             <div className="space-y-3">

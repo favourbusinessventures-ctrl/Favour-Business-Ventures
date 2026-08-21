@@ -10,21 +10,42 @@ export function useLiveReviews(productIdFilter?: string): {
   error: string | null;
   summary: RatingSummary;
   submitReview: (data: ReviewSubmissionData) => Promise<{ success: boolean; id?: string; error?: string }>;
+  refetch: () => void;
 } {
   const [firestoreReviews, setFirestoreReviews] = useState<CustomerReview[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState<number>(0);
+
+  const refetch = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    setReloadKey((prev) => prev + 1);
+  }, []);
 
   useEffect(() => {
+    let unsubscribe: () => void = () => {};
+    let isMounted = true;
+
+    // Timeout protection
+    const timeoutId = setTimeout(() => {
+      if (isMounted && loading) {
+        setLoading(false);
+      }
+    }, 4000);
+
     try {
       const q = query(
         collection(db, 'reviews'),
         where('status', '==', 'approved')
       );
 
-      const unsubscribe = onSnapshot(
+      unsubscribe = onSnapshot(
         q,
         (snapshot) => {
+          if (!isMounted) return;
+          clearTimeout(timeoutId);
+
           if (!snapshot.empty) {
             const list: CustomerReview[] = [];
             snapshot.forEach((doc) => {
@@ -50,22 +71,32 @@ export function useLiveReviews(productIdFilter?: string): {
           } else {
             setFirestoreReviews([]);
           }
+          setError(null);
           setLoading(false);
         },
         (err) => {
+          if (!isMounted) return;
+          clearTimeout(timeoutId);
           console.warn('Live reviews listening notice:', err.message);
-          setError(err.message);
+          setError(null); // Keep non-blocking due to curated fallback reviews
           setLoading(false);
         }
       );
-
-      return () => unsubscribe();
     } catch (err: any) {
-      console.warn('Error subscribing to reviews:', err);
-      setError(err?.message || 'Failed to initialize reviews');
-      setLoading(false);
+      if (isMounted) {
+        clearTimeout(timeoutId);
+        console.warn('Error subscribing to reviews:', err);
+        setError(null);
+        setLoading(false);
+      }
     }
-  }, []);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+      unsubscribe();
+    };
+  }, [reloadKey]);
 
   // Merged reviews: use Firestore reviews if available, otherwise fallback to curated initial reviews
   const allApprovedReviews = useMemo(() => {
@@ -143,5 +174,5 @@ export function useLiveReviews(productIdFilter?: string): {
     []
   );
 
-  return { reviews, loading, error, summary, submitReview };
+  return { reviews, loading, error, summary, submitReview, refetch };
 }

@@ -7,6 +7,7 @@ import {
   ShoppingBag, 
   Star,
   Headphones,
+  Activity,
   Settings, 
   Lock,
   ExternalLink,
@@ -76,6 +77,12 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       id: 'customerCare',
       label: 'Customer Care',
       icon: Headphones,
+      enabled: true
+    },
+    {
+      id: 'systemHealth',
+      label: 'System Health',
+      icon: Activity,
       enabled: true
     },
     {

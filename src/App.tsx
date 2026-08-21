@@ -15,6 +15,7 @@ import { AboutView } from './views/AboutView';
 import { GalleryView } from './views/GalleryView';
 import { ContactView } from './views/ContactView';
 import { AdminRoot } from './admin/AdminRoot';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 interface StorefrontContentProps {
   currentTab: NavigationTab;
@@ -57,22 +58,24 @@ const StorefrontContent: React.FC<StorefrontContentProps> = ({
 
       {/* Main Content View with Smooth App-Like Route Transition (350ms, cubic-bezier(0.22, 1, 0.36, 1)) */}
       <main className="flex-1 overflow-hidden pb-12 sm:pb-0">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full"
-          >
-            {currentTab === 'home' && <HomeView onNavigate={onNavigate} />}
-            {currentTab === 'products' && <ProductsView />}
-            {currentTab === 'about' && <AboutView />}
-            {currentTab === 'gallery' && <GalleryView />}
-            {currentTab === 'contact' && <ContactView />}
-          </motion.div>
-        </AnimatePresence>
+        <ErrorBoundary sectionName="Page Content">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentTab}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full"
+            >
+              {currentTab === 'home' && <HomeView onNavigate={onNavigate} />}
+              {currentTab === 'products' && <ProductsView />}
+              {currentTab === 'about' && <AboutView />}
+              {currentTab === 'gallery' && <GalleryView />}
+              {currentTab === 'contact' && <ContactView />}
+            </motion.div>
+          </AnimatePresence>
+        </ErrorBoundary>
       </main>
 
       {/* Footer */}
@@ -148,7 +151,9 @@ export default function App() {
   if (isAdminRoute) {
     return (
       <ThemeProvider>
-        <AdminRoot onReturnToStore={handleReturnToStore} />
+        <ErrorBoundary fallbackTitle="Admin Panel Notice" fallbackMessage="An error occurred while loading the admin workspace. Please refresh or return to the storefront.">
+          <AdminRoot onReturnToStore={handleReturnToStore} />
+        </ErrorBoundary>
       </ThemeProvider>
     );
   }

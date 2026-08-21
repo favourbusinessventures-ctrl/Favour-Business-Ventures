@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, ArrowUpRight, Package, FileText } from 'lucide-react';
+import { MessageCircle, ArrowUpRight, Package, FileText, RefreshCw } from 'lucide-react';
 import { useLiveProducts } from '../hooks/useLiveProducts';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { useTheme } from '../context/ThemeContext';
@@ -14,7 +14,7 @@ import { CustomerInquiryModal } from './CustomerInquiryModal';
 type CategoryFilter = 'all' | 'Stockfish' | 'Crayfish';
 
 export const ProductSection: React.FC = () => {
-  const { products, loading } = useLiveProducts();
+  const { products, loading, refetch } = useLiveProducts();
   const { settings } = useBusinessSettings();
   const { isDark } = useTheme();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
@@ -109,11 +109,19 @@ export const ProductSection: React.FC = () => {
             }`}>
               No products available
             </h3>
-            <p className={`text-sm font-sans-clean font-light max-w-sm ${
+            <p className={`text-sm font-sans-clean font-light max-w-sm mb-4 ${
               isDark ? 'text-[#A3B899]' : 'text-[#6B7266]'
             }`}>
               We're currently restocking our selection. Please check back shortly or contact us directly on WhatsApp.
             </p>
+            <button
+              type="button"
+              onClick={refetch}
+              className="btn-tactile inline-flex items-center gap-2 px-5 py-2.5 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-xs font-semibold tracking-wider uppercase rounded-xl transition-all cursor-pointer shadow-md"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Reload Products</span>
+            </button>
           </div>
         ) : (
           /* Actual product grid */

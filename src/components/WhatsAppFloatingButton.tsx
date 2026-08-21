@@ -8,7 +8,7 @@ export const WhatsAppFloatingButton: React.FC = () => {
   const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
-    <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40">
+    <div className="hidden sm:block fixed sm:bottom-6 sm:right-6 z-40">
       <a
         href={whatsappUrl}
         target="_blank"

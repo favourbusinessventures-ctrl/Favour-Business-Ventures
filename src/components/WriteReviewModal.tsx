@@ -3,6 +3,7 @@ import { Star, X, CheckCircle2, AlertCircle, Loader2, ShieldCheck, Sparkles } fr
 import { ReviewSubmissionData } from '../types';
 import { useLiveProducts } from '../hooks/useLiveProducts';
 import { useTheme } from '../context/ThemeContext';
+import { formatFriendlyError } from '../utils/errorUtils';
 
 interface WriteReviewModalProps {
   isOpen: boolean;
@@ -79,7 +80,8 @@ export const WriteReviewModal: React.FC<WriteReviewModalProps> = ({
     if (result.success) {
       setIsSuccess(true);
     } else {
-      setError(result.error || 'Failed to submit review. Please try again.');
+      const friendly = formatFriendlyError(result.error || 'Failed to submit review. Please try again.');
+      setError(friendly.message);
     }
   };
 
