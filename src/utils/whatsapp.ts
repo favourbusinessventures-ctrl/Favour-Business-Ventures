@@ -62,3 +62,36 @@ export function getCustomOrderWhatsAppUrl(details: {
 
   return buildWhatsAppUrl(lines.join('\n'), customNumber);
 }
+
+/**
+ * Helper to generate order message for multiple shopping cart items
+ */
+export function getCartOrderWhatsAppUrl(
+  items: Array<{
+    productName: string;
+    selectedOption: string;
+    quantity: number;
+    category?: string;
+  }>,
+  customNumber?: string,
+  customerNotes?: string
+): string {
+  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  const lines: string[] = [
+    `*NEW SHOPPING CART ORDER — FAVOUR BUSINESS VENTURES*`,
+    `----------------------------------------`,
+    `*Selected Provisions (${items.length} items / ${totalQuantity} packs):*`,
+    ...items.map((item, index) => `${index + 1}. *${item.productName}* (${item.selectedOption}) — Qty: *${item.quantity}*`),
+    `----------------------------------------`,
+  ];
+
+  if (customerNotes?.trim()) {
+    lines.push(`*Customer Notes / Destination:* ${customerNotes.trim()}`);
+    lines.push(`----------------------------------------`);
+  }
+
+  lines.push(`Hello, I would like to place this order. Please confirm current pricing, availability, and delivery/waybill arrangements.`);
+
+  return buildWhatsAppUrl(lines.join('\n'), customNumber);
+}

@@ -27,6 +27,7 @@ export interface InquiryInitialData {
   category?: 'stockfish' | 'crayfish';
   option?: string;
   quantity?: string;
+  notes?: string;
 }
 
 interface CustomerInquiryModalProps {
@@ -72,6 +73,9 @@ export const CustomerInquiryModal: React.FC<CustomerInquiryModalProps> = ({
       setSelectedOption(defaultOption);
 
       setQuantity(initialData?.quantity || '1');
+      if (initialData?.notes) {
+        setCustomerMessage(initialData.notes);
+      }
     }
   }, [isOpen, initialData, products]);
 

@@ -6,8 +6,10 @@ import { Footer } from './components/Footer';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { StickyMobileOrderBar } from './components/StickyMobileOrderBar';
 import { BrandedLoader } from './components/BrandedLoader';
+import { CartDrawer } from './components/CartDrawer';
 import { CustomerCareFloatingButton, CustomerCareChatModal } from './components/CustomerCare';
 import { CustomerCareProvider, useCustomerCare } from './context/CustomerCareContext';
+import { CartProvider } from './context/CartContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { HomeView } from './views/HomeView';
 import { ProductsView } from './views/ProductsView';
@@ -95,6 +97,9 @@ const StorefrontContent: React.FC<StorefrontContentProps> = ({
       {/* Interactive Customer Care Assistant Chat Modal */}
       <CustomerCareChatModal />
 
+      {/* Shopping Cart Drawer */}
+      <CartDrawer onNavigate={onNavigate} />
+
       {/* Sticky Mobile Order Action for Smartphones (Unobtrusive & Touch-Optimized) */}
       <StickyMobileOrderBar
         currentTab={currentTab}
@@ -161,13 +166,15 @@ export default function App() {
   return (
     <ThemeProvider>
       <CustomerCareProvider>
-        <StorefrontContent
-          currentTab={currentTab}
-          onNavigate={handleNavigate}
-          onNavigateToAdmin={handleNavigateToAdmin}
-          isInitialLoading={isInitialLoading}
-          onFinishLoading={() => setIsInitialLoading(false)}
-        />
+        <CartProvider>
+          <StorefrontContent
+            currentTab={currentTab}
+            onNavigate={handleNavigate}
+            onNavigateToAdmin={handleNavigateToAdmin}
+            isInitialLoading={isInitialLoading}
+            onFinishLoading={() => setIsInitialLoading(false)}
+          />
+        </CartProvider>
       </CustomerCareProvider>
     </ThemeProvider>
   );

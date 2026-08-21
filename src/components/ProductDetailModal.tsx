@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, MessageCircle, ArrowUpRight, Check, Minus, Plus, Star, MessageSquarePlus, Headphones, FileText } from 'lucide-react';
+import { X, MessageCircle, ArrowUpRight, Check, Minus, Plus, Star, MessageSquarePlus, Headphones, FileText, ShoppingBag } from 'lucide-react';
 import { ProductDetail, ProductOption } from '../types';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { useLiveReviews } from '../hooks/useLiveReviews';
 import { useCustomerCare } from '../context/CustomerCareContext';
 import { useTheme } from '../context/ThemeContext';
+import { useCart } from '../context/CartContext';
 import { WriteReviewModal } from './WriteReviewModal';
 import { CustomerInquiryModal } from './CustomerInquiryModal';
 import { getCustomOrderWhatsAppUrl } from '../utils/whatsapp';
@@ -21,18 +22,21 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
   const { isDark } = useTheme();
   const { reviews, summary, submitReview } = useLiveReviews(product?.id);
   const { openAssistant } = useCustomerCare();
+  const { addItem, openCart } = useCart();
   const [selectedOption, setSelectedOption] = useState<ProductOption>(
     product?.options[0] || { name: 'Standard Format', description: '' }
   );
   const [quantity, setQuantity] = useState<number>(1);
   const [isWriteModalOpen, setIsWriteModalOpen] = useState<boolean>(false);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState<boolean>(false);
+  const [isAddedFeedback, setIsAddedFeedback] = useState<boolean>(false);
 
   // Reset state when product changes
   useEffect(() => {
     if (product) {
       setSelectedOption(product.options[0] || { name: 'Standard Format', description: '' });
       setQuantity(1);
+      setIsAddedFeedback(false);
     }
   }, [product]);
 
@@ -52,6 +56,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
   }, [product, onClose, isWriteModalOpen, isInquiryModalOpen]);
 
   if (!product) return null;
+
+  const handleAddToCart = () => {
+    addItem(product, selectedOption.name, quantity);
+    setIsAddedFeedback(true);
+    setTimeout(() => {
+      setIsAddedFeedback(false);
+    }, 2800);
+  };
 
   const whatsappUrl = getCustomOrderWhatsAppUrl(
     {
@@ -344,37 +356,83 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   </div>
                 </div>
 
-                {/* Action Buttons: Inquiry Modal & WhatsApp */}
+                {/* Action Buttons: Add to Cart, Inquiry Modal & WhatsApp */}
                 <div className="space-y-2.5 pt-1">
-                  {/* Primary 1: Make Inquiry via Modal */}
-                  <button
-                    type="button"
-                    onClick={() => setIsInquiryModalOpen(true)}
-                    className={`btn-tactile w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs font-sans-clean font-bold tracking-[0.2em] uppercase rounded-xl transition-all cursor-pointer shadow-md ${
-                      isDark
-                        ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
-                        : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
-                    }`}
-                  >
-                    <FileText className="w-4 h-4" />
-                    <span>Make an Inquiry / Order</span>
-                  </button>
+                  {/* Primary 1: Add to Cart */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleAddToCart}
+                      className={`btn-tactile flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-4 text-xs font-sans-clean font-bold tracking-[0.2em] uppercase rounded-xl transition-all cursor-pointer shadow-md min-h-[48px] ${
+                        isAddedFeedback
+                          ? 'bg-emerald-600 text-white'
+                          : isDark
+                            ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
+                            : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                      }`}
+                    >
+                      {isAddedFeedback ? (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span>Added to Cart ({quantity}x)</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingBag className="w-4 h-4" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
 
-                  {/* Primary 2: Order on WhatsApp */}
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`btn-tactile w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs font-sans-clean font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer shadow-md ${
-                      isDark
-                        ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/50'
-                        : 'bg-[#25D366] hover:bg-[#20bd5a] text-white'
-                    }`}
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Order on WhatsApp</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
+                    {isAddedFeedback && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onClose();
+                          openCart();
+                        }}
+                        className={`btn-tactile inline-flex items-center justify-center px-4 py-4 text-xs font-sans-clean font-bold tracking-[0.15em] uppercase rounded-xl border transition-all cursor-pointer shadow-md min-h-[48px] ${
+                          isDark
+                            ? 'bg-[#16382A] text-[#B8954A] border-[#B8954A]'
+                            : 'bg-white text-[#1E5631] border-[#1E5631]'
+                        }`}
+                      >
+                        <span>View Cart</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* WhatsApp Quick Order & Inquiry Form */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-3 text-[11px] font-sans-clean font-bold tracking-[0.15em] uppercase rounded-xl group cursor-pointer border min-h-[44px] ${
+                        isDark
+                          ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
+                          : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40'
+                      }`}
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>WhatsApp Order</span>
+                      <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={() => setIsInquiryModalOpen(true)}
+                      className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-3 border text-[11px] font-sans-clean font-semibold tracking-[0.12em] uppercase rounded-xl transition-all cursor-pointer min-h-[44px] ${
+                        isDark
+                          ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/40'
+                          : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB]'
+                      }`}
+                    >
+                      <FileText className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
+                      <span>Inquiry Form</span>
+                    </button>
+                  </div>
 
                   {/* Secondary: Ask Customer Care */}
                   <button
@@ -383,7 +441,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                       onClose();
                       openAssistant(product);
                     }}
-                    className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 border text-xs font-sans-clean font-semibold tracking-[0.1em] rounded-xl transition-colors cursor-pointer ${
+                    className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 border text-xs font-sans-clean font-semibold tracking-[0.1em] rounded-xl transition-colors cursor-pointer min-h-[44px] ${
                       isDark
                         ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]'
                         : 'bg-[#F5F5F0] text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]'

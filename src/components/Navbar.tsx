@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, Menu, X, ArrowUpRight } from 'lucide-react';
+import { MessageCircle, Menu, X, ArrowUpRight, ShoppingBag } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { useTheme } from '../context/ThemeContext';
+import { useCart } from '../context/CartContext';
 import { ThemeToggle } from './ThemeToggle';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 
@@ -15,6 +16,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
   const { settings } = useBusinessSettings();
   const { isDark } = useTheme();
+  const { totalItems, openCart } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -118,11 +120,40 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
           <div className="hidden sm:flex items-center gap-3">
             <ThemeToggle />
 
+            {/* Shopping Cart Button */}
+            <button
+              onClick={openCart}
+              aria-label={`Open shopping cart with ${totalItems} items`}
+              className={`btn-tactile relative inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border transition-all cursor-pointer min-h-[44px] ${
+                isDark
+                  ? 'bg-[#0D3325] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
+                  : 'bg-white hover:bg-[#F5F5F0] text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40 shadow-xs'
+              }`}
+            >
+              <div className="relative">
+                <ShoppingBag className={`w-4 h-4 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
+                {totalItems > 0 && (
+                  <span
+                    className={`absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 text-[10px] font-sans-clean font-bold rounded-full flex items-center justify-center ${
+                      isDark
+                        ? 'bg-[#B8954A] text-[#071F16]'
+                        : 'bg-[#1E5631] text-white'
+                    }`}
+                  >
+                    {totalItems > 99 ? '99+' : totalItems}
+                  </span>
+                )}
+              </div>
+              <span className="text-[11px] font-sans-clean font-semibold uppercase tracking-[0.15em]">
+                Cart
+              </span>
+            </button>
+
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tactile btn-whatsapp-gold inline-flex items-center gap-2 px-5 py-2.5 text-[#071F16] text-[10.5px] font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer shadow-md"
+              className="btn-tactile btn-whatsapp-gold inline-flex items-center gap-2 px-5 py-2.5 text-[#071F16] text-[10.5px] font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer shadow-md min-h-[44px]"
             >
               <MessageCircle className="w-3.5 h-3.5 text-[#071F16]" />
               <span>Order</span>
@@ -130,8 +161,32 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
             </a>
           </div>
 
-          {/* Mobile Actions (Toggle + Menu Button) */}
+          {/* Mobile Actions (Cart + Toggle + Menu Button) */}
           <div className="flex md:hidden items-center gap-2 shrink-0">
+            {/* Mobile Cart Button */}
+            <button
+              onClick={openCart}
+              aria-label={`Open shopping cart with ${totalItems} items`}
+              className={`relative w-11 h-11 flex items-center justify-center transition-colors cursor-pointer rounded-xl border focus:outline-none ${
+                isDark
+                  ? 'text-[#EDEDED] hover:text-[#B8954A] border-[#16382A] bg-[#0D3325]/50'
+                  : 'text-[#1A1A1A] hover:text-[#1E5631] border-[#E5E7EB] bg-white shadow-xs'
+              }`}
+            >
+              <ShoppingBag className="w-5 h-5" />
+              {totalItems > 0 && (
+                <span
+                  className={`absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 text-[9.5px] font-sans-clean font-bold rounded-full flex items-center justify-center ${
+                    isDark
+                      ? 'bg-[#B8954A] text-[#071F16]'
+                      : 'bg-[#1E5631] text-white'
+                  }`}
+                >
+                  {totalItems > 99 ? '99+' : totalItems}
+                </span>
+              )}
+            </button>
+
             <ThemeToggle />
 
             <button
@@ -224,14 +279,38 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
               </div>
             </div>
 
-            <div className={`pt-6 pb-4 space-y-4 border-t ${
+            <div className={`pt-6 pb-4 space-y-3 border-t ${
               isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
             }`}>
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  openCart();
+                }}
+                className={`btn-tactile w-full flex items-center justify-between px-4 py-3.5 rounded-xl border font-sans-clean font-semibold text-xs tracking-[0.12em] uppercase transition-colors cursor-pointer min-h-[48px] ${
+                  isDark
+                    ? 'bg-[#0D3325] border-[#16382A] text-[#EDEDED] hover:border-[#B8954A]/50'
+                    : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A] hover:bg-white shadow-xs'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <ShoppingBag className={`w-4 h-4 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
+                  <span>View Shopping Cart</span>
+                </div>
+                <span
+                  className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold ${
+                    isDark ? 'bg-[#16382A] text-[#B8954A]' : 'bg-white text-[#1E5631] border border-[#E5E7EB]'
+                  }`}
+                >
+                  {totalItems} {totalItems === 1 ? 'item' : 'items'}
+                </span>
+              </button>
+
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-tactile btn-whatsapp-gold w-full flex items-center justify-center gap-3 py-4 text-[#071F16] text-xs font-bold tracking-[0.2em] uppercase rounded-xl shadow-lg"
+                className="btn-tactile btn-whatsapp-gold w-full flex items-center justify-center gap-3 py-4 text-[#071F16] text-xs font-bold tracking-[0.2em] uppercase rounded-xl shadow-lg min-h-[48px]"
               >
                 <MessageCircle className="w-4 h-4 text-[#071F16]" />
                 <span>Order on WhatsApp</span>

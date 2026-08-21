@@ -63,3 +63,15 @@ export interface RatingSummary {
     1: number;
   };
 }
+
+export interface CartItem {
+  id: string; // generated as `${productId}__${selectedOption}`
+  productId: string;
+  productName: string;
+  category: 'Stockfish' | 'Crayfish';
+  subtitle?: string;
+  imageUrl: string;
+  selectedOption: string;
+  quantity: number;
+  priceNote?: string;
+}

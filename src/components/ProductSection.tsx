@@ -1,15 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, ArrowUpRight, Package, FileText, RefreshCw } from 'lucide-react';
+import { MessageCircle, ArrowUpRight, Package, FileText, RefreshCw, ShoppingBag, Check } from 'lucide-react';
 import { useLiveProducts } from '../hooks/useLiveProducts';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { useTheme } from '../context/ThemeContext';
+import { useCart } from '../context/CartContext';
 import { getCustomOrderWhatsAppUrl } from '../utils/whatsapp';
 import { ProductDetail } from '../types';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 import { ProductCardSkeleton } from './ProductCardSkeleton';
 import { ProductDetailModal } from './ProductDetailModal';
 import { CustomerInquiryModal } from './CustomerInquiryModal';
+import { HowToOrderSection } from './HowToOrderSection';
 
 type CategoryFilter = 'all' | 'Stockfish' | 'Crayfish';
 
@@ -17,9 +19,20 @@ export const ProductSection: React.FC = () => {
   const { products, loading, refetch } = useLiveProducts();
   const { settings } = useBusinessSettings();
   const { isDark } = useTheme();
+  const { addItem } = useCart();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
   const [selectedProduct, setSelectedProduct] = useState<ProductDetail | null>(null);
   const [inquiryProduct, setInquiryProduct] = useState<ProductDetail | null>(null);
+  const [addedItemMap, setAddedItemMap] = useState<Record<string, boolean>>({});
+
+  const handleQuickAdd = (product: ProductDetail) => {
+    const defaultOption = product.options?.[0]?.name || 'Standard Cut';
+    addItem(product, defaultOption, 1);
+    setAddedItemMap((prev) => ({ ...prev, [product.id]: true }));
+    setTimeout(() => {
+      setAddedItemMap((prev) => ({ ...prev, [product.id]: false }));
+    }, 2400);
+  };
 
   const filteredProducts = useMemo(() => {
     if (activeCategory === 'all') return products;
@@ -215,40 +228,55 @@ export const ProductSection: React.FC = () => {
                         </p>
                       )}
 
-                      {/* Actions — primary: Order on WhatsApp, secondary: Make Inquiry / Details */}
+                      {/* Actions — primary: Add to Cart & WhatsApp, secondary: Details / Inquire */}
                       <div className={`flex flex-col sm:flex-row items-stretch gap-2 pt-3 mt-auto border-t ${
                         isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
                       }`}>
-                        {/* Primary: Order on WhatsApp */}
+                        {/* Primary: Quick Add to Cart */}
+                        <button
+                          type="button"
+                          onClick={() => handleQuickAdd(product)}
+                          className={`btn-tactile flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-3 text-[10.5px] font-sans-clean font-bold tracking-[0.14em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] shadow-sm ${
+                            addedItemMap[product.id]
+                              ? 'bg-emerald-600 text-white'
+                              : isDark
+                                ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
+                                : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                          }`}
+                        >
+                          {addedItemMap[product.id] ? (
+                            <>
+                              <Check className="w-3.5 h-3.5" />
+                              <span>Added</span>
+                            </>
+                          ) : (
+                            <>
+                              <ShoppingBag className="w-3.5 h-3.5" />
+                              <span>Add to Cart</span>
+                            </>
+                          )}
+                        </button>
+
+                        {/* WhatsApp Direct Order */}
                         <a
                           href={quickOrderUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Order ${product.name} on WhatsApp`}
-                          className="btn-tactile flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16] text-[10px] font-sans-clean font-bold tracking-[0.15em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] shadow-sm"
-                        >
-                          <MessageCircle className="w-3.5 h-3.5" />
-                          <span>Order on WhatsApp</span>
-                        </a>
-
-                        {/* Secondary: Inquiry Modal */}
-                        <button
-                          onClick={() => setInquiryProduct(product)}
-                          title="Submit an order inquiry form"
-                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.12em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
+                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
                             isDark
                               ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/40'
                               : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]'
                           }`}
                         >
-                          <FileText className={`w-3 h-3 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
-                          <span>Inquire</span>
-                        </button>
+                          <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
+                          <span>WhatsApp</span>
+                        </a>
 
                         {/* Details */}
                         <button
                           onClick={() => setSelectedProduct(product)}
-                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-3.5 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.12em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
+                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-3 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
                             isDark
                               ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A]'
                               : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB]'
@@ -264,6 +292,11 @@ export const ProductSection: React.FC = () => {
             </motion.div>
           </AnimatePresence>
         )}
+
+        {/* How to Order Compact Guide Strip */}
+        <div className="pt-12 sm:pt-16">
+          <HowToOrderSection />
+        </div>
       </div>
 
       {/* Product Detail Modal */}

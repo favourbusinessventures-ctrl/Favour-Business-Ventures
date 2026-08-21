@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { MessageCircle, ArrowUpRight, ArrowRight, Check } from 'lucide-react';
+import { MessageCircle, ArrowUpRight, ArrowRight, Check, ShoppingBag } from 'lucide-react';
 import { useLiveProducts } from '../hooks/useLiveProducts';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { useTheme } from '../context/ThemeContext';
+import { useCart } from '../context/CartContext';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 import { NavigationTab } from '../types';
@@ -16,6 +17,15 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
   const { products } = useLiveProducts();
   const { settings } = useBusinessSettings();
   const { isDark } = useTheme();
+  const { addItem, recentlyAddedId } = useCart();
+  const [addedItem, setAddedItem] = useState<string | null>(null);
+
+  const handleQuickAdd = (product: typeof products[0]) => {
+    const defaultOption = product.options?.[0]?.name || 'Standard Cut';
+    addItem(product, defaultOption, 1);
+    setAddedItem(product.id);
+    setTimeout(() => setAddedItem(null), 2400);
+  };
 
   // Filter or take the 2 main featured provisions (Stockfish and Crayfish)
   const featured = products.slice(0, 2);
@@ -200,25 +210,55 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                       </div>
                     )}
 
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
-                      {/* WhatsApp CTA — Visual Focal Point */}
+                    <div className="flex flex-col sm:flex-row items-stretch gap-2.5 pt-1">
+                      {/* Quick Add to Cart Button */}
+                      <button
+                        type="button"
+                        onClick={() => handleQuickAdd(product)}
+                        className={`btn-tactile flex-1 inline-flex items-center justify-center gap-2 px-4 py-3.5 text-xs font-sans-clean font-bold tracking-[0.16em] uppercase rounded-xl transition-all cursor-pointer shadow-sm min-h-[44px] ${
+                          addedItem === product.id
+                            ? 'bg-emerald-600 text-white'
+                            : isDark
+                              ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
+                              : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                        }`}
+                      >
+                        {addedItem === product.id ? (
+                          <>
+                            <Check className="w-4 h-4" />
+                            <span>Added to Cart</span>
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingBag className="w-4 h-4" />
+                            <span>Add to Cart</span>
+                          </>
+                        )}
+                      </button>
+
+                      {/* WhatsApp CTA */}
                       <a
                         href={productWhatsAppUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-tactile btn-whatsapp-gold flex-1 inline-flex items-center justify-center gap-2.5 px-5 py-3.5 text-xs font-bold tracking-[0.18em] uppercase rounded-xl group/btn cursor-pointer"
+                        className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 text-xs font-sans-clean font-bold tracking-[0.14em] uppercase rounded-xl group/btn cursor-pointer border min-h-[44px] ${
+                          isDark
+                            ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
+                            : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40 shadow-xs'
+                        }`}
                       >
-                        <MessageCircle className="w-4 h-4 text-[#071F16]" />
-                        <span>Order on WhatsApp</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-[#071F16] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>WhatsApp</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                       </a>
 
+                      {/* Details button */}
                       <button
                         onClick={() => onNavigate('products')}
-                        className={`btn-tactile inline-flex items-center justify-center gap-2 px-5 py-3.5 text-xs font-semibold tracking-[0.16em] uppercase rounded-xl cursor-pointer border ${
+                        className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-4 py-3.5 text-xs font-sans-clean font-semibold tracking-[0.14em] uppercase rounded-xl cursor-pointer border min-h-[44px] ${
                           isDark
-                            ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/40'
-                            : 'bg-[#F5F5F0] hover:bg-[#E5E7EB] text-[#1A1A1A] border-[#E5E7EB]'
+                            ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A]'
+                            : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB]'
                         }`}
                       >
                         <span>Details</span>
