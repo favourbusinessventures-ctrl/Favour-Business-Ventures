@@ -55,7 +55,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
             <ImageWithPlaceholder
               src={product.imageUrl}
               alt={`${product.name} - ${selectedOption.name}`}
-              aspectRatioClass="aspect-16/11 sm:aspect-4/3"
+              aspectRatioClass="aspect-[16/11] sm:aspect-[4/3]"
               theme={theme}
               className="w-full h-full object-cover object-center img-editorial-zoom"
             />

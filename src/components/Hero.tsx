@@ -185,13 +185,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             }`}>
               
               {/* Product Hero Image */}
-              <div className={`relative overflow-hidden rounded-xl aspect-16/11 ${
+              <div className={`relative overflow-hidden rounded-xl aspect-[16/11] ${
                 isDark ? 'bg-[#071F16]' : 'bg-[#F5F5F0]'
               }`}>
                 <ImageWithPlaceholder
                   src={heroImg}
                   alt="Authentic Stockfish and Clean Sun-Dried Crayfish"
-                  aspectRatioClass="aspect-16/11"
+                  aspectRatioClass="aspect-[16/11]"
                   theme={isDark ? 'dark' : 'light'}
                   priority={true}
                   className="w-full h-full object-cover object-center img-editorial-zoom"

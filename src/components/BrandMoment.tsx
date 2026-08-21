@@ -69,7 +69,7 @@ export const BrandMoment: React.FC = () => {
             
             {/* Primary Overlapping Frame */}
             <div className="p-3 sm:p-4 bg-[#0D3325] border border-[#16382A] shadow-2xl relative">
-              <div className="aspect-4/5 overflow-hidden bg-[#071F16]">
+              <div className="aspect-[4/5] overflow-hidden bg-[#071F16]">
                 <img
                   src={stockfishCutsImg}
                   alt="Stockfish quality cuts"

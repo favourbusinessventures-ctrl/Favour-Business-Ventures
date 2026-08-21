@@ -107,7 +107,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   <ImageWithPlaceholder
                     src={product.imageUrl}
                     alt={`${product.name} — premium quality`}
-                    aspectRatioClass="aspect-4/3"
+                    aspectRatioClass="aspect-[4/3]"
                     theme={isDark ? 'dark' : 'light'}
                     priority={true}
                     className="w-full h-full object-cover"

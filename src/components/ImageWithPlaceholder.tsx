@@ -13,7 +13,7 @@ interface ImageWithPlaceholderProps extends React.ImgHTMLAttributes<HTMLImageEle
 export const ImageWithPlaceholder: React.FC<ImageWithPlaceholderProps> = ({
   src,
   alt,
-  aspectRatioClass = 'aspect-4/3',
+  aspectRatioClass = 'aspect-[4/3]',
   theme = 'light',
   containerClassName = '',
   priority = false,

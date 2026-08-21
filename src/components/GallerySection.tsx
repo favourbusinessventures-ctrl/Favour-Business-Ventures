@@ -64,8 +64,8 @@ export const GallerySection: React.FC = () => {
         {/* Editorial Photo Campaign Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredItems.map((item, index) => {
-            let aspectClass = 'aspect-4/3';
-            if (item.aspect === 'portrait') aspectClass = 'aspect-3/4 sm:aspect-4/5';
+            let aspectClass = 'aspect-[4/3]';
+            if (item.aspect === 'portrait') aspectClass = 'aspect-[3/4] sm:aspect-[4/5]';
             if (item.aspect === 'square') aspectClass = 'aspect-square';
 
             const subtleCaption = item.category === 'stockfish'

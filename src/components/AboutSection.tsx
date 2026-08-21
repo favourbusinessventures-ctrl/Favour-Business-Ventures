@@ -83,7 +83,7 @@ export const AboutSection: React.FC = () => {
                 <ImageWithPlaceholder
                   src={stockfishBaleImg}
                   alt="Stockfish provisions by Favour Business Ventures"
-                  aspectRatioClass="aspect-4/3 sm:aspect-5/4"
+                  aspectRatioClass="aspect-[4/3] sm:aspect-[5/4]"
                   theme={isDark ? 'dark' : 'light'}
                   className="w-full h-full object-cover object-center img-editorial-zoom"
                 />

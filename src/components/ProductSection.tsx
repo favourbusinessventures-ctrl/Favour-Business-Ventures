@@ -157,7 +157,7 @@ export const ProductSection: React.FC = () => {
                       <ImageWithPlaceholder
                         src={product.imageUrl}
                         alt={`${product.name} — ${product.subtitle}`}
-                        aspectRatioClass="aspect-4/3"
+                        aspectRatioClass="aspect-[4/3]"
                         theme={isDark ? 'dark' : 'light'}
                         priority={idx < 3}
                         className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"

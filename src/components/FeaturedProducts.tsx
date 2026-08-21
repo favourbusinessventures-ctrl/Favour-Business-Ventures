@@ -113,13 +113,13 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                 }`}
               >
                 {/* Product Image Frame with Glass Tag */}
-                <div className={`relative overflow-hidden aspect-16/10 ${
+                <div className={`relative overflow-hidden aspect-[16/10] ${
                   isDark ? 'bg-[#071F16]' : 'bg-[#F5F5F0]'
                 }`}>
                   <ImageWithPlaceholder
                     src={product.imageUrl}
                     alt={product.name}
-                    aspectRatioClass="aspect-16/10"
+                    aspectRatioClass="aspect-[16/10]"
                     theme={isDark ? 'dark' : 'light'}
                     priority={idx === 0}
                     className="w-full h-full object-cover object-center img-editorial-zoom group-hover:scale-105 transition-transform duration-500"

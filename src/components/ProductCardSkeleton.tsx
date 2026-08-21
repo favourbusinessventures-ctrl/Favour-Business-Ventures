@@ -4,7 +4,7 @@ export const ProductCardSkeleton: React.FC = () => {
   return (
     <div className="bg-[#FFF9EF] border border-[#E5DEC9] rounded-xl overflow-hidden">
       {/* Image skeleton */}
-      <div className="aspect-4/3 bg-[#EFE9DC] animate-pulse" />
+      <div className="aspect-[4/3] bg-[#EFE9DC] animate-pulse" />
       {/* Content skeleton */}
       <div className="p-5 sm:p-6 space-y-3">
         <div className="h-3 w-20 bg-[#E5DEC9] rounded animate-pulse" />

@@ -96,13 +96,13 @@ export const GalleryPreview: React.FC<GalleryPreviewProps> = ({ onNavigate }) =>
               }`}
             >
               {/* Image Frame */}
-              <div className={`relative overflow-hidden rounded-xl aspect-4/3 ${
+              <div className={`relative overflow-hidden rounded-xl aspect-[4/3] ${
                 isDark ? 'bg-[#071F16]' : 'bg-[#F5F5F0]'
               }`}>
                 <ImageWithPlaceholder
                   src={item.imageUrl}
                   alt={item.title}
-                  aspectRatioClass="aspect-4/3"
+                  aspectRatioClass="aspect-[4/3]"
                   theme={isDark ? 'dark' : 'light'}
                   className="w-full h-full object-cover img-editorial-zoom group-hover:scale-105 transition-transform duration-500"
                 />
