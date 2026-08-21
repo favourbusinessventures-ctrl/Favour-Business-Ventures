@@ -1,12 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { MessageCircle, ArrowRight, ArrowUpRight, Sparkles, ShieldCheck } from 'lucide-react';
+import { MessageCircle, ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
 import { useTheme } from '../context/ThemeContext';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
-import { heroImg, crayfishWholeImg } from '../data/products';
+import { heroImg } from '../data/products';
 import { NavigationTab } from '../types';
-import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 
 interface HeroProps {
   onNavigate: (tab: NavigationTab) => void;
@@ -18,251 +17,157 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
 
   return (
-    <section 
-      id="hero-section" 
-      className={`relative overflow-hidden pt-8 pb-16 sm:pt-12 sm:pb-24 lg:pb-32 border-b transition-colors duration-300 ${
-        isDark 
-          ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]' 
-          : 'bg-[#FAFAFA] text-[#1A1A1A] border-[#E5E7EB]'
-      }`}
+    <section
+      id="hero-section"
+      className="relative overflow-hidden min-h-[100svh] flex flex-col"
     >
-      {/* Subtle Atmospheric Depth Glows */}
-      {isDark ? (
-        <>
-          <div className="absolute top-0 right-1/4 w-[38rem] h-[38rem] bg-[#0D3325]/70 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute top-1/3 -left-20 w-88 h-88 bg-[#B8954A]/12 rounded-full blur-3xl pointer-events-none" />
-        </>
-      ) : (
-        <>
-          <div className="absolute top-0 right-1/4 w-[32rem] h-[32rem] bg-[#1E5631]/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute top-1/3 -left-20 w-72 h-72 bg-[#8A9A5B]/10 rounded-full blur-3xl pointer-events-none" />
-        </>
-      )}
+      {/* Full-width background photo */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={heroImg}
+          alt="Premium stockfish and sun-dried crayfish provisions"
+          className="w-full h-full object-cover object-center"
+          loading="eager"
+          decoding="sync"
+          referrerPolicy="no-referrer"
+        />
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 relative z-10 space-y-8 sm:space-y-10">
-        
-        {/* Editorial Masthead Pill */}
-        <motion.div 
+      {/* Left-side gradient overlay for text readability — covers left ~55% on desktop, full width on mobile */}
+      <div
+        className={`absolute inset-0 z-10 pointer-events-none ${
+          isDark
+            ? 'bg-gradient-to-r from-[#071F16] via-[#071F16]/85 to-transparent'
+            : 'bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/80 to-transparent'
+        }`}
+      />
+
+      {/* Mobile: full-width bottom gradient for stacked layout readability */}
+      <div
+        className={`absolute inset-0 z-10 pointer-events-none lg:hidden ${
+          isDark
+            ? 'bg-gradient-to-t from-[#071F16] via-[#071F16]/60 to-transparent'
+            : 'bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/50 to-transparent'
+        }`}
+      />
+
+      {/* Content layer */}
+      <div className="relative z-20 flex-1 flex flex-col justify-between max-w-7xl w-full mx-auto px-4 sm:px-8 lg:px-14 pt-6 sm:pt-10 pb-8 sm:pb-12">
+
+        {/* Top: Brand wordmark with drop shadow for contrast against photo */}
+        <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className={`flex items-center justify-between gap-3 sm:gap-4 py-2 px-4 rounded-full max-w-fit border shadow-sm backdrop-blur-md ${
-            isDark
-              ? 'bg-[#0D3325]/80 border-[#16382A] text-[#EDEDED]'
-              : 'bg-white/90 border-[#E5E7EB] text-[#1A1A1A]'
-          }`}
+          className="flex flex-col gap-1 max-w-md"
         >
-          <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
-            <span className={`text-[10px] sm:text-[11px] font-sans-clean font-semibold tracking-[0.25em] uppercase ${
-              isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
-            }`}>
-              FAVOUR BUSINESS VENTURES
-            </span>
-          </div>
-
-          <span className={isDark ? 'text-[#16382A]' : 'text-[#E5E7EB]'}>•</span>
-
-          <div className={`text-[10px] sm:text-[10.5px] font-sans-clean font-medium tracking-wider uppercase ${
-            isDark ? 'text-[#EDEDED]/80' : 'text-[#525252]'
-          }`}>
-            Direct Provisions Desk
-          </div>
+          <span
+            className={`font-editorial text-lg sm:text-2xl md:text-3xl font-bold tracking-[0.12em] sm:tracking-[0.16em] uppercase leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] ${
+              isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+            }`}
+          >
+            {settings.name}
+          </span>
+          <span className="text-[8px] sm:text-[10px] font-sans-clean font-semibold tracking-[0.24em] sm:tracking-[0.32em] uppercase text-[#C9A15A] drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+            Stockfish & Crayfish Provisions
+          </span>
         </motion.div>
 
-        {/* 2-Column Responsive Layout: Text on Left / Showcase on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          
-          {/* Left Column (6 Cols Desktop) */}
-          <div className="lg:col-span-6 space-y-6 sm:space-y-8">
-            
-            {/* Main Headline */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-3 sm:space-y-4"
-            >
-              <h1 className={`font-editorial text-4xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-bold leading-[0.98] tracking-tight ${
-                isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
-              }`}>
-                PREMIUM STOCKFISH & <br />
-                <span className={`italic font-normal ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`}>
-                  SUN-DRIED CRAYFISH.
-                </span>
-              </h1>
-              
-              <div className={`w-24 h-[2px] ${
-                isDark 
-                  ? 'bg-gradient-to-r from-[#B8954A] to-transparent' 
-                  : 'bg-gradient-to-r from-[#1E5631] to-transparent'
-              }`} />
-            </motion.div>
-
-            {/* Short Supporting Copy */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-3.5 max-w-lg"
-            >
-              <p className={`text-base sm:text-lg font-sans-clean font-light leading-relaxed ${
-                isDark ? 'text-[#EDEDED]/85' : 'text-[#525252]'
-              }`}>
-                Hand-selected, thoroughly cleaned, and delivered with dependable quality for everyday family cooking, caterers, and festive feasts.
-              </p>
-
-              {/* Quality Badges */}
-              <div className="flex flex-wrap gap-2.5 pt-1">
-                <span className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans-clean border shadow-xs backdrop-blur-xs ${
-                  isDark 
-                    ? 'bg-[#0D3325]/90 border-[#16382A] text-[#EDEDED]/90' 
-                    : 'bg-white border-[#E5E7EB] text-[#1A1A1A]'
-                }`}>
-                  <ShieldCheck className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
-                  Zero Sand or Debris
-                </span>
-                <span className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans-clean border shadow-xs backdrop-blur-xs ${
-                  isDark 
-                    ? 'bg-[#0D3325]/90 border-[#16382A] text-[#EDEDED]/90' 
-                    : 'bg-white border-[#E5E7EB] text-[#1A1A1A]'
-                }`}>
-                  <Sparkles className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
-                  Rich Natural Aroma
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Primary and Secondary CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2"
-            >
-              {/* Primary WhatsApp Order CTA */}
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-tactile btn-whatsapp-gold inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4 text-[#071F16]" />
-                <span>Chat on WhatsApp</span>
-                <ArrowUpRight className="w-4 h-4 text-[#071F16] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
-
-              {/* Secondary Navigation CTA */}
-              <button
-                onClick={() => onNavigate('products')}
-                className={`btn-tactile inline-flex items-center justify-center gap-2.5 px-7 py-4 text-xs font-semibold tracking-[0.18em] uppercase rounded-xl backdrop-blur-sm group cursor-pointer border shadow-sm ${
-                  isDark
-                    ? 'bg-[#0D3325]/90 hover:bg-[#164936] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
-                    : 'bg-white hover:bg-[#F5F5F0] text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40'
-                }`}
-              >
-                <span>Shop Products</span>
-                <ArrowRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${
-                  isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
-                }`} />
-              </button>
-            </motion.div>
-
-          </div>
-
-          {/* Right Column (6 Cols Desktop) — Showcase */}
+        {/* Middle: Headline + tagline + CTAs */}
+        <div className="flex-1 flex flex-col justify-center py-10 sm:py-12 lg:py-0 lg:max-w-[55%]">
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 relative mt-4 lg:mt-0"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-4 sm:space-y-5"
           >
-            {/* Main Card Container */}
-            <div className={`p-3.5 sm:p-5 rounded-2xl border shadow-xl relative transition-all duration-300 ${
-              isDark 
-                ? 'bg-[#0D3325]/80 backdrop-blur-md border-[#16382A] hover:border-[#B8954A]/40' 
-                : 'bg-white border-[#E5E7EB] hover:border-[#1E5631]/30'
-            }`}>
-              
-              {/* Product Hero Image */}
-              <div className={`relative overflow-hidden rounded-xl aspect-[16/11] ${
-                isDark ? 'bg-[#071F16]' : 'bg-[#F5F5F0]'
-              }`}>
-                <ImageWithPlaceholder
-                  src={heroImg}
-                  alt="Authentic Stockfish and Clean Sun-Dried Crayfish"
-                  aspectRatioClass="aspect-[16/11]"
-                  theme={isDark ? 'dark' : 'light'}
-                  priority={true}
-                  className="w-full h-full object-cover object-center img-editorial-zoom"
-                />
-                
-                {/* Floating Badge */}
-                <div className={`absolute top-4 left-4 px-3.5 py-1.5 rounded-lg text-[10px] font-sans-clean font-semibold tracking-[0.2em] uppercase border shadow-md pointer-events-none backdrop-blur-sm ${
-                  isDark
-                    ? 'bg-[#071F16]/90 text-[#EDEDED] border-[#B8954A]/40'
-                    : 'bg-white/95 text-[#1A1A1A] border-[#E5E7EB]'
-                }`}>
-                  Direct Provisions
-                </div>
-              </div>
+            <h1
+              className={`font-editorial text-4xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-bold leading-[0.98] tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] ${
+                isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+              }`}
+            >
+              PREMIUM STOCKFISH &{' '}
+              <span className={`italic font-normal ${isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'}`}>
+                SUN-DRIED CRAYFISH.
+              </span>
+            </h1>
 
-              {/* Minimal Caption Strip */}
-              <div className="pt-4 px-1 flex items-center justify-between text-xs">
-                <span className={`font-editorial italic text-sm sm:text-base ${
-                  isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
-                }`}>
-                  Natural curing & rich savory aroma
-                </span>
-                <span className={`text-[10px] font-sans-clean uppercase tracking-[0.22em] font-semibold ${
-                  isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
-                }`}>
-                  Grade-A Selection
-                </span>
-              </div>
-            </div>
+            <div className="w-24 h-[2px] bg-gradient-to-r from-[#C9A15A] to-transparent" />
 
-            {/* Overlapping Card for Crayfish Accent */}
-            <div className={`hidden sm:flex absolute -bottom-6 -left-6 backdrop-blur-md border p-3.5 sm:p-4 rounded-xl shadow-xl items-center gap-3.5 max-w-[290px] z-20 ${
-              isDark
-                ? 'bg-[#071F16]/95 border-[#B8954A]/40 text-[#EDEDED]'
-                : 'bg-white/95 border-[#E5E7EB] text-[#1A1A1A]'
-            }`}>
-              <div className={`w-13 h-13 shrink-0 rounded-lg overflow-hidden border ${
-                isDark ? 'bg-[#0D3325] border-[#16382A]' : 'bg-[#F5F5F0] border-[#E5E7EB]'
-              }`}>
-                <ImageWithPlaceholder
-                  src={crayfishWholeImg}
-                  alt="Sun-dried whole crayfish"
-                  aspectRatioClass="aspect-square"
-                  theme={isDark ? 'dark' : 'light'}
-                  priority={true}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="space-y-0.5">
-                <span className={`text-[9px] font-sans-clean font-semibold uppercase tracking-[0.22em] block ${
-                  isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
-                }`}>
-                  Sun-Dried
-                </span>
-                <p className={`font-editorial text-sm font-bold leading-tight ${
-                  isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
-                }`}>
-                  Pure aroma & rich umami
-                </p>
-                <span className={`text-[10px] font-sans-clean block ${
-                  isDark ? 'text-[#EDEDED]/65' : 'text-[#6B7266]'
-                }`}>
-                  Ready to cook
-                </span>
-              </div>
-            </div>
-
+            <p
+              className={`text-base sm:text-lg font-sans-clean font-light leading-relaxed max-w-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.2)] ${
+                isDark ? 'text-[#EDEDED]/90' : 'text-[#3A3A3A]'
+              }`}
+            >
+              Hand-selected, thoroughly cleaned, and delivered with dependable quality for everyday family cooking, caterers, and festive feasts.
+            </p>
           </motion.div>
 
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-6 sm:pt-7"
+          >
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-tactile btn-whatsapp-gold inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer"
+            >
+              <MessageCircle className="w-4 h-4 text-[#071F16]" />
+              <span>Chat on WhatsApp</span>
+              <ArrowUpRight className="w-4 h-4 text-[#071F16] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+
+            <button
+              onClick={() => onNavigate('products')}
+              className={`btn-tactile inline-flex items-center justify-center gap-2.5 px-7 py-4 text-xs font-semibold tracking-[0.18em] uppercase rounded-xl backdrop-blur-md group cursor-pointer border shadow-sm ${
+                isDark
+                  ? 'bg-[#0D3325]/80 hover:bg-[#164936] text-[#EDEDED] border-[#16382A] hover:border-[#C9A15A]/50'
+                  : 'bg-white/80 hover:bg-white text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40'
+              }`}
+            >
+              <span>Shop Products</span>
+              <ArrowRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'}`} />
+            </button>
+          </motion.div>
         </div>
 
+        {/* Bottom: Circular trust badge — bottom-left anchor */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-end gap-4 sm:gap-6"
+        >
+          {/* Circular badge */}
+          <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 shrink-0">
+            {/* Gold ring */}
+            <div className="absolute inset-0 rounded-full border-2 border-[#C9A15A] shadow-[0_4px_20px_rgba(0,0,0,0.3)]" />
+            {/* Inner dark green fill */}
+            <div className="absolute inset-[3px] rounded-full bg-[#1E5631] flex flex-col items-center justify-center text-center p-2">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#C9A15A] mb-1" />
+              <span className="text-[8px] sm:text-[9px] lg:text-[10px] font-sans-clean font-bold uppercase tracking-[0.12em] text-white leading-tight">
+                100% Natural
+              </span>
+              <span className="text-[7px] sm:text-[8px] lg:text-[9px] font-sans-clean font-semibold uppercase tracking-[0.1em] text-[#C9A15A] leading-tight">
+                & Hygienic
+              </span>
+            </div>
+          </div>
+
+          {/* Badge-adjacent micro-copy */}
+          <div className="hidden sm:flex flex-col gap-1 pb-1">
+            <span className={`text-[10px] font-sans-clean font-semibold uppercase tracking-[0.25em] ${isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'}`}>
+              Direct Provisions
+            </span>
+            <span className={`text-[11px] font-sans-clean font-light leading-snug max-w-[200px] ${isDark ? 'text-[#EDEDED]/75' : 'text-[#3A3A3A]'}`}>
+              Zero sand or debris. Rich natural aroma. Ready to cook.
+            </span>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
