@@ -47,29 +47,29 @@ export const ProductSection: React.FC = () => {
 
   return (
     <section id="products-section" className={`transition-colors duration-300 ${
-      isDark ? 'bg-[#071F16] text-[#EDEDED]' : 'bg-[#FAFAFA] text-[#1A1A1A]'
+      isDark ? 'bg-[#071F16] text-[#EDEDED]' : 'bg-[#F7F3EA] text-[#173B2A]'
     }`}>
       {/* ── Page Header ── */}
       <div className={`pt-14 sm:pt-20 pb-10 sm:pb-14 border-b ${
-        isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
+        isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
       }`}>
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
           <div className="max-w-2xl space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
               <span className={`w-8 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
-              <span className={`text-[10px] sm:text-[11px] font-sans-clean font-semibold tracking-[0.35em] uppercase ${
+              <span className={`text-[10px] sm:text-[11px] font-sans-clean font-bold tracking-[0.35em] uppercase ${
                 isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
               }`}>
                 Our Products
               </span>
             </div>
             <h1 className={`font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.04] ${
-              isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+              isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
             }`}>
               Stockfish & Crayfish
             </h1>
-            <p className={`text-sm sm:text-base font-sans-clean font-light leading-relaxed ${
-              isDark ? 'text-[#EDEDED]/75' : 'text-[#525252]'
+            <p className={`text-sm sm:text-base font-sans-clean font-normal leading-relaxed ${
+              isDark ? 'text-[#EDEDED]/75' : 'text-[#3D4F43]'
             }`}>
               Quality provisions for everyday cooking and special occasions. Browse our selection, make an inquiry, or order directly on WhatsApp.
             </p>
@@ -87,14 +87,14 @@ export const ProductSection: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`relative px-5 py-2.5 text-[11px] font-sans-clean font-semibold tracking-[0.15em] uppercase whitespace-nowrap rounded-lg transition-all duration-200 cursor-pointer min-h-[44px] flex items-center ${
+                className={`relative px-5 py-2.5 text-[11px] font-sans-clean font-bold tracking-[0.15em] uppercase whitespace-nowrap rounded-lg transition-all duration-200 cursor-pointer min-h-[44px] flex items-center ${
                   isActive
                     ? isDark 
                       ? 'bg-[#16382A] text-[#EDEDED] border border-[#B8954A] shadow-sm'
                       : 'bg-[#1E5631] text-white border border-[#1E5631] shadow-sm'
                     : isDark
                       ? 'bg-[#0D3325] border border-[#16382A] text-[#EDEDED]/70 hover:text-[#EDEDED] hover:border-[#B8954A]/40'
-                      : 'bg-white border border-[#E5E7EB] text-[#525252] hover:text-[#1A1A1A] hover:border-[#1E5631]/30'
+                      : 'bg-[#FFFDF8] border border-[#E6DEC8] text-[#3D4F43] hover:text-[#173B2A] hover:border-[#1E5631]/40'
                 }`}
               >
                 {cat.label}
@@ -115,17 +115,17 @@ export const ProductSection: React.FC = () => {
           /* Empty state */
           <div className="flex flex-col items-center justify-center py-16 sm:py-24 text-center">
             <div className={`w-14 h-14 rounded-full border flex items-center justify-center text-[#B8954A] mb-4 ${
-              isDark ? 'bg-[#0D3325] border-[#16382A]' : 'bg-white border-[#E5E7EB]'
+              isDark ? 'bg-[#0D3325] border-[#16382A]' : 'bg-[#FFFDF8] border-[#E6DEC8]'
             }`}>
               <Package className="w-6 h-6" />
             </div>
             <h3 className={`font-editorial text-xl font-bold mb-1 ${
-              isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+              isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
             }`}>
               No products available
             </h3>
-            <p className={`text-sm font-sans-clean font-light max-w-sm mb-4 ${
-              isDark ? 'text-[#EDEDED]/60' : 'text-[#6B7266]'
+            <p className={`text-sm font-sans-clean font-normal max-w-sm mb-4 ${
+              isDark ? 'text-[#EDEDED]/60' : 'text-[#58685C]'
             }`}>
               We're currently restocking our selection. Please check back shortly or contact us directly on WhatsApp.
             </p>
@@ -168,13 +168,15 @@ export const ProductSection: React.FC = () => {
                     className={`border rounded-xl overflow-hidden flex flex-col group transition-all duration-300 ${
                       isDark 
                         ? 'bg-[#0D3325] border-[#16382A] hover:border-[#B8954A]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]'
-                        : 'bg-white border-[#E5E7EB] hover:border-[#1E5631]/40 hover:shadow-[0_8px_30px_rgba(7,31,22,0.08)]'
+                        : 'bg-[#FFFDF8] border-[#E6DEC8] hover:border-[#1E5631]/50 hover:shadow-[0_8px_30px_rgba(23,59,42,0.08)]'
                     }`}
                   >
-                    {/* Product image — click opens detail modal */}
+                    {/* Product image container — Uniform framing across entire catalogue */}
                     <button
                       onClick={() => setSelectedProduct(product)}
-                      className="relative overflow-hidden block text-left cursor-pointer w-full"
+                      className={`relative overflow-hidden block text-left cursor-pointer w-full aspect-[4/3] ${
+                        isDark ? 'bg-[#071F16]' : 'bg-[#F4EFE6]'
+                      }`}
                       aria-label={`View ${product.name} details`}
                     >
                       <ImageWithPlaceholder
@@ -183,13 +185,13 @@ export const ProductSection: React.FC = () => {
                         aspectRatioClass="aspect-[4/3]"
                         theme={isDark ? 'dark' : 'light'}
                         priority={idx < 3}
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Category badge */}
-                      <div className={`absolute top-3 left-3 px-2.5 py-1 text-[9px] font-sans-clean font-semibold tracking-[0.2em] uppercase border rounded ${
+                      <div className={`absolute top-3 left-3 px-2.5 py-1 text-[9px] font-sans-clean font-bold tracking-[0.2em] uppercase border rounded shadow-sm ${
                         isDark 
                           ? 'bg-[#071F16]/90 backdrop-blur-sm text-[#EDEDED] border-[#B8954A]/30' 
-                          : 'bg-white/90 backdrop-blur-sm text-[#1A1A1A] border-[#E5E7EB]'
+                          : 'bg-[#FFFDF8]/95 backdrop-blur-sm text-[#173B2A] border-[#E6DEC8]'
                       }`}>
                         {product.category}
                       </div>
@@ -200,12 +202,12 @@ export const ProductSection: React.FC = () => {
                       {/* Title + subtitle */}
                       <div className="space-y-1">
                         <h3 className={`font-editorial text-lg sm:text-xl font-bold leading-tight ${
-                          isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+                          isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
                         }`}>
                           {product.name}
                         </h3>
-                        <p className={`text-xs font-sans-clean font-light leading-snug line-clamp-2 ${
-                          isDark ? 'text-[#EDEDED]/70' : 'text-[#525252]'
+                        <p className={`text-xs font-sans-clean font-normal leading-snug line-clamp-2 ${
+                          isDark ? 'text-[#EDEDED]/70' : 'text-[#3D4F43]'
                         }`}>
                           {product.subtitle}
                         </p>
@@ -214,15 +216,15 @@ export const ProductSection: React.FC = () => {
                       {/* Availability indicator */}
                       <div className="flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        <span className="text-[10px] font-sans-clean font-medium text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                        <span className="text-[10px] font-sans-clean font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
                           Available
                         </span>
                       </div>
 
                       {/* Options preview */}
                       {product.options && product.options.length > 0 && (
-                        <p className={`text-[11px] font-sans-clean font-light leading-relaxed ${
-                          isDark ? 'text-[#EDEDED]/60' : 'text-[#6B7266]'
+                        <p className={`text-[11px] font-sans-clean font-normal leading-relaxed ${
+                          isDark ? 'text-[#EDEDED]/60' : 'text-[#58685C]'
                         }`}>
                           {product.options.length} formats: {product.options.map((o) => o.name).join(' • ')}
                         </p>
@@ -230,7 +232,7 @@ export const ProductSection: React.FC = () => {
 
                       {/* Actions — primary: Add to Cart & WhatsApp, secondary: Details / Inquire */}
                       <div className={`flex flex-col sm:flex-row items-stretch gap-2 pt-3 mt-auto border-t ${
-                        isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
+                        isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
                       }`}>
                         {/* Primary: Quick Add to Cart */}
                         <button
@@ -263,10 +265,10 @@ export const ProductSection: React.FC = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Order ${product.name} on WhatsApp`}
-                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
+                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-3 border text-[10px] font-sans-clean font-bold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
                             isDark
                               ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/40'
-                              : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]'
+                              : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]'
                           }`}
                         >
                           <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
@@ -276,10 +278,10 @@ export const ProductSection: React.FC = () => {
                         {/* Details */}
                         <button
                           onClick={() => setSelectedProduct(product)}
-                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-3 py-3 border text-[10px] font-sans-clean font-semibold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
+                          className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-3 py-3 border text-[10px] font-sans-clean font-bold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
                             isDark
                               ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A]'
-                              : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB]'
+                              : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8]'
                           }`}
                         >
                           Details

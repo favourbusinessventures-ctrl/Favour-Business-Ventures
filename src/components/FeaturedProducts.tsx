@@ -36,7 +36,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
       className={`py-20 sm:py-28 relative overflow-hidden border-b transition-colors duration-300 ${
         isDark 
           ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]' 
-          : 'bg-[#FAFAFA] text-[#1A1A1A] border-[#E5E7EB]'
+          : 'bg-[#F7F3EA] text-[#173B2A] border-[#E6DEC8]'
       }`}
     >
       {/* Ambient background glows */}
@@ -47,8 +47,8 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
         </>
       ) : (
         <>
-          <div className="absolute top-1/4 -left-32 w-80 h-80 bg-[#1E5631]/4 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-10 right-0 w-80 h-80 bg-[#8A9A5B]/8 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/4 -left-32 w-80 h-80 bg-[#1E5631]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-10 right-0 w-80 h-80 bg-[#7A8D60]/10 rounded-full blur-3xl pointer-events-none" />
         </>
       )}
 
@@ -61,13 +61,13 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={`flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b ${
-            isDark ? 'border-[#16382A]/80' : 'border-[#E5E7EB]'
+            isDark ? 'border-[#16382A]/80' : 'border-[#E6DEC8]'
           }`}
         >
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2.5">
               <span className={`w-6 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
-              <span className={`text-[10px] sm:text-[11px] font-sans-clean font-semibold tracking-[0.32em] uppercase ${
+              <span className={`text-[10px] sm:text-[11px] font-sans-clean font-bold tracking-[0.32em] uppercase ${
                 isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
               }`}>
                 FEATURED PROVISIONS
@@ -75,13 +75,13 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
             </div>
 
             <h2 className={`font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.02] ${
-              isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+              isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
             }`}>
               STOCKFISH & CRAYFISH
             </h2>
 
-            <p className={`text-sm sm:text-base font-sans-clean font-light leading-relaxed ${
-              isDark ? 'text-[#EDEDED]/75' : 'text-[#525252]'
+            <p className={`text-sm sm:text-base font-sans-clean font-normal leading-relaxed ${
+              isDark ? 'text-[#EDEDED]/75' : 'text-[#3D4F43]'
             }`}>
               Carefully sorted, hygienic, and packaged to give your everyday cooking and celebration dishes authentic flavor and rich aroma.
             </p>
@@ -89,10 +89,10 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
 
           <button
             onClick={() => onNavigate('products')}
-            className={`btn-tactile inline-flex items-center gap-2 px-6 py-3.5 text-xs font-semibold tracking-[0.18em] uppercase rounded-xl cursor-pointer shrink-0 self-start md:self-auto border shadow-sm ${
+            className={`btn-tactile inline-flex items-center gap-2 px-6 py-3.5 text-xs font-bold tracking-[0.18em] uppercase rounded-xl cursor-pointer shrink-0 self-start md:self-auto border shadow-sm ${
               isDark
                 ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
-                : 'bg-white hover:bg-[#F5F5F0] text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40'
+                : 'bg-[#FFFDF8] hover:bg-[#F4EFE6] text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]/50'
             }`}
           >
             <span>View All Options</span>
@@ -115,16 +115,16 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.55, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.55, delay: idx * 0.12, ease: [0.16, 1, 0.36, 1] }}
                 className={`card-glass-hover rounded-2xl overflow-hidden flex flex-col justify-between group border transition-all duration-300 ${
                   isDark
                     ? 'bg-[#0D3325]/80 backdrop-blur-md border-[#16382A] hover:border-[#B8954A]/50 shadow-2xl'
-                    : 'bg-white border-[#E5E7EB] hover:border-[#1E5631]/30 shadow-md'
+                    : 'bg-[#FFFDF8] border-[#E6DEC8] hover:border-[#1E5631]/50 shadow-md'
                 }`}
               >
                 {/* Product Image Frame with Glass Tag */}
                 <div className={`relative overflow-hidden aspect-[16/10] ${
-                  isDark ? 'bg-[#071F16]' : 'bg-[#F5F5F0]'
+                  isDark ? 'bg-[#071F16]' : 'bg-[#F4EFE6]'
                 }`}>
                   <ImageWithPlaceholder
                     src={product.imageUrl}
@@ -136,10 +136,10 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                   />
                   
                   {/* Subtle Translucent Category Tag */}
-                  <div className={`absolute top-4 left-4 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border text-[9.5px] font-sans-clean font-semibold tracking-[0.25em] uppercase shadow-md ${
+                  <div className={`absolute top-4 left-4 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border text-[9.5px] font-sans-clean font-bold tracking-[0.25em] uppercase shadow-md ${
                     isDark
                       ? 'bg-[#071F16]/90 border-[#B8954A]/40 text-[#EDEDED]'
-                      : 'bg-white/95 border-[#E5E7EB] text-[#1A1A1A]'
+                      : 'bg-[#FFFDF8]/95 border-[#E6DEC8] text-[#173B2A]'
                   }`}>
                     {product.category}
                   </div>
@@ -148,7 +148,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                   <div className={`absolute top-4 right-4 backdrop-blur-sm w-8 h-8 rounded-full border flex items-center justify-center text-[11px] font-editorial font-bold shadow-md ${
                     isDark
                       ? 'bg-[#0D3325]/90 border-[#16382A] text-[#B8954A]'
-                      : 'bg-white border-[#E5E7EB] text-[#1E5631]'
+                      : 'bg-[#FFFDF8] border-[#E6DEC8] text-[#1E5631]'
                   }`}>
                     0{idx + 1}
                   </div>
@@ -160,13 +160,13 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                     <h3 className={`font-editorial text-2xl sm:text-3xl font-bold transition-colors leading-snug ${
                       isDark
                         ? 'text-[#EDEDED] group-hover:text-[#B8954A]'
-                        : 'text-[#1A1A1A] group-hover:text-[#1E5631]'
+                        : 'text-[#173B2A] group-hover:text-[#1E5631]'
                     }`}>
                       {product.name}
                     </h3>
                     
-                    <p className={`text-xs sm:text-sm font-sans-clean font-light leading-relaxed ${
-                      isDark ? 'text-[#EDEDED]/75' : 'text-[#525252]'
+                    <p className={`text-xs sm:text-sm font-sans-clean font-normal leading-relaxed ${
+                      isDark ? 'text-[#EDEDED]/75' : 'text-[#3D4F43]'
                     }`}>
                       {product.description}
                     </p>
@@ -177,10 +177,10 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                         {product.highlights.slice(0, 3).map((hl, hIdx) => (
                           <span
                             key={hIdx}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10.5px] font-sans-clean border ${
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10.5px] font-sans-clean border font-medium ${
                               isDark
                                 ? 'bg-[#071F16]/80 border-[#16382A] text-[#EDEDED]/90'
-                                : 'bg-[#F5F5F0] border-[#E5E7EB] text-[#1A1A1A]'
+                                : 'bg-[#F4EFE6] border-[#E6DEC8] text-[#173B2A]'
                             }`}
                           >
                             <Check className={`w-3 h-3 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
@@ -193,17 +193,17 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
 
                   {/* Options List & Direct CTAs */}
                   <div className={`pt-4 border-t space-y-4 ${
-                    isDark ? 'border-[#16382A]' : 'border-[#E5E7EB]'
+                    isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
                   }`}>
                     {product.options && product.options.length > 0 && (
                       <div className="space-y-1.5">
-                        <span className={`text-[10px] font-sans-clean font-semibold uppercase tracking-[0.2em] ${
+                        <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.2em] ${
                           isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
                         }`}>
                           Available Portions / Cuts:
                         </span>
-                        <p className={`text-xs font-sans-clean ${
-                          isDark ? 'text-[#EDEDED]/65' : 'text-[#6B7266]'
+                        <p className={`text-xs font-sans-clean font-medium ${
+                          isDark ? 'text-[#EDEDED]/65' : 'text-[#58685C]'
                         }`}>
                           {product.options.map(opt => opt.name).join(' • ')}
                         </p>
@@ -244,7 +244,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                         className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 text-xs font-sans-clean font-bold tracking-[0.14em] uppercase rounded-xl group/btn cursor-pointer border min-h-[44px] ${
                           isDark
                             ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
-                            : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40 shadow-xs'
+                            : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]/40 shadow-xs'
                         }`}
                       >
                         <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
@@ -255,10 +255,10 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                       {/* Details button */}
                       <button
                         onClick={() => onNavigate('products')}
-                        className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-4 py-3.5 text-xs font-sans-clean font-semibold tracking-[0.14em] uppercase rounded-xl cursor-pointer border min-h-[44px] ${
+                        className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-4 py-3.5 text-xs font-sans-clean font-bold tracking-[0.14em] uppercase rounded-xl cursor-pointer border min-h-[44px] ${
                           isDark
                             ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A]'
-                            : 'bg-[#F5F5F0] hover:bg-white text-[#1A1A1A] border-[#E5E7EB]'
+                            : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8]'
                         }`}
                       >
                         <span>Details</span>

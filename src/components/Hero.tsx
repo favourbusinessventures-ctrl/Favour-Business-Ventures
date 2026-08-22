@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         className={`absolute inset-0 z-10 pointer-events-none ${
           isDark
             ? 'bg-gradient-to-r from-[#071F16] via-[#071F16]/85 to-transparent'
-            : 'bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/80 to-transparent'
+            : 'bg-gradient-to-r from-[#F7F3EA] via-[#F7F3EA]/85 to-transparent'
         }`}
       />
 
@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         className={`absolute inset-0 z-10 pointer-events-none lg:hidden ${
           isDark
             ? 'bg-gradient-to-t from-[#071F16] via-[#071F16]/60 to-transparent'
-            : 'bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/50 to-transparent'
+            : 'bg-gradient-to-t from-[#F7F3EA] via-[#F7F3EA]/60 to-transparent'
         }`}
       />
 
@@ -62,13 +62,15 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           className="flex flex-col gap-1 max-w-md"
         >
           <span
-            className={`font-editorial text-lg sm:text-2xl md:text-3xl font-bold tracking-[0.12em] sm:tracking-[0.16em] uppercase leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] ${
-              isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+            className={`font-editorial text-lg sm:text-2xl md:text-3xl font-bold tracking-[0.12em] sm:tracking-[0.16em] uppercase leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)] ${
+              isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
             }`}
           >
             {settings.name}
           </span>
-          <span className="text-[8px] sm:text-[10px] font-sans-clean font-semibold tracking-[0.24em] sm:tracking-[0.32em] uppercase text-[#C9A15A] drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+          <span className={`text-[8px] sm:text-[10px] font-sans-clean font-bold tracking-[0.24em] sm:tracking-[0.32em] uppercase ${
+            isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'
+          } drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]`}>
             Stockfish & Crayfish Provisions
           </span>
         </motion.div>
@@ -82,8 +84,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             className="space-y-4 sm:space-y-5"
           >
             <h1
-              className={`font-editorial text-4xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-bold leading-[0.98] tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] ${
-                isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+              className={`font-editorial text-4xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-bold leading-[0.98] tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] ${
+                isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
               }`}
             >
               PREMIUM STOCKFISH &{' '}
@@ -92,11 +94,11 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               </span>
             </h1>
 
-            <div className="w-24 h-[2px] bg-gradient-to-r from-[#C9A15A] to-transparent" />
+            <div className={`w-24 h-[2px] bg-gradient-to-r ${isDark ? 'from-[#C9A15A]' : 'from-[#1E5631]'} to-transparent`} />
 
             <p
-              className={`text-base sm:text-lg font-sans-clean font-light leading-relaxed max-w-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.2)] ${
-                isDark ? 'text-[#EDEDED]/90' : 'text-[#3A3A3A]'
+              className={`text-base sm:text-lg font-sans-clean font-normal leading-relaxed max-w-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.15)] ${
+                isDark ? 'text-[#EDEDED]/90' : 'text-[#3D4F43]'
               }`}
             >
               Hand-selected, thoroughly cleaned, and delivered with dependable quality for everyday family cooking, caterers, and festive feasts.
@@ -123,10 +125,10 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
             <button
               onClick={() => onNavigate('products')}
-              className={`btn-tactile inline-flex items-center justify-center gap-2.5 px-7 py-4 text-xs font-semibold tracking-[0.18em] uppercase rounded-xl backdrop-blur-md group cursor-pointer border shadow-sm ${
+              className={`btn-tactile inline-flex items-center justify-center gap-2.5 px-7 py-4 text-xs font-bold tracking-[0.18em] uppercase rounded-xl backdrop-blur-md group cursor-pointer border shadow-sm ${
                 isDark
                   ? 'bg-[#0D3325]/80 hover:bg-[#164936] text-[#EDEDED] border-[#16382A] hover:border-[#C9A15A]/50'
-                  : 'bg-white/80 hover:bg-white text-[#1A1A1A] border-[#E5E7EB] hover:border-[#1E5631]/40'
+                  : 'bg-[#FFFDF8]/90 hover:bg-[#FFFDF8] text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]/50'
               }`}
             >
               <span>Shop Products</span>

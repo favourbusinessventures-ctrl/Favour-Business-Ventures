@@ -18,13 +18,17 @@
     --color-border-light: #E5E7EB;
     --color-border-dark: #16382A;
 
-    /* Light Mode Accent Tokens */
+    /* Light Mode Accent Tokens (Warm Linen, Soft Ivory & Deep Botanical Palette) */
     --color-light-accent: #1E5631;
     --color-light-accent-hover: #2E7D4F;
-    --color-light-sage: #8A9A5B;
-    --color-light-bg: #FAFAFA;
-    --color-light-surface: #FFFFFF;
-    --color-light-surface-alt: #F5F5F0;
+    --color-light-sage: #7A8D60;
+    --color-light-bg: #F7F3EA;
+    --color-light-surface: #FFFDF8;
+    --color-light-surface-alt: #EEF4ED;
+    --color-light-border: #E6DEC8;
+    --color-light-text-primary: #173B2A;
+    --color-light-text-secondary: #3D4F43;
+    --color-light-text-muted: #58685C;
 
     /* Dark Mode Accent Tokens */
     --color-dark-accent: #2E7D4F;
@@ -47,8 +51,8 @@
   }
 
   html.light {
-    background-color: #FAFAFA;
-    color: #1A1A1A;
+    background-color: #F7F3EA;
+    color: #173B2A;
   }
 
   h1, h2, h3, h4, .font-editorial {
