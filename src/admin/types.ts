@@ -113,4 +113,4 @@ export interface AdminAuthContextType {
   clearError: () => void;
 }
 
-export type AdminTab = 'dashboard' | 'products' | 'gallery' | 'orders' | 'reviews' | 'customerCare' | 'systemHealth' | 'settings';
+export type AdminTab = 'dashboard' | 'products' | 'gallery' | 'orders' | 'reviews' | 'customerCare' | 'branding' | 'systemHealth' | 'settings';

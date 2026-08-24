@@ -4,6 +4,7 @@ import {
   Star, 
   ShoppingBag, 
   Headphones, 
+  Palette,
   Activity, 
   Settings, 
   Image as ImageIcon,
@@ -69,6 +70,14 @@ export const QuickNavMatrix: React.FC<QuickNavMatrixProps> = ({
       title: 'Media & Gallery Assets',
       description: 'Manage visual showcases, product photography, and Cloudflare storage.',
       icon: ImageIcon
+    },
+    {
+      id: 'branding',
+      title: 'Branding & Appearance',
+      description: 'Customize logos, theme colors, typography scales, and the intro animation without source code.',
+      icon: Palette,
+      badge: 'Visual Identity',
+      badgeColor: 'bg-[#B8954A]/20 text-[#B8954A] border-[#B8954A]/40'
     },
     {
       id: 'systemHealth',

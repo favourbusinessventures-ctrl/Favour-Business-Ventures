@@ -29,8 +29,9 @@ app.use(express.urlencoded({ limit: '25mb', extended: true }));
 const uploadsBaseDir = path.join(process.cwd(), 'public', 'uploads');
 const productsUploadDir = path.join(uploadsBaseDir, 'products');
 const galleryUploadDir = path.join(uploadsBaseDir, 'gallery');
+const brandingUploadDir = path.join(uploadsBaseDir, 'branding');
 
-[uploadsBaseDir, productsUploadDir, galleryUploadDir].forEach(dir => {
+[uploadsBaseDir, productsUploadDir, galleryUploadDir, brandingUploadDir].forEach(dir => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -159,8 +160,8 @@ app.post('/api/images/upload', async (req: Request, res: Response): Promise<void
       return;
     }
 
-    const targetFolder = folder === 'gallery' ? 'gallery' : 'products';
-    const targetDir = targetFolder === 'gallery' ? galleryUploadDir : productsUploadDir;
+    const targetFolder = folder === 'gallery' ? 'gallery' : (folder === 'branding' ? 'branding' : 'products');
+    const targetDir = targetFolder === 'gallery' ? galleryUploadDir : (targetFolder === 'branding' ? brandingUploadDir : productsUploadDir);
 
     // Validate MIME type
     const declaredMime = mimeType || 'image/jpeg';
@@ -259,7 +260,7 @@ app.get('/api/images/raw/:key', async (req: Request, res: Response): Promise<voi
     // 1. Check local filesystem first
     const parts = cleanKey.split('_');
     if (parts.length >= 2) {
-      const folder = parts[0] === 'gallery' ? 'gallery' : 'products';
+      const folder = parts[0] === 'gallery' ? 'gallery' : (parts[0] === 'branding' ? 'branding' : 'products');
       const fileName = parts.slice(1).join('_');
       const localPath = path.join(uploadsBaseDir, folder, fileName);
       if (fs.existsSync(localPath)) {

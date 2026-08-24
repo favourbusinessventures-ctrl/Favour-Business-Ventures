@@ -2,6 +2,7 @@ import React from 'react';
 import { MessageCircle, ArrowUpRight } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
+import { useBranding } from '../hooks/useBranding';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeToggle } from './ThemeToggle';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
@@ -13,8 +14,15 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin }) => {
   const { settings } = useBusinessSettings();
+  const { branding } = useBranding();
   const { isDark } = useTheme();
   const whatsappUrl = buildWhatsAppUrl(settings.defaultOrderMessage, settings.whatsappNumberRaw);
+
+  const brandDisplayName = branding.brandName || settings.name || 'FAVORA';
+  const brandTagline = branding.brandTagline || 'Stockfish & Crayfish Provisions';
+  const footerLogo = isDark 
+    ? (branding.darkModeLogoUrl || branding.primaryLogoUrl)
+    : (branding.primaryLogoUrl || branding.darkModeLogoUrl);
 
   return (
     <footer className={`border-t transition-colors duration-300 ${
@@ -32,12 +40,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
             <span className={`text-[10px] font-sans-clean font-semibold uppercase tracking-[0.35em] block ${
               isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
             }`}>
-              Stockfish & Crayfish Provisions
+              {brandTagline}
             </span>
             <h3 className={`font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight ${
               isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
             }`}>
-              {settings.name}
+              {brandDisplayName}
             </h3>
             <p className={`text-xs sm:text-sm font-sans-clean font-light leading-relaxed ${
               isDark ? 'text-[#EDEDED]/75' : 'text-[#525252]'
@@ -69,15 +77,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
 
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-3.5">
-            <span className={`font-editorial text-2xl font-bold tracking-[0.1em] uppercase ${
-              isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
-            }`}>
-              {settings.name}
-            </span>
+            {footerLogo ? (
+              <img
+                src={footerLogo}
+                alt={brandDisplayName}
+                style={{ maxHeight: `${Math.min(branding.desktopLogoSize || 40, 48)}px` }}
+                className="w-auto object-contain mb-2"
+              />
+            ) : (
+              <span className={`font-editorial text-2xl font-bold tracking-[0.1em] uppercase ${
+                isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
+              }`}>
+                {brandDisplayName}
+              </span>
+            )}
             <p className={`text-xs font-sans-clean font-light leading-relaxed max-w-sm ${
               isDark ? 'text-[#EDEDED]/75' : 'text-[#525252]'
             }`}>
-              Stockfish and crayfish provided with dependable quality for homes, food vendors, and caterers.
+              {settings.description || `${brandDisplayName} provisions provided with dependable quality for homes, food vendors, and caterers.`}
             </p>
             <div className={`pt-1 text-xs font-sans-clean font-medium ${
               isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
@@ -174,7 +191,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onNavigateToAdmin })
           isDark ? 'border-[#16382A] text-[#EDEDED]/50' : 'border-[#E5E7EB] text-[#6B7266]'
         }`}>
           <p>
-            © {new Date().getFullYear()} {settings.name}. All rights reserved.
+            © {new Date().getFullYear()} {brandDisplayName}. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <ThemeToggle />

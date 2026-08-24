@@ -191,6 +191,168 @@
       },
       "required": ["name", "whatsappNumberRaw"]
     },
+    "BrandingSetting": {
+      "title": "BrandingSetting",
+      "description": "Visual branding, logos, color palette, typography scales, and intro animation settings",
+      "type": "object",
+      "properties": {
+        "brandName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Customer-facing display brand name"
+        },
+        "brandShortName": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "Customer-facing short title"
+        },
+        "brandTagline": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Customer-facing brand tagline"
+        },
+        "subTagline": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Customer-facing sub-tagline"
+        },
+        "primaryLogoUrl": {
+          "type": "string",
+          "description": "Primary logo image URL"
+        },
+        "darkModeLogoUrl": {
+          "type": "string",
+          "description": "Dark mode logo image URL"
+        },
+        "lightModeLogoUrl": {
+          "type": "string",
+          "description": "Light mode logo image URL"
+        },
+        "mobileLogoUrl": {
+          "type": "string",
+          "description": "Mobile specific logo image URL"
+        },
+        "faviconUrl": {
+          "type": "string",
+          "description": "Custom favicon URL"
+        },
+        "desktopLogoSize": {
+          "type": "number",
+          "description": "Desktop logo height in pixels (20-90)"
+        },
+        "tabletLogoSize": {
+          "type": "number",
+          "description": "Tablet logo height in pixels (18-72)"
+        },
+        "mobileLogoSize": {
+          "type": "number",
+          "description": "Mobile logo height in pixels (16-54)"
+        },
+        "primaryColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX primary brand color"
+        },
+        "secondaryColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX secondary brand color"
+        },
+        "accentColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX accent gold/amber color"
+        },
+        "backgroundColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX light background color"
+        },
+        "surfaceColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX light surface/card color"
+        },
+        "textColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX primary text color"
+        },
+        "mutedTextColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX secondary text color"
+        },
+        "darkModeBackground": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX dark background color"
+        },
+        "darkModeSurface": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX dark surface color"
+        },
+        "headingScale": {
+          "type": "string",
+          "enum": ["compact", "standard", "prominent"],
+          "description": "Heading font scale preset"
+        },
+        "bodyTextSize": {
+          "type": "string",
+          "enum": ["small", "standard", "large"],
+          "description": "Body font size preset"
+        },
+        "buttonTextSize": {
+          "type": "string",
+          "enum": ["compact", "standard", "large"],
+          "description": "Button font and padding size preset"
+        },
+        "navTextSize": {
+          "type": "string",
+          "enum": ["compact", "standard", "large"],
+          "description": "Navigation link text size preset"
+        },
+        "enableIntro": {
+          "type": "boolean",
+          "description": "Whether intro animation is enabled"
+        },
+        "introDuration": {
+          "type": "number",
+          "description": "Intro animation duration in seconds"
+        },
+        "introLogoSize": {
+          "type": "string",
+          "enum": ["small", "medium", "large"],
+          "description": "Intro logo size preset"
+        },
+        "introBackground": {
+          "type": "string",
+          "enum": ["brand", "custom"],
+          "description": "Intro background theme mode"
+        },
+        "introBackgroundColor": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{3}){1,2}$",
+          "description": "HEX custom intro background color"
+        },
+        "introTagline": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Tagline displayed inside opening intro animation"
+        },
+        "showIntroTagline": {
+          "type": "boolean",
+          "description": "Whether to render tagline in intro animation"
+        },
+        "introAnimationStyle": {
+          "type": "string",
+          "enum": ["fade", "reveal", "cinematic"],
+          "description": "Intro animation choreography preset"
+        }
+      },
+      "required": ["brandName"]
+    },
     "Order": {
       "title": "Order",
       "description": "Customer order records and inquiry logs",

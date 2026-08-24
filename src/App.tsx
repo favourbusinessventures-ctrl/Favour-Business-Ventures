@@ -11,6 +11,7 @@ import { CustomerCareFloatingButton, CustomerCareChatModal } from './components/
 import { CustomerCareProvider, useCustomerCare } from './context/CustomerCareContext';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { BrandingProvider } from './context/BrandingContext';
 import { HomeView } from './views/HomeView';
 import { ProductsView } from './views/ProductsView';
 import { AboutView } from './views/AboutView';
@@ -153,26 +154,30 @@ export default function App() {
   if (isAdminRoute) {
     return (
       <ThemeProvider>
-        <ErrorBoundary fallbackTitle="Admin Panel Notice" fallbackMessage="An error occurred while loading the admin workspace. Please refresh or return to the storefront.">
-          <AdminRoot onReturnToStore={handleReturnToStore} />
-        </ErrorBoundary>
+        <BrandingProvider>
+          <ErrorBoundary fallbackTitle="Admin Panel Notice" fallbackMessage="An error occurred while loading the admin workspace. Please refresh or return to the storefront.">
+            <AdminRoot onReturnToStore={handleReturnToStore} />
+          </ErrorBoundary>
+        </BrandingProvider>
       </ThemeProvider>
     );
   }
 
   return (
     <ThemeProvider>
-      <CustomerCareProvider>
-        <CartProvider>
-          <StorefrontContent
-            currentTab={currentTab}
-            onNavigate={handleNavigate}
-            onNavigateToAdmin={handleNavigateToAdmin}
-            isInitialLoading={isInitialLoading}
-            onFinishLoading={() => setIsInitialLoading(false)}
-          />
-        </CartProvider>
-      </CustomerCareProvider>
+      <BrandingProvider>
+        <CustomerCareProvider>
+          <CartProvider>
+            <StorefrontContent
+              currentTab={currentTab}
+              onNavigate={handleNavigate}
+              onNavigateToAdmin={handleNavigateToAdmin}
+              isInitialLoading={isInitialLoading}
+              onFinishLoading={() => setIsInitialLoading(false)}
+            />
+          </CartProvider>
+        </CustomerCareProvider>
+      </BrandingProvider>
     </ThemeProvider>
   );
 }

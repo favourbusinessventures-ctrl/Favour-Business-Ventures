@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, Menu, X, ArrowUpRight, ShoppingBag } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useBusinessSettings } from '../hooks/useBusinessSettings';
+import { useBranding } from '../hooks/useBranding';
 import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
 import { ThemeToggle } from './ThemeToggle';
@@ -15,10 +16,18 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
   const { settings } = useBusinessSettings();
+  const { branding } = useBranding();
   const { isDark } = useTheme();
   const { totalItems, openCart } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const activeLogo = isDark 
+    ? (branding.darkModeLogoUrl || branding.primaryLogoUrl)
+    : branding.primaryLogoUrl;
+
+  const brandDisplayName = branding.brandName || settings.name || 'FAVORA';
+  const brandTagline = branding.brandTagline || 'Stockfish & Crayfish Provisions';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,18 +82,27 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
           {/* Brand Wordmark (Left) */}
           <button
             onClick={() => handleNavClick('home')}
-            className="text-left group cursor-pointer focus:outline-none shrink-0"
+            className="text-left group cursor-pointer focus:outline-none shrink-0 flex items-center gap-3"
           >
-            <div className="flex flex-col">
-              <span className={`font-editorial text-base sm:text-xl md:text-2xl font-bold tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-colors leading-tight ${
-                isDark ? 'text-[#EDEDED] group-hover:text-[#B8954A]' : 'text-[#1A1A1A] group-hover:text-[#1E5631]'
-              }`}>
-                {settings.name}
-              </span>
-              <span className="text-[8px] sm:text-[9px] font-sans-clean font-semibold tracking-[0.24em] sm:tracking-[0.32em] text-[#B8954A] uppercase">
-                Stockfish & Crayfish Provisions
-              </span>
-            </div>
+            {activeLogo ? (
+              <img 
+                src={activeLogo} 
+                alt={brandDisplayName}
+                style={{ maxHeight: `${branding.desktopLogoSize || 40}px` }}
+                className="w-auto object-contain"
+              />
+            ) : (
+              <div className="flex flex-col">
+                <span className={`font-editorial text-base sm:text-xl md:text-2xl font-bold tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-colors leading-tight ${
+                  isDark ? 'text-[#EDEDED] group-hover:text-[#B8954A]' : 'text-[#1A1A1A] group-hover:text-[#1E5631]'
+                }`}>
+                  {brandDisplayName}
+                </span>
+                <span className="text-[8px] sm:text-[9px] font-sans-clean font-semibold tracking-[0.24em] sm:tracking-[0.32em] text-[#B8954A] uppercase">
+                  {brandTagline}
+                </span>
+              </div>
+            )}
           </button>
 
           {/* Desktop Navigation Links */}
@@ -229,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                 <span className={`text-[10px] font-sans-clean uppercase tracking-[0.2em] ${
                   isDark ? 'text-[#EDEDED]/50' : 'text-[#6B7266]'
                 }`}>
-                  FAVORA
+                  {brandDisplayName}
                 </span>
               </div>
 

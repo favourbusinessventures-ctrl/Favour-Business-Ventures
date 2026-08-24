@@ -91,7 +91,7 @@ function fileToBase64(file: File): Promise<string> {
  */
 function uploadToLocalServer(
   file: File,
-  folder: 'products' | 'gallery',
+  folder: 'products' | 'gallery' | 'branding',
   onProgress?: UploadProgressCallback,
   authToken?: string | null
 ): ActiveUploadHandle {
@@ -194,7 +194,7 @@ function uploadToCloudinary(
   file: File,
   cloudName: string,
   uploadPreset: string,
-  folder: 'products' | 'gallery',
+  folder: 'products' | 'gallery' | 'branding',
   onProgress?: UploadProgressCallback
 ): ActiveUploadHandle {
   let xhr: XMLHttpRequest | null = new XMLHttpRequest();
@@ -203,7 +203,7 @@ function uploadToCloudinary(
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', uploadPreset);
-    formData.append('folder', `favour_business_${folder}`);
+    formData.append('folder', `favora_${folder}`);
 
     xhr!.open('POST', `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, true);
 
@@ -266,7 +266,7 @@ function uploadToCloudinary(
  */
 export function startImageUpload(
   file: File,
-  folder: 'products' | 'gallery',
+  folder: 'products' | 'gallery' | 'branding',
   onProgress?: UploadProgressCallback,
   authToken?: string | null
 ): ActiveUploadHandle {

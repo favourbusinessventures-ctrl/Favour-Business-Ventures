@@ -45,11 +45,11 @@ service cloud.firestore {
     }
 
     // 4. Settings Collection
-    // - Public storefront: can read ONLY the public 'business_info' document
+    // - Public storefront: can read public 'business_info' and 'branding_settings' documents
     // - Other settings documents or listing collection: strictly admin-only
     // - Mutations: strictly admin-only
     match /settings/{settingId} {
-      allow get: if settingId == 'business_info' || isAdmin();
+      allow get: if settingId in ['business_info', 'branding_settings'] || isAdmin();
       allow list: if isAdmin();
       allow write: if isAdmin();
     }
