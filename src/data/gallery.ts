@@ -13,48 +13,66 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: 'g-hero-display',
     title: 'Stockfish & Crayfish Pairing',
     category: 'stockfish',
-    description: 'Clean dried stockfish and sun-dried crayfish ready for traditional soup preparation.',
+    description: 'Clean cured stockfish alongside aromatic sun-dried crayfish, ready for traditional Nigerian soup pots.',
     imageUrl: heroImg,
-    aspect: 'landscape'
+    aspect: 'landscape',
+    badge: 'Signature Provisions',
+    kitchenUse: 'Egusi, Afang, Oha & Banga Soups',
+    processNote: 'Hand-sorted and thoroughly inspected for zero moisture retention'
   },
   {
     id: 'g-stockfish-cuts',
     title: 'Stockfish Body Cuts',
     category: 'stockfish',
-    description: 'Firm, fleshy cuts selected for soup depth and tenderness.',
+    description: 'Firm, fleshy center cuts selected for tenderness and rich umami depth without excess bone.',
     imageUrl: stockfishCutsImg,
-    aspect: 'portrait'
+    aspect: 'portrait',
+    badge: 'Prime Meaty Cuts',
+    kitchenUse: 'Family Stews, Vegetable & Native Soups',
+    processNote: 'Cleaned, pre-portioned, and stored in dry ventilated conditions'
   },
   {
     id: 'g-crayfish-whole',
     title: 'Whole Dried Crayfish',
     category: 'crayfish',
-    description: 'Cleaned, sun-dried whole crayfish with natural vibrant color.',
+    description: 'Crisp, whole sun-dried crayfish with natural vibrant red-orange hue and intense sweet seafood aroma.',
     imageUrl: crayfishWholeImg,
-    aspect: 'portrait'
+    aspect: 'portrait',
+    badge: 'Zero-Sand Sun-Dried',
+    kitchenUse: 'Native Jollof, Soups, Sauces & Pottage',
+    processNote: 'Carefully winnowed and sifted to guarantee complete absence of grit or sand'
   },
   {
     id: 'g-stockfish-heads',
-    title: 'Stockfish Heads & Pieces',
+    title: 'Stockfish Heads & Collars',
     category: 'stockfish',
-    description: 'Rich pieces curated for deep broth flavor in traditional Nigerian dishes.',
+    description: 'Mineral-rich stockfish heads and collars cured to impart rich, savory depth into long-simmered broths.',
     imageUrl: stockfishHeadImg,
-    aspect: 'square'
+    aspect: 'square',
+    badge: 'Deep Broth Base',
+    kitchenUse: 'Pepper Soup, Native Broths & Bitterleaf Soup',
+    processNote: 'Properly cured and thoroughly checked for clean interior cavity'
   },
   {
     id: 'g-crayfish-ground',
     title: 'Pure Ground Crayfish',
     category: 'crayfish',
-    description: 'Freshly ground dried crayfish for quick, aromatic seasoning.',
+    description: 'Freshly milled 100% pure dried crayfish powder offering quick, aromatic seasoning for everyday cooking.',
     imageUrl: crayfishGroundImg,
-    aspect: 'landscape'
+    aspect: 'landscape',
+    badge: 'Pure 100% Milled',
+    kitchenUse: 'Instant Seasoning, Stews, Beans & Fried Rice',
+    processNote: 'Milled from clean whole crayfish with zero additives or filler'
   },
   {
     id: 'g-stockfish-bale',
-    title: 'Bulk Stockfish Presentation',
+    title: 'Packaged Stockfish Bale',
     category: 'stockfish',
-    description: 'Large quantity packaged stockfish ready for order and distribution.',
+    description: 'Wholesale and bulk quantities securely packaged for caterers, restaurants, and large household orders.',
     imageUrl: stockfishBaleImg,
-    aspect: 'portrait'
+    aspect: 'portrait',
+    badge: 'Dispatch-Ready Packaging',
+    kitchenUse: 'Commercial Catering, Events & Bulk Kitchens',
+    processNote: 'Hygienically bundled and sealed for safe transit and prolonged shelf life'
   }
 ];

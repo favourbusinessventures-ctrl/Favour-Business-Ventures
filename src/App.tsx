@@ -73,7 +73,7 @@ const StorefrontContent: React.FC<StorefrontContentProps> = ({
               {currentTab === 'home' && <HomeView onNavigate={onNavigate} />}
               {currentTab === 'products' && <ProductsView />}
               {currentTab === 'about' && <AboutView />}
-              {currentTab === 'gallery' && <GalleryView />}
+              {currentTab === 'gallery' && <GalleryView onNavigate={onNavigate} />}
               {currentTab === 'contact' && <ContactView />}
             </motion.div>
           </AnimatePresence>

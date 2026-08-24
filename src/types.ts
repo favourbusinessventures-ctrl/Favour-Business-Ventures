@@ -24,6 +24,9 @@ export interface GalleryItem {
   description: string;
   imageUrl: string;
   aspect: 'portrait' | 'landscape' | 'square';
+  badge?: string;
+  kitchenUse?: string;
+  processNote?: string;
 }
 
 export type ReviewStatus = 'pending' | 'approved' | 'rejected';
