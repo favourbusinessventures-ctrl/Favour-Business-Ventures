@@ -35,7 +35,7 @@ export const AboutSection: React.FC = () => {
       className={`py-16 sm:py-24 lg:py-32 border-b transition-colors duration-300 ${
         isDark 
           ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]' 
-          : 'bg-[#F7F3EA] text-[#173B2A] border-[#E6DEC8]'
+          : 'bg-[#F5F0E6] text-[#173B2A] border-[#DED4BF]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14 space-y-12 sm:space-y-20">
@@ -45,9 +45,9 @@ export const AboutSection: React.FC = () => {
            ========================================================================= */}
         <div className="max-w-3xl space-y-3 sm:space-y-4">
           <div className="flex items-center gap-3">
-            <span className={`w-8 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
+            <span className={`w-8 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#B58A32]'}`} />
             <span className={`text-[10px] sm:text-[10.5px] font-sans-clean font-bold tracking-[0.35em] uppercase ${
-              isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+              isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
             }`}>
               WHY FAVOUR BUSINESS VENTURES
             </span>
@@ -57,12 +57,12 @@ export const AboutSection: React.FC = () => {
             isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
           }`}>
             GOOD MEALS BEGIN <br />
-            <span className={`italic font-normal ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`}>
+            <span className={`italic font-normal ${isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'}`}>
               WITH GOOD INGREDIENTS.
             </span>
           </h2>
 
-          <div className={`w-20 h-[1.5px] mt-2 ${isDark ? 'bg-[#B8954A]/70' : 'bg-[#1E5631]/40'}`} />
+          <div className={`w-20 h-[1.5px] mt-2 ${isDark ? 'bg-[#B8954A]/70' : 'bg-[#B58A32]/50'}`} />
         </div>
 
         {/* =========================================================================
@@ -77,7 +77,7 @@ export const AboutSection: React.FC = () => {
             <div className={`p-3 sm:p-4 border shadow-xl relative group rounded-2xl transition-colors duration-300 ${
               isDark 
                 ? 'bg-[#0D3325] border-[#16382A]' 
-                : 'bg-[#FFFDF8] border-[#E6DEC8]'
+                : 'bg-[#FFFDF8] border-[#DED4BF] shadow-[0_4px_20px_rgba(23,59,42,0.06)]'
             }`}>
               <div className="overflow-hidden bg-[#071F16] relative rounded-xl">
                 <ImageWithPlaceholder
@@ -92,7 +92,7 @@ export const AboutSection: React.FC = () => {
                 <div className={`absolute top-4 left-4 px-3.5 py-1.5 text-[9px] font-sans-clean font-bold tracking-[0.25em] uppercase border pointer-events-none rounded-md shadow-md ${
                   isDark
                     ? 'bg-[#071F16] text-[#EDEDED] border-[#B8954A]/40'
-                    : 'bg-[#FFFDF8] text-[#173B2A] border-[#E6DEC8]'
+                    : 'bg-[#FFFDF8] text-[#173B2A] border-[#DED4BF]'
                 }`}>
                   Authentic Food Stock
                 </div>
@@ -106,7 +106,7 @@ export const AboutSection: React.FC = () => {
                   Natural curing, clean handling & rich umami
                 </span>
                 <span className={`text-[9px] font-sans-clean uppercase tracking-[0.2em] font-bold ${
-                  isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                  isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                 }`}>
                   Standard of Care
                 </span>
@@ -118,7 +118,7 @@ export const AboutSection: React.FC = () => {
           <div className="lg:col-span-6 space-y-6 sm:space-y-7 order-2">
             <div className="space-y-3">
               <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.3em] block ${
-                isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
               }`}>
                 Our Purpose
               </span>
@@ -130,14 +130,14 @@ export const AboutSection: React.FC = () => {
               </h3>
             </div>
 
-            <div className={`space-y-3.5 text-sm sm:text-base font-sans-clean font-normal leading-relaxed ${
+            <div className={`space-y-3.5 text-sm sm:text-base font-sans-clean font-medium leading-relaxed ${
               isDark ? 'text-[#EDEDED]/80' : 'text-[#173B2A]'
             }`}>
               <p>
                 From everyday cooking to meals made for the people you love, the ingredients matter.
               </p>
               
-              <p className={isDark ? 'text-[#EDEDED]/65' : 'text-[#3D4F43]'}>
+              <p className={isDark ? 'text-[#EDEDED]/65' : 'text-[#35463C]'}>
                 {settings.name} focuses on stockfish and crayfish — presented simply, clearly, and ready to order. We avoid unnecessary complexity and concentrate on delivering clean, dependable provisions directly to your doorstep.
               </p>
             </div>
@@ -148,10 +148,10 @@ export const AboutSection: React.FC = () => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`btn-tactile inline-flex items-center gap-2.5 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase shadow-md group rounded-xl cursor-pointer ${
+                className={`btn-tactile inline-flex items-center gap-2.5 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase shadow-md group rounded-xl cursor-pointer min-h-[48px] ${
                   isDark
                     ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/50'
-                    : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white border border-[#1E5631]'
+                    : 'bg-[#173B2A] hover:bg-[#28533C] text-white border border-[#173B2A]'
                 }`}
               >
                 <MessageCircle className={`w-4 h-4 ${isDark ? 'text-[#B8954A]' : 'text-white'}`} />
@@ -167,26 +167,26 @@ export const AboutSection: React.FC = () => {
             BRAND VALUES: 3 Simple Editorial Principles
            ========================================================================= */}
         <div className={`pt-6 border-t space-y-6 sm:space-y-8 ${
-          isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
+          isDark ? 'border-[#16382A]' : 'border-[#DED4BF]'
         }`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className={`w-6 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
+              <span className={`w-6 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#B58A32]'}`} />
               <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.3em] ${
-                isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
               }`}>
                 The Standards We Maintain
               </span>
             </div>
-            <span className={`text-[10px] font-sans-clean uppercase tracking-[0.2em] font-medium ${
-              isDark ? 'text-[#EDEDED]/50' : 'text-[#58685C]'
+            <span className={`text-[10px] font-sans-clean uppercase tracking-[0.2em] font-semibold ${
+              isDark ? 'text-[#EDEDED]/50' : 'text-[#667268]'
             }`}>
               Favour Business Ventures
             </span>
           </div>
 
           <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 divide-y md:divide-y-0 md:divide-x ${
-            isDark ? 'divide-[#16382A]' : 'divide-[#E6DEC8]'
+            isDark ? 'divide-[#16382A]' : 'divide-[#DED4BF]'
           }`}>
             {values.map((val, idx) => (
               <div
@@ -195,7 +195,7 @@ export const AboutSection: React.FC = () => {
               >
                 <div className="flex items-baseline gap-3">
                   <span className={`font-editorial text-2xl font-bold ${
-                    isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                   }`}>
                     {val.num}
                   </span>
@@ -207,7 +207,7 @@ export const AboutSection: React.FC = () => {
                 </div>
 
                 <p className={`text-xs sm:text-sm font-sans-clean font-normal leading-relaxed ${
-                  isDark ? 'text-[#EDEDED]/65' : 'text-[#3D4F43]'
+                  isDark ? 'text-[#EDEDED]/65' : 'text-[#35463C]'
                 }`}>
                   {val.description}
                 </p>

@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         className={`absolute inset-0 z-10 pointer-events-none ${
           isDark
             ? 'bg-gradient-to-r from-[#071F16] via-[#071F16]/85 to-transparent'
-            : 'bg-gradient-to-r from-[#F7F3EA] via-[#F7F3EA]/85 to-transparent'
+            : 'bg-gradient-to-r from-[#F5F0E6] via-[#F5F0E6]/90 lg:via-[#F5F0E6]/85 to-transparent'
         }`}
       />
 
@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         className={`absolute inset-0 z-10 pointer-events-none lg:hidden ${
           isDark
             ? 'bg-gradient-to-t from-[#071F16] via-[#071F16]/60 to-transparent'
-            : 'bg-gradient-to-t from-[#F7F3EA] via-[#F7F3EA]/60 to-transparent'
+            : 'bg-gradient-to-t from-[#F5F0E6] via-[#F5F0E6]/75 to-transparent'
         }`}
       />
 
@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             {settings.name}
           </span>
           <span className={`text-[8px] sm:text-[10px] font-sans-clean font-bold tracking-[0.24em] sm:tracking-[0.32em] uppercase ${
-            isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'
+            isDark ? 'text-[#C9A15A]' : 'text-[#B58A32]'
           } drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]`}>
             Stockfish & Crayfish Provisions
           </span>
@@ -89,16 +89,16 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               }`}
             >
               PREMIUM STOCKFISH &{' '}
-              <span className={`italic font-normal ${isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'}`}>
+              <span className={`italic font-normal ${isDark ? 'text-[#C9A15A]' : 'text-[#B58A32]'}`}>
                 SUN-DRIED CRAYFISH.
               </span>
             </h1>
 
-            <div className={`w-24 h-[2px] bg-gradient-to-r ${isDark ? 'from-[#C9A15A]' : 'from-[#1E5631]'} to-transparent`} />
+            <div className={`w-24 h-[2px] bg-gradient-to-r ${isDark ? 'from-[#C9A15A]' : 'from-[#B58A32]'} to-transparent`} />
 
             <p
-              className={`text-base sm:text-lg font-sans-clean font-normal leading-relaxed max-w-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.15)] ${
-                isDark ? 'text-[#EDEDED]/90' : 'text-[#3D4F43]'
+              className={`text-base sm:text-lg font-sans-clean font-medium leading-relaxed max-w-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.15)] ${
+                isDark ? 'text-[#EDEDED]/90' : 'text-[#35463C]'
               }`}
             >
               Hand-selected, thoroughly cleaned, and delivered with dependable quality for everyday family cooking, caterers, and festive feasts.
@@ -128,11 +128,11 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               className={`btn-tactile inline-flex items-center justify-center gap-2.5 px-7 py-4 text-xs font-bold tracking-[0.18em] uppercase rounded-xl backdrop-blur-md group cursor-pointer border shadow-sm ${
                 isDark
                   ? 'bg-[#0D3325]/80 hover:bg-[#164936] text-[#EDEDED] border-[#16382A] hover:border-[#C9A15A]/50'
-                  : 'bg-[#FFFDF8]/90 hover:bg-[#FFFDF8] text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]/50'
+                  : 'bg-[#FFFDF8] hover:bg-[#FAF7F0] text-[#173B2A] border-[#DED4BF] hover:border-[#B58A32]/60'
               }`}
             >
               <span>Shop Products</span>
-              <ArrowRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'}`} />
+              <ArrowRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${isDark ? 'text-[#C9A15A]' : 'text-[#B58A32]'}`} />
             </button>
           </motion.div>
         </div>
@@ -147,14 +147,14 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           {/* Circular badge */}
           <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 shrink-0">
             {/* Gold ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-[#C9A15A] shadow-[0_4px_20px_rgba(0,0,0,0.3)]" />
+            <div className={`absolute inset-0 rounded-full border-2 ${isDark ? 'border-[#C9A15A] shadow-[0_4px_20px_rgba(0,0,0,0.3)]' : 'border-[#B58A32] shadow-[0_4px_18px_rgba(181,138,50,0.22)]'}`} />
             {/* Inner dark green fill */}
-            <div className="absolute inset-[3px] rounded-full bg-[#1E5631] flex flex-col items-center justify-center text-center p-2">
-              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#C9A15A] mb-1" />
+            <div className="absolute inset-[3px] rounded-full bg-[#173B2A] flex flex-col items-center justify-center text-center p-2">
+              <ShieldCheck className={`w-5 h-5 sm:w-6 sm:h-6 ${isDark ? 'text-[#C9A15A]' : 'text-[#D7BD78]'} mb-1`} />
               <span className="text-[8px] sm:text-[9px] lg:text-[10px] font-sans-clean font-bold uppercase tracking-[0.12em] text-white leading-tight">
                 100% Natural
               </span>
-              <span className="text-[7px] sm:text-[8px] lg:text-[9px] font-sans-clean font-semibold uppercase tracking-[0.1em] text-[#C9A15A] leading-tight">
+              <span className={`text-[7px] sm:text-[8px] lg:text-[9px] font-sans-clean font-semibold uppercase tracking-[0.1em] ${isDark ? 'text-[#C9A15A]' : 'text-[#D7BD78]'} leading-tight`}>
                 & Hygienic
               </span>
             </div>
@@ -162,10 +162,10 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
           {/* Badge-adjacent micro-copy */}
           <div className="hidden sm:flex flex-col gap-1 pb-1">
-            <span className={`text-[10px] font-sans-clean font-semibold uppercase tracking-[0.25em] ${isDark ? 'text-[#C9A15A]' : 'text-[#1E5631]'}`}>
+            <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.25em] ${isDark ? 'text-[#C9A15A]' : 'text-[#B58A32]'}`}>
               Direct Provisions
             </span>
-            <span className={`text-[11px] font-sans-clean font-light leading-snug max-w-[200px] ${isDark ? 'text-[#EDEDED]/75' : 'text-[#3A3A3A]'}`}>
+            <span className={`text-[11px] font-sans-clean font-medium leading-snug max-w-[200px] ${isDark ? 'text-[#EDEDED]/75' : 'text-[#35463C]'}`}>
               Zero sand or debris. Rich natural aroma. Ready to cook.
             </span>
           </div>

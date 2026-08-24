@@ -93,7 +93,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
             className={`relative w-full max-w-4xl max-h-[92vh] sm:max-h-[88vh] shadow-2xl rounded-t-2xl sm:rounded-2xl border overflow-hidden flex flex-col md:flex-row ${
               isDark 
                 ? 'bg-[#0D3325] border-[#16382A] text-[#EDEDED]' 
-                : 'bg-[#FFFDF8] border-[#E6DEC8] text-[#173B2A]'
+                : 'bg-[#FFFDF8] border-[#DED4BF] text-[#173B2A]'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
@@ -104,7 +104,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
               className={`absolute top-4 right-4 z-20 w-11 h-11 flex items-center justify-center transition-colors rounded-xl cursor-pointer border shadow-md ${
                 isDark
                   ? 'bg-[#071F16] text-[#EDEDED] hover:bg-[#B8954A] hover:text-[#071F16] border-[#16382A]'
-                  : 'bg-[#F4EFE6] text-[#173B2A] hover:bg-[#1E5631] hover:text-white border-[#E6DEC8]'
+                  : 'bg-[#FAF7F0] text-[#173B2A] hover:bg-[#173B2A] hover:text-white border-[#DED4BF]'
               }`}
             >
               <X className="w-5 h-5" />
@@ -114,13 +114,13 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
             <div className="flex flex-col md:flex-row w-full overflow-y-auto md:overflow-hidden max-h-[92vh] sm:max-h-[88vh]">
               {/* Product Image Column — Prominent & Visually Balanced */}
               <div className={`relative p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center md:w-[46%] lg:w-[48%] shrink-0 border-b md:border-b-0 md:border-r ${
-                isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F4EFE6] border-[#E6DEC8]'
+                isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#FAF7F0] border-[#DED4BF]'
               }`}>
                 {/* Category badge */}
                 <div className={`absolute top-4 sm:top-5 left-4 sm:left-5 z-10 px-3 py-1.5 text-[9px] font-sans-clean font-semibold tracking-[0.2em] uppercase border rounded-md shadow-sm ${
                   isDark 
                     ? 'bg-[#071F16]/90 backdrop-blur-sm text-[#EDEDED] border-[#B8954A]/40' 
-                    : 'bg-[#FFFDF8]/95 backdrop-blur-sm text-[#173B2A] border-[#E6DEC8]'
+                    : 'bg-[#FFFDF8]/95 backdrop-blur-sm text-[#173B2A] border-[#DED4BF]'
                 }`}>
                   {product.category}
                 </div>
@@ -137,7 +137,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 </div>
 
                 <p className={`hidden md:block text-center text-[10.5px] font-sans-clean tracking-wider mt-4 ${
-                  isDark ? 'text-[#A3B899]/70' : 'text-[#58685C]'
+                  isDark ? 'text-[#A3B899]/70' : 'text-[#667268]'
                 }`}>
                   100% Quality Inspected & Safely Packaged
                 </p>
@@ -147,7 +147,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
               <div className="flex-1 p-5 sm:p-7 md:p-8 flex flex-col space-y-4 sm:space-y-5 overflow-y-auto md:max-h-[88vh]">
                 {/* Title & Rating Header */}
                 <div className={`space-y-1.5 pb-4 border-b ${
-                  isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
+                  isDark ? 'border-[#16382A]' : 'border-[#DED4BF]'
                 }`}>
                   <div className="flex items-center gap-2">
                     <div className="flex items-center text-[#B8954A]">
@@ -161,7 +161,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                       {summary.averageRating.toFixed(1)}
                     </span>
                     <span className={`text-[11px] font-sans-clean ${
-                      isDark ? 'text-[#EDEDED]/60' : 'text-[#58685C]'
+                      isDark ? 'text-[#EDEDED]/60' : 'text-[#667268]'
                     }`}>
                       ({summary.totalReviews} verified reviews)
                     </span>
@@ -173,7 +173,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                     {product.name}
                   </h2>
                   <p className={`font-editorial italic text-sm sm:text-base leading-relaxed ${
-                    isDark ? 'text-[#A3B899]' : 'text-[#3D4F43]'
+                    isDark ? 'text-[#A3B899]' : 'text-[#35463C]'
                   }`}>
                     {product.subtitle}
                   </p>
@@ -181,7 +181,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
                 {/* Description */}
                 <p className={`text-sm font-sans-clean font-normal leading-relaxed ${
-                  isDark ? 'text-[#EDEDED]/80' : 'text-[#3D4F43]'
+                  isDark ? 'text-[#EDEDED]/80' : 'text-[#35463C]'
                 }`}>
                   {product.description}
                 </p>
@@ -190,7 +190,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 {product.highlights && product.highlights.length > 0 && (
                   <div className="space-y-2.5">
                     <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.2em] block ${
-                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                      isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                     }`}>
                       Key Qualities
                     </span>
@@ -200,9 +200,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                           isDark ? 'text-[#EDEDED]/85' : 'text-[#173B2A]'
                         }`}>
                           <Check className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${
-                            isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                            isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                           }`} />
-                          <span className="leading-relaxed">{hl}</span>
+                          <span className="leading-relaxed font-medium">{hl}</span>
                         </li>
                       ))}
                     </ul>
@@ -221,7 +221,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                   <button
                     onClick={() => setIsWriteModalOpen(true)}
                     className={`inline-flex items-center gap-1.5 text-xs font-sans-clean hover:underline font-semibold transition-colors cursor-pointer ${
-                      isDark ? 'text-[#B8954A] hover:text-[#EDEDED]' : 'text-[#1E5631] hover:text-[#173B2A]'
+                      isDark ? 'text-[#B8954A] hover:text-[#EDEDED]' : 'text-[#B58A32] hover:text-[#173B2A]'
                     }`}
                   >
                     <MessageSquarePlus className="w-3.5 h-3.5" />
@@ -233,7 +233,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 {product.options && product.options.length > 0 && (
                   <div className="space-y-2.5">
                     <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.2em] block ${
-                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                      isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                     }`}>
                       Choose Your Format
                     </span>
@@ -249,10 +249,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                               isSelected
                                 ? isDark
                                   ? 'bg-[#16382A] text-[#EDEDED] border border-[#B8954A] shadow-md'
-                                  : 'bg-[#1E5631] text-white border border-[#1E5631] shadow-md'
+                                  : 'bg-[#173B2A] text-white border border-[#173B2A] shadow-md'
                                 : isDark
                                   ? 'bg-[#071F16]/60 text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/40'
-                                  : 'bg-[#F4EFE6] text-[#173B2A] border border-[#E6DEC8] hover:border-[#1E5631]/40'
+                                  : 'bg-[#FAF7F0] text-[#173B2A] border border-[#DED4BF] hover:border-[#B58A32]/60'
                             }`}
                           >
                             <div className="flex-1 min-w-0">
@@ -262,13 +262,13 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                               <span className={`text-[11px] font-sans-clean font-normal leading-snug block mt-0.5 ${
                                 isSelected 
                                   ? isDark ? 'text-[#EDEDED]/85' : 'text-white/90' 
-                                  : isDark ? 'text-[#A3B899]' : 'text-[#58685C]'
+                                  : isDark ? 'text-[#A3B899]' : 'text-[#667268]'
                               }`}>
                                 {option.description}
                               </span>
                             </div>
                             <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-                              isSelected ? isDark ? 'bg-[#B8954A]' : 'bg-white' : isDark ? 'bg-[#16382A]' : 'bg-[#E6DEC8]'
+                              isSelected ? isDark ? 'bg-[#B8954A]' : 'bg-white' : isDark ? 'bg-[#16382A]' : 'bg-[#DED4BF]'
                             }`} />
                           </button>
                         );
@@ -280,13 +280,13 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 {/* Quantity selector */}
                 <div className="space-y-2">
                   <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.2em] block ${
-                    isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                    isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                   }`}>
                     Select Quantity
                   </span>
                   <div className="flex items-center gap-3">
                     <div className={`inline-flex items-center border rounded-xl p-1 ${
-                      isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F4EFE6] border-[#E6DEC8]'
+                      isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#FAF7F0] border-[#DED4BF]'
                     }`}>
                       <button
                         type="button"
@@ -296,7 +296,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                         className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed ${
                           isDark 
                             ? 'text-[#EDEDED] hover:bg-[#16382A] hover:text-[#B8954A]' 
-                            : 'text-[#173B2A] hover:bg-white hover:text-[#1E5631]'
+                            : 'text-[#173B2A] hover:bg-[#FFFDF8] hover:text-[#173B2A]'
                         }`}
                       >
                         <Minus className="w-3.5 h-3.5" />
@@ -314,14 +314,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                         className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed ${
                           isDark 
                             ? 'text-[#EDEDED] hover:bg-[#16382A] hover:text-[#B8954A]' 
-                            : 'text-[#173B2A] hover:bg-white hover:text-[#1E5631]'
+                            : 'text-[#173B2A] hover:bg-[#FFFDF8] hover:text-[#173B2A]'
                         }`}
                       >
                         <Plus className="w-3.5 h-3.5" />
                       </button>
                     </div>
                     <span className={`text-[11px] font-sans-clean uppercase tracking-[0.2em] font-medium ${
-                      isDark ? 'text-[#A3B899]' : 'text-[#58685C]'
+                      isDark ? 'text-[#A3B899]' : 'text-[#667268]'
                     }`}>
                       Portion / Pack
                     </span>
@@ -330,13 +330,13 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
                 {/* Selection summary */}
                 <div className={`p-3.5 rounded-xl border ${
-                  isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#F4EFE6] border-[#E6DEC8]'
+                  isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#FAF7F0] border-[#DED4BF]'
                 }`}>
                   <div className={`flex items-center justify-between pb-2 mb-2 border-b ${
-                    isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
+                    isDark ? 'border-[#16382A]' : 'border-[#DED4BF]'
                   }`}>
                     <span className={`text-[9.5px] font-sans-clean font-bold uppercase tracking-[0.2em] ${
-                      isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                      isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                     }`}>
                       Your Selection
                     </span>
@@ -349,7 +349,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                         {product.name}
                       </span>
                       <span className={`text-xs font-sans-clean ml-1.5 font-medium ${
-                        isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                        isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                       }`}>
                         • {selectedOption.name}
                       </span>
@@ -357,7 +357,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                     <span className={`text-xs font-sans-clean font-semibold px-2.5 py-1 rounded-lg border shrink-0 ${
                       isDark 
                         ? 'bg-[#16382A] border-[#B8954A]/30 text-[#EDEDED]' 
-                        : 'bg-white border-[#E6DEC8] text-[#173B2A]'
+                        : 'bg-[#FFFDF8] border-[#DED4BF] text-[#173B2A]'
                     }`}>
                       Qty: {quantity}
                     </span>
@@ -376,7 +376,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                           ? 'bg-emerald-600 text-white'
                           : isDark
                             ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
-                            : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                            : 'bg-[#173B2A] hover:bg-[#28533C] text-white'
                       }`}
                     >
                       {isAddedFeedback ? (
@@ -402,7 +402,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                         className={`btn-tactile inline-flex items-center justify-center px-4 py-4 text-xs font-sans-clean font-bold tracking-[0.15em] uppercase rounded-xl border transition-all cursor-pointer shadow-md min-h-[48px] ${
                           isDark
                             ? 'bg-[#16382A] text-[#B8954A] border-[#B8954A]'
-                            : 'bg-white text-[#1E5631] border-[#1E5631]'
+                            : 'bg-[#FFFDF8] text-[#173B2A] border-[#173B2A]'
                         }`}
                       >
                         <span>View Cart</span>
@@ -420,7 +420,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                       className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-3 text-[11px] font-sans-clean font-bold tracking-[0.15em] uppercase rounded-xl group cursor-pointer border min-h-[44px] ${
                         isDark
                           ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
-                          : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]/40'
+                          : 'bg-[#FAF7F0] hover:bg-[#FFFDF8] text-[#173B2A] border-[#DED4BF] hover:border-[#173B2A]/40'
                       }`}
                     >
                       <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
@@ -434,10 +434,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                       className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-3 border text-[11px] font-sans-clean font-bold tracking-[0.12em] uppercase rounded-xl transition-all cursor-pointer min-h-[44px] ${
                         isDark
                           ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/40'
-                          : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8]'
+                          : 'bg-[#FAF7F0] hover:bg-[#FFFDF8] text-[#173B2A] border-[#DED4BF]'
                       }`}
                     >
-                      <FileText className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
+                      <FileText className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'}`} />
                       <span>Inquiry Form</span>
                     </button>
                   </div>
@@ -452,10 +452,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                     className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 border text-xs font-sans-clean font-semibold tracking-[0.1em] rounded-xl transition-colors cursor-pointer min-h-[44px] ${
                       isDark
                         ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]'
-                        : 'bg-[#F4EFE6] text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]'
+                        : 'bg-[#FAF7F0] text-[#173B2A] border-[#DED4BF] hover:border-[#173B2A]'
                     }`}
                   >
-                    <Headphones className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
+                    <Headphones className={`w-3.5 h-3.5 ${isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'}`} />
                     <span>Have questions? Ask Customer Care</span>
                   </button>
                 </div>

@@ -47,18 +47,18 @@ export const ProductSection: React.FC = () => {
 
   return (
     <section id="products-section" className={`transition-colors duration-300 ${
-      isDark ? 'bg-[#071F16] text-[#EDEDED]' : 'bg-[#F7F3EA] text-[#173B2A]'
+      isDark ? 'bg-[#071F16] text-[#EDEDED]' : 'bg-[#F5F0E6] text-[#173B2A]'
     }`}>
       {/* ── Page Header ── */}
       <div className={`pt-14 sm:pt-20 pb-10 sm:pb-14 border-b ${
-        isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
+        isDark ? 'border-[#16382A]' : 'border-[#DED4BF]'
       }`}>
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
           <div className="max-w-2xl space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
-              <span className={`w-8 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
+              <span className={`w-8 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#B58A32]'}`} />
               <span className={`text-[10px] sm:text-[11px] font-sans-clean font-bold tracking-[0.35em] uppercase ${
-                isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
               }`}>
                 Our Products
               </span>
@@ -68,8 +68,8 @@ export const ProductSection: React.FC = () => {
             }`}>
               Stockfish & Crayfish
             </h1>
-            <p className={`text-sm sm:text-base font-sans-clean font-normal leading-relaxed ${
-              isDark ? 'text-[#EDEDED]/75' : 'text-[#3D4F43]'
+            <p className={`text-sm sm:text-base font-sans-clean font-medium leading-relaxed ${
+              isDark ? 'text-[#EDEDED]/75' : 'text-[#35463C]'
             }`}>
               Quality provisions for everyday cooking and special occasions. Browse our selection, make an inquiry, or order directly on WhatsApp.
             </p>
@@ -91,10 +91,10 @@ export const ProductSection: React.FC = () => {
                   isActive
                     ? isDark 
                       ? 'bg-[#16382A] text-[#EDEDED] border border-[#B8954A] shadow-sm'
-                      : 'bg-[#1E5631] text-white border border-[#1E5631] shadow-sm'
+                      : 'bg-[#173B2A] text-white border border-[#173B2A] shadow-sm'
                     : isDark
                       ? 'bg-[#0D3325] border border-[#16382A] text-[#EDEDED]/70 hover:text-[#EDEDED] hover:border-[#B8954A]/40'
-                      : 'bg-[#FFFDF8] border border-[#E6DEC8] text-[#3D4F43] hover:text-[#173B2A] hover:border-[#1E5631]/40'
+                      : 'bg-[#FFFDF8] border border-[#DED4BF] text-[#35463C] hover:text-[#173B2A] hover:border-[#B58A32]/60'
                 }`}
               >
                 {cat.label}
@@ -115,7 +115,7 @@ export const ProductSection: React.FC = () => {
           /* Empty state */
           <div className="flex flex-col items-center justify-center py-16 sm:py-24 text-center">
             <div className={`w-14 h-14 rounded-full border flex items-center justify-center text-[#B8954A] mb-4 ${
-              isDark ? 'bg-[#0D3325] border-[#16382A]' : 'bg-[#FFFDF8] border-[#E6DEC8]'
+              isDark ? 'bg-[#0D3325] border-[#16382A]' : 'bg-[#FFFDF8] border-[#DED4BF]'
             }`}>
               <Package className="w-6 h-6" />
             </div>
@@ -125,7 +125,7 @@ export const ProductSection: React.FC = () => {
               No products available
             </h3>
             <p className={`text-sm font-sans-clean font-normal max-w-sm mb-4 ${
-              isDark ? 'text-[#EDEDED]/60' : 'text-[#58685C]'
+              isDark ? 'text-[#EDEDED]/60' : 'text-[#667268]'
             }`}>
               We're currently restocking our selection. Please check back shortly or contact us directly on WhatsApp.
             </p>
@@ -168,14 +168,14 @@ export const ProductSection: React.FC = () => {
                     className={`border rounded-xl overflow-hidden flex flex-col group transition-all duration-300 ${
                       isDark 
                         ? 'bg-[#0D3325] border-[#16382A] hover:border-[#B8954A]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]'
-                        : 'bg-[#FFFDF8] border-[#E6DEC8] hover:border-[#1E5631]/50 hover:shadow-[0_8px_30px_rgba(23,59,42,0.08)]'
+                        : 'bg-[#FFFDF8] border-[#DED4BF] hover:border-[#B58A32]/50 shadow-[0_4px_18px_rgba(23,59,42,0.05)] hover:shadow-[0_12px_32px_rgba(23,59,42,0.09)]'
                     }`}
                   >
                     {/* Product image container — Uniform framing across entire catalogue */}
                     <button
                       onClick={() => setSelectedProduct(product)}
                       className={`relative overflow-hidden block text-left cursor-pointer w-full aspect-[4/3] ${
-                        isDark ? 'bg-[#071F16]' : 'bg-[#F4EFE6]'
+                        isDark ? 'bg-[#071F16]' : 'bg-[#FAF7F0]'
                       }`}
                       aria-label={`View ${product.name} details`}
                     >
@@ -191,7 +191,7 @@ export const ProductSection: React.FC = () => {
                       <div className={`absolute top-3 left-3 px-2.5 py-1 text-[9px] font-sans-clean font-bold tracking-[0.2em] uppercase border rounded shadow-sm ${
                         isDark 
                           ? 'bg-[#071F16]/90 backdrop-blur-sm text-[#EDEDED] border-[#B8954A]/30' 
-                          : 'bg-[#FFFDF8]/95 backdrop-blur-sm text-[#173B2A] border-[#E6DEC8]'
+                          : 'bg-[#FFFDF8]/95 backdrop-blur-sm text-[#173B2A] border-[#DED4BF]'
                       }`}>
                         {product.category}
                       </div>
@@ -207,7 +207,7 @@ export const ProductSection: React.FC = () => {
                           {product.name}
                         </h3>
                         <p className={`text-xs font-sans-clean font-normal leading-snug line-clamp-2 ${
-                          isDark ? 'text-[#EDEDED]/70' : 'text-[#3D4F43]'
+                          isDark ? 'text-[#EDEDED]/70' : 'text-[#35463C]'
                         }`}>
                           {product.subtitle}
                         </p>
@@ -224,7 +224,7 @@ export const ProductSection: React.FC = () => {
                       {/* Options preview */}
                       {product.options && product.options.length > 0 && (
                         <p className={`text-[11px] font-sans-clean font-normal leading-relaxed ${
-                          isDark ? 'text-[#EDEDED]/60' : 'text-[#58685C]'
+                          isDark ? 'text-[#EDEDED]/60' : 'text-[#667268]'
                         }`}>
                           {product.options.length} formats: {product.options.map((o) => o.name).join(' • ')}
                         </p>
@@ -232,7 +232,7 @@ export const ProductSection: React.FC = () => {
 
                       {/* Actions — primary: Add to Cart & WhatsApp, secondary: Details / Inquire */}
                       <div className={`flex flex-col sm:flex-row items-stretch gap-2 pt-3 mt-auto border-t ${
-                        isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
+                        isDark ? 'border-[#16382A]' : 'border-[#DED4BF]'
                       }`}>
                         {/* Primary: Quick Add to Cart */}
                         <button
@@ -243,7 +243,7 @@ export const ProductSection: React.FC = () => {
                               ? 'bg-emerald-600 text-white'
                               : isDark
                                 ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
-                                : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                                : 'bg-[#173B2A] hover:bg-[#28533C] text-white'
                           }`}
                         >
                           {addedItemMap[product.id] ? (
@@ -268,7 +268,7 @@ export const ProductSection: React.FC = () => {
                           className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-3 border text-[10px] font-sans-clean font-bold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
                             isDark
                               ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/40'
-                              : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]'
+                              : 'bg-[#FAF7F0] hover:bg-[#FFFDF8] text-[#173B2A] border-[#DED4BF] hover:border-[#173B2A]'
                           }`}
                         >
                           <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
@@ -281,7 +281,7 @@ export const ProductSection: React.FC = () => {
                           className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-3 py-3 border text-[10px] font-sans-clean font-bold tracking-[0.1em] uppercase rounded-lg transition-all cursor-pointer min-h-[44px] ${
                             isDark
                               ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A]'
-                              : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8]'
+                              : 'bg-[#FAF7F0] hover:bg-[#FFFDF8] text-[#173B2A] border-[#DED4BF]'
                           }`}
                         >
                           Details

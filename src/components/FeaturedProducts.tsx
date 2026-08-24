@@ -36,7 +36,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
       className={`py-20 sm:py-28 relative overflow-hidden border-b transition-colors duration-300 ${
         isDark 
           ? 'bg-[#071F16] text-[#EDEDED] border-[#16382A]' 
-          : 'bg-[#F7F3EA] text-[#173B2A] border-[#E6DEC8]'
+          : 'bg-[#FAF7F0] text-[#173B2A] border-[#DED4BF]'
       }`}
     >
       {/* Ambient background glows */}
@@ -47,8 +47,8 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
         </>
       ) : (
         <>
-          <div className="absolute top-1/4 -left-32 w-80 h-80 bg-[#1E5631]/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-10 right-0 w-80 h-80 bg-[#7A8D60]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/4 -left-32 w-80 h-80 bg-[#B58A32]/6 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-10 right-0 w-80 h-80 bg-[#173B2A]/5 rounded-full blur-3xl pointer-events-none" />
         </>
       )}
 
@@ -61,14 +61,14 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={`flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b ${
-            isDark ? 'border-[#16382A]/80' : 'border-[#E6DEC8]'
+            isDark ? 'border-[#16382A]/80' : 'border-[#DED4BF]'
           }`}
         >
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2.5">
-              <span className={`w-6 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#1E5631]'}`} />
+              <span className={`w-6 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#B58A32]'}`} />
               <span className={`text-[10px] sm:text-[11px] font-sans-clean font-bold tracking-[0.32em] uppercase ${
-                isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
               }`}>
                 FEATURED PROVISIONS
               </span>
@@ -80,8 +80,8 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
               STOCKFISH & CRAYFISH
             </h2>
 
-            <p className={`text-sm sm:text-base font-sans-clean font-normal leading-relaxed ${
-              isDark ? 'text-[#EDEDED]/75' : 'text-[#3D4F43]'
+            <p className={`text-sm sm:text-base font-sans-clean font-medium leading-relaxed ${
+              isDark ? 'text-[#EDEDED]/75' : 'text-[#35463C]'
             }`}>
               Carefully sorted, hygienic, and packaged to give your everyday cooking and celebration dishes authentic flavor and rich aroma.
             </p>
@@ -92,11 +92,11 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
             className={`btn-tactile inline-flex items-center gap-2 px-6 py-3.5 text-xs font-bold tracking-[0.18em] uppercase rounded-xl cursor-pointer shrink-0 self-start md:self-auto border shadow-sm ${
               isDark
                 ? 'bg-[#0D3325] hover:bg-[#164936] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
-                : 'bg-[#FFFDF8] hover:bg-[#F4EFE6] text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]/50'
+                : 'bg-[#FFFDF8] hover:bg-[#F5F0E6] text-[#173B2A] border-[#DED4BF] hover:border-[#B58A32]/60'
             }`}
           >
             <span>View All Options</span>
-            <ArrowRight className={`w-4 h-4 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
+            <ArrowRight className={`w-4 h-4 ${isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'}`} />
           </button>
         </motion.div>
 
@@ -119,12 +119,12 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                 className={`card-glass-hover rounded-2xl overflow-hidden flex flex-col justify-between group border transition-all duration-300 ${
                   isDark
                     ? 'bg-[#0D3325]/80 backdrop-blur-md border-[#16382A] hover:border-[#B8954A]/50 shadow-2xl'
-                    : 'bg-[#FFFDF8] border-[#E6DEC8] hover:border-[#1E5631]/50 shadow-md'
+                    : 'bg-[#FFFDF8] border-[#DED4BF] hover:border-[#B58A32]/50 shadow-[0_4px_20px_rgba(23,59,42,0.06)] hover:shadow-[0_12px_32px_rgba(23,59,42,0.10)]'
                 }`}
               >
                 {/* Product Image Frame with Glass Tag */}
                 <div className={`relative overflow-hidden aspect-[16/10] ${
-                  isDark ? 'bg-[#071F16]' : 'bg-[#F4EFE6]'
+                  isDark ? 'bg-[#071F16]' : 'bg-[#F5F0E6]'
                 }`}>
                   <ImageWithPlaceholder
                     src={product.imageUrl}
@@ -139,7 +139,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                   <div className={`absolute top-4 left-4 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border text-[9.5px] font-sans-clean font-bold tracking-[0.25em] uppercase shadow-md ${
                     isDark
                       ? 'bg-[#071F16]/90 border-[#B8954A]/40 text-[#EDEDED]'
-                      : 'bg-[#FFFDF8]/95 border-[#E6DEC8] text-[#173B2A]'
+                      : 'bg-[#FFFDF8]/95 border-[#DED4BF] text-[#173B2A]'
                   }`}>
                     {product.category}
                   </div>
@@ -148,7 +148,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                   <div className={`absolute top-4 right-4 backdrop-blur-sm w-8 h-8 rounded-full border flex items-center justify-center text-[11px] font-editorial font-bold shadow-md ${
                     isDark
                       ? 'bg-[#0D3325]/90 border-[#16382A] text-[#B8954A]'
-                      : 'bg-[#FFFDF8] border-[#E6DEC8] text-[#1E5631]'
+                      : 'bg-[#FFFDF8] border-[#DED4BF] text-[#B58A32]'
                   }`}>
                     0{idx + 1}
                   </div>
@@ -160,13 +160,13 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                     <h3 className={`font-editorial text-2xl sm:text-3xl font-bold transition-colors leading-snug ${
                       isDark
                         ? 'text-[#EDEDED] group-hover:text-[#B8954A]'
-                        : 'text-[#173B2A] group-hover:text-[#1E5631]'
+                        : 'text-[#173B2A] group-hover:text-[#28533C]'
                     }`}>
                       {product.name}
                     </h3>
                     
                     <p className={`text-xs sm:text-sm font-sans-clean font-normal leading-relaxed ${
-                      isDark ? 'text-[#EDEDED]/75' : 'text-[#3D4F43]'
+                      isDark ? 'text-[#EDEDED]/75' : 'text-[#35463C]'
                     }`}>
                       {product.description}
                     </p>
@@ -180,10 +180,10 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10.5px] font-sans-clean border font-medium ${
                               isDark
                                 ? 'bg-[#071F16]/80 border-[#16382A] text-[#EDEDED]/90'
-                                : 'bg-[#F4EFE6] border-[#E6DEC8] text-[#173B2A]'
+                                : 'bg-[#E8F0E5] border-[#DED4BF]/80 text-[#173B2A]'
                             }`}
                           >
-                            <Check className={`w-3 h-3 ${isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'}`} />
+                            <Check className={`w-3 h-3 ${isDark ? 'text-[#B8954A]' : 'text-[#173B2A]'}`} />
                             {hl}
                           </span>
                         ))}
@@ -193,17 +193,17 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
 
                   {/* Options List & Direct CTAs */}
                   <div className={`pt-4 border-t space-y-4 ${
-                    isDark ? 'border-[#16382A]' : 'border-[#E6DEC8]'
+                    isDark ? 'border-[#16382A]' : 'border-[#DED4BF]'
                   }`}>
                     {product.options && product.options.length > 0 && (
                       <div className="space-y-1.5">
                         <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.2em] ${
-                          isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
+                          isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
                         }`}>
                           Available Portions / Cuts:
                         </span>
                         <p className={`text-xs font-sans-clean font-medium ${
-                          isDark ? 'text-[#EDEDED]/65' : 'text-[#58685C]'
+                          isDark ? 'text-[#EDEDED]/65' : 'text-[#667268]'
                         }`}>
                           {product.options.map(opt => opt.name).join(' • ')}
                         </p>
@@ -220,7 +220,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                             ? 'bg-emerald-600 text-white'
                             : isDark
                               ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
-                              : 'bg-[#1E5631] hover:bg-[#2E7D4F] text-white'
+                              : 'bg-[#173B2A] hover:bg-[#28533C] text-white'
                         }`}
                       >
                         {addedItem === product.id ? (
@@ -244,7 +244,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                         className={`btn-tactile sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 text-xs font-sans-clean font-bold tracking-[0.14em] uppercase rounded-xl group/btn cursor-pointer border min-h-[44px] ${
                           isDark
                             ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A] hover:border-[#B8954A]/50'
-                            : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8] hover:border-[#1E5631]/40 shadow-xs'
+                            : 'bg-[#FAF7F0] hover:bg-[#FFFDF8] text-[#173B2A] border-[#DED4BF] hover:border-[#173B2A]/40 shadow-xs'
                         }`}
                       >
                         <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
@@ -258,7 +258,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                         className={`btn-tactile sm:w-auto inline-flex items-center justify-center px-4 py-3.5 text-xs font-sans-clean font-bold tracking-[0.14em] uppercase rounded-xl cursor-pointer border min-h-[44px] ${
                           isDark
                             ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A]'
-                            : 'bg-[#F4EFE6] hover:bg-white text-[#173B2A] border-[#E6DEC8]'
+                            : 'bg-[#FAF7F0] hover:bg-[#FFFDF8] text-[#173B2A] border-[#DED4BF]'
                         }`}
                       >
                         <span>Details</span>

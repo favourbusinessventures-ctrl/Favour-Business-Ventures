@@ -19,16 +19,17 @@
     --color-border-dark: #16382A;
 
     /* Light Mode Accent Tokens (Warm Linen, Soft Ivory & Deep Botanical Palette) */
-    --color-light-accent: #1E5631;
-    --color-light-accent-hover: #2E7D4F;
-    --color-light-sage: #7A8D60;
-    --color-light-bg: #F7F3EA;
+    --color-light-accent: #173B2A;
+    --color-light-accent-hover: #28533C;
+    --color-light-sage: #E8F0E5;
+    --color-light-gold: #B58A32;
+    --color-light-bg: #F5F0E6;
     --color-light-surface: #FFFDF8;
-    --color-light-surface-alt: #EEF4ED;
-    --color-light-border: #E6DEC8;
+    --color-light-surface-alt: #FAF7F0;
+    --color-light-border: #DED4BF;
     --color-light-text-primary: #173B2A;
-    --color-light-text-secondary: #3D4F43;
-    --color-light-text-muted: #58685C;
+    --color-light-text-secondary: #35463C;
+    --color-light-text-muted: #667268;
 
     /* Dark Mode Accent Tokens */
     --color-dark-accent: #2E7D4F;
@@ -51,7 +52,7 @@
   }
 
   html.light {
-    background-color: #F7F3EA;
+    background-color: #F5F0E6;
     color: #173B2A;
   }
 
