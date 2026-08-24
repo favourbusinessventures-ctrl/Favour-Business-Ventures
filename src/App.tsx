@@ -5,7 +5,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { StickyMobileOrderBar } from './components/StickyMobileOrderBar';
-import { BrandedLoader } from './components/BrandedLoader';
+import { FavoraBrandIntro } from './components/FavoraBrandIntro';
 import { CartDrawer } from './components/CartDrawer';
 import { CustomerCareFloatingButton, CustomerCareChatModal } from './components/CustomerCare';
 import { CustomerCareProvider, useCustomerCare } from './context/CustomerCareContext';
@@ -43,14 +43,11 @@ const StorefrontContent: React.FC<StorefrontContentProps> = ({
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
-      isDark ? 'bg-[#071F16] text-[#EDEDED]' : 'bg-[#FAFAFA] text-[#1A1A1A]'
-    } selection:bg-[#B8954A]/30 selection:text-[#1A1A1A]`}>
+      isDark ? 'bg-[#071F16] text-[#EDEDED]' : 'bg-[#F5F0E6] text-[#173B2A]'
+    } selection:bg-[#B8954A]/30 selection:text-[#173B2A]`}>
       
-      {/* Branded Loading Screen on Initial Mount */}
-      <BrandedLoader
-        isLoading={isInitialLoading}
-        onFinish={onFinishLoading}
-      />
+      {/* FAVORA Brand Intro on Initial Session Entry */}
+      <FavoraBrandIntro onFinish={onFinishLoading} />
 
       {/* Top Editorial & Mobile-First Navbar */}
       <Navbar
