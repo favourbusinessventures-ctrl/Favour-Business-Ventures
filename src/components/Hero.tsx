@@ -84,7 +84,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             className="space-y-4 sm:space-y-5"
           >
             <h1
-              className={`font-editorial text-4xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-bold leading-[0.98] tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] ${
+              className={`font-editorial text-3xl sm:text-5xl lg:text-[3.75rem] xl:text-[4.25rem] font-bold leading-[1.04] tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] ${
                 isDark ? 'text-[#EDEDED]' : 'text-[#173B2A]'
               }`}
             >
@@ -97,7 +97,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             <div className={`w-24 h-[2px] bg-gradient-to-r ${isDark ? 'from-[#C9A15A]' : 'from-[#B58A32]'} to-transparent`} />
 
             <p
-              className={`text-base sm:text-lg font-sans-clean font-medium leading-relaxed max-w-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.15)] ${
+              className={`text-sm sm:text-base lg:text-lg font-sans-clean font-medium leading-relaxed max-w-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.15)] ${
                 isDark ? 'text-[#EDEDED]/90' : 'text-[#35463C]'
               }`}
             >
@@ -110,13 +110,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-6 sm:pt-7"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-5 sm:pt-6"
           >
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-tactile btn-whatsapp-gold inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer"
+              className="btn-tactile btn-whatsapp-gold inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] uppercase rounded-xl group cursor-pointer min-h-[46px]"
             >
               <MessageCircle className="w-4 h-4 text-[#071F16]" />
               <span>Chat on WhatsApp</span>
@@ -125,7 +125,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
             <button
               onClick={() => onNavigate('products')}
-              className={`btn-tactile inline-flex items-center justify-center gap-2.5 px-7 py-4 text-xs font-bold tracking-[0.18em] uppercase rounded-xl backdrop-blur-md group cursor-pointer border shadow-sm ${
+              className={`btn-tactile inline-flex items-center justify-center gap-2.5 px-6 py-3.5 sm:py-4 text-xs font-bold tracking-[0.18em] uppercase rounded-xl backdrop-blur-md group cursor-pointer border shadow-sm min-h-[46px] ${
                 isDark
                   ? 'bg-[#0D3325]/80 hover:bg-[#164936] text-[#EDEDED] border-[#16382A] hover:border-[#C9A15A]/50'
                   : 'bg-[#FFFDF8] hover:bg-[#FAF7F0] text-[#173B2A] border-[#DED4BF] hover:border-[#B58A32]/60'
@@ -142,19 +142,19 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-end gap-4 sm:gap-6"
+          className="flex items-end gap-3 sm:gap-6 pt-4"
         >
           {/* Circular badge */}
-          <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 shrink-0">
+          <div className="relative w-20 h-20 sm:w-28 sm:h-28 lg:w-32 lg:h-32 shrink-0">
             {/* Gold ring */}
             <div className={`absolute inset-0 rounded-full border-2 ${isDark ? 'border-[#C9A15A] shadow-[0_4px_20px_rgba(0,0,0,0.3)]' : 'border-[#B58A32] shadow-[0_4px_18px_rgba(181,138,50,0.22)]'}`} />
             {/* Inner dark green fill */}
-            <div className="absolute inset-[3px] rounded-full bg-[#173B2A] flex flex-col items-center justify-center text-center p-2">
-              <ShieldCheck className={`w-5 h-5 sm:w-6 sm:h-6 ${isDark ? 'text-[#C9A15A]' : 'text-[#D7BD78]'} mb-1`} />
-              <span className="text-[8px] sm:text-[9px] lg:text-[10px] font-sans-clean font-bold uppercase tracking-[0.12em] text-white leading-tight">
+            <div className="absolute inset-[3px] rounded-full bg-[#173B2A] flex flex-col items-center justify-center text-center p-1.5 sm:p-2">
+              <ShieldCheck className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? 'text-[#C9A15A]' : 'text-[#D7BD78]'} mb-0.5 sm:mb-1`} />
+              <span className="text-[7.5px] sm:text-[8.5px] lg:text-[9.5px] font-sans-clean font-bold uppercase tracking-[0.12em] text-white leading-tight">
                 100% Natural
               </span>
-              <span className={`text-[7px] sm:text-[8px] lg:text-[9px] font-sans-clean font-semibold uppercase tracking-[0.1em] ${isDark ? 'text-[#C9A15A]' : 'text-[#D7BD78]'} leading-tight`}>
+              <span className={`text-[6.5px] sm:text-[7.5px] lg:text-[8.5px] font-sans-clean font-semibold uppercase tracking-[0.1em] ${isDark ? 'text-[#C9A15A]' : 'text-[#D7BD78]'} leading-tight`}>
                 & Hygienic
               </span>
             </div>

@@ -21,7 +21,11 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
   }, [onClose]);
 
   const whatsappUrl = buildWhatsAppUrl(
@@ -41,15 +45,15 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md"
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 8 }}
+        initial={{ opacity: 0, scale: 0.97, y: 16 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 8 }}
+        exit={{ opacity: 0, scale: 0.97, y: 16 }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-        className={`relative max-w-4xl w-full border shadow-2xl overflow-hidden rounded-2xl transition-colors duration-300 ${
+        className={`relative max-w-4xl w-full border shadow-2xl overflow-hidden rounded-t-2xl sm:rounded-2xl transition-colors duration-300 flex flex-col md:flex-row max-h-[92vh] sm:max-h-[88vh] ${
           isDark 
             ? 'bg-[#0D3325] border-[#16382A] text-[#EDEDED]' 
             : 'bg-[#FFFDF8] border-[#DED4BF] text-[#173B2A]'
@@ -60,7 +64,7 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
         <button
           onClick={onClose}
           aria-label="Close modal"
-          className={`absolute top-4 right-4 z-10 w-11 h-11 transition-colors flex items-center justify-center cursor-pointer rounded-xl border shadow-md ${
+          className={`absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-11 h-11 transition-colors flex items-center justify-center cursor-pointer rounded-xl border shadow-md ${
             isDark
               ? 'bg-[#071F16] text-[#EDEDED] hover:bg-[#B8954A] hover:text-[#071F16] border-[#16382A]'
               : 'bg-[#F5F0E6] text-[#173B2A] hover:bg-[#173B2A] hover:text-white border-[#DED4BF]'
@@ -69,24 +73,26 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
           <X className="w-5 h-5" />
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 max-h-[88vh] overflow-y-auto">
+        <div className="flex flex-col md:flex-row w-full overflow-y-auto max-h-[92vh] sm:max-h-[88vh]">
           {/* Image Display */}
-          <div className={`md:col-span-7 flex items-center justify-center p-4 sm:p-6 sm:min-h-[380px] ${
-            isDark ? 'bg-[#071F16]' : 'bg-[#F5F0E6]'
+          <div className={`md:w-[52%] flex items-center justify-center p-4 sm:p-6 md:p-8 shrink-0 border-b md:border-b-0 md:border-r ${
+            isDark ? 'bg-[#071F16] border-[#16382A]' : 'bg-[#FAF7F0] border-[#DED4BF]'
           }`}>
-            <img
-              src={item.imageUrl}
-              alt={item.title}
-              referrerPolicy="no-referrer"
-              className="max-h-[45vh] sm:max-h-[55vh] md:max-h-[70vh] w-auto object-contain rounded-xl shadow-md"
-            />
+            <div className="w-full h-full min-h-[220px] sm:min-h-[280px] md:min-h-[380px] max-h-[440px] flex items-center justify-center">
+              <img
+                src={item.imageUrl}
+                alt={item.title}
+                referrerPolicy="no-referrer"
+                className="max-h-[36vh] sm:max-h-[48vh] md:max-h-[64vh] w-auto max-w-full object-contain rounded-xl shadow-md"
+              />
+            </div>
           </div>
 
           {/* Details Column */}
-          <div className={`md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6 ${
+          <div className={`flex-1 p-5 sm:p-7 md:p-8 flex flex-col justify-between space-y-5 overflow-y-auto ${
             isDark ? 'bg-[#0D3325]' : 'bg-[#FFFDF8]'
           }`}>
-            <div className="space-y-4">
+            <div className="space-y-3.5 pr-8 sm:pr-0">
               {/* Category & Badge */}
               <div className="flex flex-wrap items-center gap-2">
                 <span className={`text-[10px] font-sans-clean font-bold uppercase tracking-[0.25em] px-2.5 py-1 rounded-md border ${
@@ -113,14 +119,14 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
 
               <div className={`w-10 h-[1.5px] ${isDark ? 'bg-[#B8954A]' : 'bg-[#B58A32]'}`} />
 
-              <p className={`text-sm font-sans-clean leading-relaxed ${
+              <p className={`text-xs sm:text-sm font-sans-clean leading-relaxed ${
                 isDark ? 'text-[#EDEDED]/80 font-light' : 'text-[#35463C] font-medium'
               }`}>
                 {item.description}
               </p>
 
               {/* Kitchen & Quality Assurance Details */}
-              <div className={`pt-3 pb-2 space-y-2.5 border-t text-xs font-sans-clean ${
+              <div className={`pt-3 pb-1 space-y-2 border-t text-xs font-sans-clean ${
                 isDark ? 'border-[#16382A] text-[#EDEDED]/75' : 'border-[#DED4BF] text-[#35463C]'
               }`}>
                 {item.kitchenUse && (
@@ -144,7 +150,7 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
             </div>
 
             {/* Inquire & Order Action */}
-            <div className={`pt-5 border-t space-y-3 ${
+            <div className={`pt-4 border-t space-y-2.5 ${
               isDark ? 'border-[#16382A]' : 'border-[#DED4BF]'
             }`}>
               <a
@@ -153,27 +159,27 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
                 rel="noopener noreferrer"
                 className={`btn-tactile w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs font-bold tracking-[0.18em] uppercase shadow-sm group rounded-xl min-h-[46px] ${
                   isDark
-                    ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border border-[#16382A] hover:border-[#B8954A]/40'
+                    ? 'bg-[#B8954A] hover:bg-[#C9A75E] text-[#071F16]'
                     : 'bg-[#173B2A] hover:bg-[#28533C] text-white border border-[#173B2A]'
                 }`}
               >
-                <MessageCircle className={`w-4 h-4 ${isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'}`} />
+                <MessageCircle className={`w-4 h-4 ${isDark ? 'text-[#071F16]' : 'text-[#B58A32]'}`} />
                 <span>Order on WhatsApp</span>
                 <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
 
               <button
                 onClick={handleGoToProducts}
-                className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 text-[11px] font-sans-clean font-bold tracking-[0.15em] uppercase rounded-xl transition-colors cursor-pointer min-h-[42px] ${
+                className={`btn-tactile w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 text-[11px] font-sans-clean font-bold tracking-[0.15em] uppercase rounded-xl transition-colors cursor-pointer min-h-[42px] border ${
                   isDark
-                    ? 'bg-transparent hover:bg-[#16382A]/40 text-[#EDEDED]/80 border border-[#16382A]'
-                    : 'bg-[#F5F0E6] hover:bg-[#EAE2D2] text-[#173B2A] border border-[#DED4BF]'
+                    ? 'bg-[#071F16] hover:bg-[#16382A] text-[#EDEDED] border-[#16382A]'
+                    : 'bg-[#F5F0E6] hover:bg-[#EAE2D2] text-[#173B2A] border-[#DED4BF]'
                 }`}
               >
                 <span>View Products Catalogue →</span>
               </button>
 
-              <p className={`text-[11px] text-center font-sans-clean ${
+              <p className={`text-[10.5px] text-center font-sans-clean ${
                 isDark ? 'text-[#EDEDED]/50' : 'text-[#667268]'
               }`}>
                 Direct quality fulfillment by {settings.name}
