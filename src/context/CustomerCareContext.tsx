@@ -39,7 +39,7 @@ export const CustomerCareProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const createWelcomeMessage = (contextProduct?: ProductDetail | null): ChatMessage => {
     let welcomeText = WELCOME_MESSAGE_TEXT;
     if (contextProduct) {
-      welcomeText = `Hi 👋 Welcome to Favour Business Ventures. I see you are inquiring about *${contextProduct.name}*. I can provide information about cuts, preparation, availability, and ordering.`;
+      welcomeText = `Hi 👋 Welcome to FAVORA. I see you are inquiring about *${contextProduct.name}*. I can provide information about cuts, preparation, availability, and ordering.`;
     }
     return {
       id: 'welcome-' + Date.now(),
@@ -171,7 +171,7 @@ export const CustomerCareProvider: React.FC<{ children: React.ReactNode }> = ({ 
               id: 'err-whatsapp',
               label: '💬 Chat on WhatsApp',
               actionType: 'whatsapp',
-              payload: `Hello Favour Business Ventures, I had a question regarding: "${userMsgText}"`
+              payload: `Hello FAVORA, I had a question regarding: "${userMsgText}"`
             }
           ]
         };

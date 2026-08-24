@@ -82,7 +82,7 @@ export async function processCustomerQuery(
             id: 'order_curr',
             label: `Order ${productContext.name} on WhatsApp`,
             actionType: 'whatsapp',
-            payload: `Hello Favour Business Ventures, I would like to order ${productContext.name}. Please confirm current price and delivery.`
+            payload: `Hello FAVORA, I would like to order ${productContext.name}. Please confirm current price and delivery.`
           },
           {
             id: 'ask_culinary',
@@ -103,7 +103,7 @@ export async function processCustomerQuery(
             id: 'order_curr',
             label: `Order ${productContext.name}`,
             actionType: 'whatsapp',
-            payload: `Hello Favour Business Ventures, I want to order ${productContext.name}.`
+            payload: `Hello FAVORA, I want to order ${productContext.name}.`
           }
         ]
       };
@@ -118,7 +118,7 @@ export async function processCustomerQuery(
             id: 'whatsapp_price_context',
             label: `Get Price for ${productContext.name}`,
             actionType: 'whatsapp',
-            payload: `Hello Favour Business Ventures, please what is the current price for ${productContext.name}?`
+            payload: `Hello FAVORA, please what is the current price for ${productContext.name}?`
           }
         ]
       };
@@ -136,14 +136,14 @@ export async function processCustomerQuery(
     if (stockfishProduct) {
       const optionsText = stockfishProduct.options.map(o => `• *${o.name}*: ${o.description}`).join('\n');
       return {
-        text: `*Favour Business Ventures Stockfish:*\n${stockfishProduct.subtitle}\n\n*Available Formats:*\n${optionsText}\n\n*Culinary Tip:* ${stockfishProduct.culinaryNotes}`,
+        text: `*FAVORA Stockfish:*\n${stockfishProduct.subtitle}\n\n*Available Formats:*\n${optionsText}\n\n*Culinary Tip:* ${stockfishProduct.culinaryNotes}`,
         quickActions: [
           { id: 'view_stockfish_prod', label: 'View in Catalog', actionType: 'navigate', payload: 'products' },
           {
             id: 'order_stockfish',
             label: 'Order Stockfish on WhatsApp',
             actionType: 'whatsapp',
-            payload: 'Hello Favour Business Ventures, I would like to order Stockfish.'
+            payload: 'Hello FAVORA, I would like to order Stockfish.'
           }
         ]
       };
@@ -155,14 +155,14 @@ export async function processCustomerQuery(
     if (crayfishProduct) {
       const optionsText = crayfishProduct.options.map(o => `• *${o.name}*: ${o.description}`).join('\n');
       return {
-        text: `*Favour Business Ventures Crayfish:*\n${crayfishProduct.subtitle}\n\n*Available Formats:*\n${optionsText}\n\n*Cleanliness:* 100% winnowed and free from sand or grit.\n*Culinary Tip:* ${crayfishProduct.culinaryNotes}`,
+        text: `*FAVORA Crayfish:*\n${crayfishProduct.subtitle}\n\n*Available Formats:*\n${optionsText}\n\n*Cleanliness:* 100% winnowed and free from sand or grit.\n*Culinary Tip:* ${crayfishProduct.culinaryNotes}`,
         quickActions: [
           { id: 'view_crayfish_prod', label: 'View in Catalog', actionType: 'navigate', payload: 'products' },
           {
             id: 'order_crayfish',
             label: 'Order Crayfish on WhatsApp',
             actionType: 'whatsapp',
-            payload: 'Hello Favour Business Ventures, I would like to order clean Crayfish.'
+            payload: 'Hello FAVORA, I would like to order clean Crayfish.'
           }
         ]
       };
@@ -176,7 +176,7 @@ export async function processCustomerQuery(
       text: `We specialize in two core, premium foodstuffs:\n\n${productSummary}\n\nBoth are available for immediate dispatch in retail and wholesale quantities across Nigeria.`,
       quickActions: [
         { id: 'browse_all', label: 'Browse Full Catalog', actionType: 'navigate', payload: 'products' },
-        { id: 'whatsapp_general', label: 'Inquire on WhatsApp', actionType: 'whatsapp', payload: 'Hello Favour Business Ventures, what products do you have available today?' }
+        { id: 'whatsapp_general', label: 'Inquire on WhatsApp', actionType: 'whatsapp', payload: 'Hello FAVORA, what products do you have available today?' }
       ]
     };
   }
@@ -209,7 +209,7 @@ export async function processCustomerQuery(
           id: 'talk_human',
           label: 'Talk to Us on WhatsApp',
           actionType: 'whatsapp',
-          payload: `Hello Favour Business Ventures, I had a question regarding: "${query}"`
+          payload: `Hello FAVORA, I had a question regarding: "${query}"`
         }
       ],
       matchedFaqId: bestFaq.id
@@ -222,7 +222,7 @@ export async function processCustomerQuery(
   const isGreeting = queryWords.some(w => ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings'].includes(w));
   if (isGreeting && queryWords.length <= 4) {
     return {
-      text: `Hello! 👋 Welcome to Favour Business Ventures. I am your customer-care assistant. How can I help you today with our stockfish, crayfish, or nationwide delivery?`,
+      text: `Hello! 👋 Welcome to FAVORA. I am your customer-care assistant. How can I help you today with our stockfish, crayfish, or nationwide delivery?`,
       quickActions: [
         { id: 'stockfish', label: '🐟 Browse Stockfish', actionType: 'navigate', payload: 'products' },
         { id: 'crayfish', label: '🦐 Browse Crayfish', actionType: 'navigate', payload: 'products' },
@@ -245,7 +245,7 @@ export async function processCustomerQuery(
         id: 'escalate_whatsapp',
         label: '💬 Talk to a Human on WhatsApp',
         actionType: 'whatsapp',
-        payload: `Hello Favour Business Ventures, I need assistance with: "${query}"`
+        payload: `Hello FAVORA, I need assistance with: "${query}"`
       },
       {
         id: 'faq_ordering',

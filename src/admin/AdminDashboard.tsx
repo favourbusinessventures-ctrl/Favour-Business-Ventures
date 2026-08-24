@@ -238,7 +238,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="p-4 bg-[#071F16] border border-[#16382A] rounded-[2px] flex items-center justify-between text-xs font-sans-clean text-[#A3B899]">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#B8954A]" />
-            <span>Favour Business Ventures Admin Console • Real-Time Business Intelligence Active</span>
+            <span>FAVORA Admin Console • Real-Time Business Intelligence Active</span>
           </div>
           <button
             onClick={onReturnToStore}

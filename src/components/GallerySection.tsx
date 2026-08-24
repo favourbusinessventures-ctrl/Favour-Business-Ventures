@@ -204,7 +204,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onNavigate }) =>
             if (item.aspect === 'square') aspectClass = 'aspect-square';
 
             const itemWhatsAppUrl = buildWhatsAppUrl(
-              `Hello ${settings.shortName || 'Favour Business Ventures'}, I am interested in ordering ${item.title}. Please share current availability and pricing.`,
+              `Hello ${settings.shortName || 'FAVORA'}, I am interested in ordering ${item.title}. Please share current availability and pricing.`,
               settings.whatsappNumberRaw
             );
 

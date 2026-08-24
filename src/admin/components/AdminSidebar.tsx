@@ -216,7 +216,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           </button>
 
           <div className="text-[10px] text-center text-[#6B7266] font-sans-clean">
-            Favour Admin v1.1 • Reviews Enabled
+            FAVORA Admin v1.1 • Reviews Enabled
           </div>
         </div>
 

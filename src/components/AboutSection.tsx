@@ -49,7 +49,7 @@ export const AboutSection: React.FC = () => {
             <span className={`text-[10px] sm:text-[10.5px] font-sans-clean font-bold tracking-[0.35em] uppercase ${
               isDark ? 'text-[#B8954A]' : 'text-[#B58A32]'
             }`}>
-              WHY FAVOUR BUSINESS VENTURES
+              WHY FAVORA
             </span>
           </div>
 
@@ -82,7 +82,7 @@ export const AboutSection: React.FC = () => {
               <div className="overflow-hidden bg-[#071F16] relative rounded-xl">
                 <ImageWithPlaceholder
                   src={stockfishBaleImg}
-                  alt="Stockfish provisions by Favour Business Ventures"
+                  alt="Stockfish provisions by FAVORA"
                   aspectRatioClass="aspect-[4/3] sm:aspect-[5/4]"
                   theme={isDark ? 'dark' : 'light'}
                   className="w-full h-full object-cover object-center img-editorial-zoom"
@@ -181,7 +181,7 @@ export const AboutSection: React.FC = () => {
             <span className={`text-[10px] font-sans-clean uppercase tracking-[0.2em] font-semibold ${
               isDark ? 'text-[#EDEDED]/50' : 'text-[#667268]'
             }`}>
-              Favour Business Ventures
+              FAVORA
             </span>
           </div>
 

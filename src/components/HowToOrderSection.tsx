@@ -57,7 +57,7 @@ export const HowToOrderSection: React.FC = () => {
               isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
             }`}
           >
-            How to Order with Favour Ventures
+            How to Order with FAVORA
           </h3>
         </div>
         <span

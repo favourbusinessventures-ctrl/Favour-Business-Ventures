@@ -18,7 +18,7 @@ export function getProductOrderWhatsAppUrl(
   selectedSize?: string,
   customNumber?: string
 ): string {
-  let message = `Hello Favour Business Ventures, I would like to order *${productName}*`;
+  let message = `Hello FAVORA, I would like to order *${productName}*`;
   if (selectedSize) {
     message += ` (Size / Quantity: *${selectedSize}*)`;
   }
@@ -38,7 +38,7 @@ export function getCustomOrderWhatsAppUrl(details: {
   notes?: string;
 }, customNumber?: string): string {
   const lines: string[] = [
-    `*NEW ORDER INQUIRY - FAVOUR BUSINESS VENTURES*`,
+    `*NEW ORDER INQUIRY - FAVORA*`,
     `----------------------------------------`,
     `*Product:* ${details.productName}`,
     `*Package / Option:* ${details.sizeOrPackage}`,
@@ -79,7 +79,7 @@ export function getCartOrderWhatsAppUrl(
   const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const lines: string[] = [
-    `*NEW SHOPPING CART ORDER — FAVOUR BUSINESS VENTURES*`,
+    `*NEW SHOPPING CART ORDER — FAVORA*`,
     `----------------------------------------`,
     `*Selected Provisions (${items.length} items / ${totalQuantity} packs):*`,
     ...items.map((item, index) => `${index + 1}. *${item.productName}* (${item.selectedOption}) — Qty: *${item.quantity}*`),

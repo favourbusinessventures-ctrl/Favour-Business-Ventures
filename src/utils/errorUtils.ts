@@ -1,5 +1,5 @@
 /**
- * Human-Friendly Error System for Favour Business Ventures
+ * Human-Friendly Error System for FAVORA
  *
  * Translates raw Firebase, network, DOM, and JavaScript runtime errors
  * into clear, polite, and actionable messages for customers and admins.

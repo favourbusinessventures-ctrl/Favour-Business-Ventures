@@ -54,7 +54,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
       const message = this.props.fallbackMessage || 'We couldn\'t load this information right now. Please try again or contact us directly on WhatsApp.';
 
       const whatsappUrl = buildWhatsAppUrl(
-        'Hello Favour Business Ventures, I encountered an issue on the website and would like assistance with my inquiry.',
+        'Hello FAVORA, I encountered an issue on the website and would like assistance with my inquiry.',
         BUSINESS_CONFIG.whatsappNumberRaw
       );
 
@@ -111,7 +111,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
               <div className="inline-flex items-center gap-2 pt-2">
                 <span className="w-6 h-[1.5px] bg-[#B8954A]" />
                 <span className="text-[10px] font-sans-clean font-semibold tracking-[0.3em] uppercase text-[#B8954A]">
-                  Favour Business Ventures
+                  FAVORA
                 </span>
                 <span className="w-6 h-[1.5px] bg-[#B8954A]" />
               </div>

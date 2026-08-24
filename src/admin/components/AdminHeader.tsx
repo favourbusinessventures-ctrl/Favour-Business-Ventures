@@ -31,7 +31,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onReturnToStore, onTog
           </div>
           <div>
             <div className="font-editorial text-base font-bold text-[#F5F0E6] tracking-wide leading-none">
-              Favour Business Ventures
+              FAVORA
             </div>
             <div className="text-[9px] font-sans-clean font-semibold tracking-[0.25em] uppercase text-[#B8954A] mt-0.5">
               Control Panel

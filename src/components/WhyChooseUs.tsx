@@ -61,14 +61,14 @@ export const WhyChooseUs: React.FC = () => {
             <span className={`text-[10px] sm:text-[11px] font-sans-clean font-semibold tracking-[0.32em] uppercase ${
               isDark ? 'text-[#B8954A]' : 'text-[#1E5631]'
             }`}>
-              THE FBV DIFFERENCE
+              THE FAVORA DIFFERENCE
             </span>
           </div>
 
           <h2 className={`font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.04] ${
             isDark ? 'text-[#EDEDED]' : 'text-[#1A1A1A]'
           }`}>
-            WHY CHOOSE FAVOUR BUSINESS VENTURES?
+            WHY CHOOSE FAVORA?
           </h2>
 
           <p className={`text-sm sm:text-base font-sans-clean font-light leading-relaxed ${

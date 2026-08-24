@@ -274,7 +274,7 @@ export const AdminOrders: React.FC = () => {
   // Helper to build WhatsApp direct link to customer
   const getCustomerWhatsAppUrl = (order: AdminOrder): string => {
     const rawNumber = order.customerPhone.replace(/[^0-9]/g, '');
-    const message = `Hello ${order.customerName}, this is ${settings.shortName || 'Favour Business Ventures'}. We received your inquiry regarding *${order.productName}* (${order.option || 'Standard package'}, quantity: ${order.quantity || '1'}). How may we assist you with delivery and pricing?`;
+    const message = `Hello ${order.customerName}, this is ${settings.shortName || 'FAVORA'}. We received your inquiry regarding *${order.productName}* (${order.option || 'Standard package'}, quantity: ${order.quantity || '1'}). How may we assist you with delivery and pricing?`;
     return `https://wa.me/${rawNumber}?text=${encodeURIComponent(message)}`;
   };
 

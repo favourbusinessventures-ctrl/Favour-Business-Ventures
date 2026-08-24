@@ -77,7 +77,7 @@ export const CustomerCareChatModal: React.FC = () => {
   };
 
   const openHumanWhatsApp = (customPrompt?: string) => {
-    const prompt = customPrompt || "Hello Favour Business Ventures, I would like to speak directly with customer care about my inquiry.";
+    const prompt = customPrompt || "Hello FAVORA, I would like to speak directly with customer care about my inquiry.";
     const url = buildWhatsAppUrl(prompt, settings.whatsappNumberRaw);
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -115,7 +115,7 @@ export const CustomerCareChatModal: React.FC = () => {
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-editorial text-base font-bold tracking-tight text-[#F5F0E6]">
-                    Favour Business Ventures
+                    FAVORA
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-[11px] font-sans-clean">

@@ -11,7 +11,7 @@ export const WhatsAppCTASection: React.FC = () => {
   const stockfishWhatsAppUrl = buildWhatsAppUrl(settings.stockfishOrderMessage, settings.whatsappNumberRaw);
   const crayfishWhatsAppUrl = buildWhatsAppUrl(settings.crayfishOrderMessage, settings.whatsappNumberRaw);
   const wholesaleWhatsAppUrl = buildWhatsAppUrl(
-    `Hello ${settings.shortName || 'Favour Business Ventures'}, I would like to inquire about bulk wholesale and catering supply for Stockfish and Crayfish.`,
+    `Hello ${settings.shortName || 'FAVORA'}, I would like to inquire about bulk wholesale and catering supply for Stockfish and Crayfish.`,
     settings.whatsappNumberRaw
   );
 

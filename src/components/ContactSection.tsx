@@ -15,7 +15,7 @@ export const ContactSection: React.FC = () => {
   const handleSendOrder = (e: React.FormEvent) => {
     e.preventDefault();
     
-    let message = `Hello ${settings.shortName || 'Favour Business Ventures'}, I would like to place an order.\n\n`;
+    let message = `Hello ${settings.shortName || 'FAVORA'}, I would like to place an order.\n\n`;
     message += `• Product: ${productChoice}\n`;
     message += `• Quantity/Purpose: ${orderQuantity}\n`;
     if (customerName.trim()) {

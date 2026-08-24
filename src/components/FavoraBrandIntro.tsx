@@ -6,11 +6,13 @@ interface FavoraBrandIntroProps {
 }
 
 const INTRO_SESSION_KEY = 'favora_brand_intro_seen';
-const TOTAL_DURATION_MS = 2100;
-const EXIT_DURATION_MS = 500;
+// Full cinematic timeline: 3.7 seconds of experience + 0.65s smooth dissolve reveal
+const TOTAL_EXPERIENCE_MS = 3700;
+const EXIT_DURATION_MS = 650;
 
-// Premium easing
-const EASE_PREMIUM = [0.16, 1, 0.3, 1] as const;
+// Bespoke luxury easing curves
+const EASE_CINEMATIC = [0.16, 1, 0.3, 1] as const;
+const EASE_SHEEN = [0.25, 1, 0.5, 1] as const;
 
 export const FavoraBrandIntro: React.FC<FavoraBrandIntroProps> = ({ onFinish }) => {
   const [isVisible, setIsVisible] = useState<boolean>(() => {
@@ -33,7 +35,7 @@ export const FavoraBrandIntro: React.FC<FavoraBrandIntroProps> = ({ onFinish }) 
     try {
       sessionStorage.setItem(INTRO_SESSION_KEY, 'true');
     } catch {
-      // Ignore storage restrictions in private tabs
+      // Ignore storage restrictions in restricted contexts
     }
 
     setIsVisible(false);
@@ -49,15 +51,15 @@ export const FavoraBrandIntro: React.FC<FavoraBrandIntroProps> = ({ onFinish }) 
       return;
     }
 
-    // Check for reduced motion
+    // Check for user reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const activeDuration = prefersReducedMotion ? 600 : TOTAL_DURATION_MS;
+    const activeDuration = prefersReducedMotion ? 500 : TOTAL_EXPERIENCE_MS;
 
     timerRef.current = setTimeout(() => {
       completeIntro();
     }, activeDuration);
 
-    // Keyboard escape listener to skip
+    // Keyboard shortcut to skip immediately
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
         completeIntro();
@@ -82,80 +84,141 @@ export const FavoraBrandIntro: React.FC<FavoraBrandIntroProps> = ({ onFinish }) 
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.015,
-            filter: 'blur(4px)',
+            scale: 1.025,
+            filter: 'blur(6px)',
             transition: {
               duration: EXIT_DURATION_MS / 1000,
-              ease: EASE_PREMIUM,
+              ease: EASE_CINEMATIC,
             },
           }}
           onClick={completeIntro}
-          className="fixed inset-0 z-[9999] bg-[#071F16] flex flex-col items-center justify-center p-6 text-center select-none overflow-hidden cursor-pointer"
+          className="fixed inset-0 z-[9999] bg-[#051710] flex flex-col items-center justify-center p-6 text-center select-none overflow-hidden cursor-pointer"
           role="dialog"
           aria-label="FAVORA Brand Introduction"
         >
-          {/* Subtle Ambient Radial Lighting */}
-          <div
+          {/* Phase 1: Atmospheric Background & Slow Ambient Radial Breathing */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1.05 }}
+            transition={{
+              duration: 3.5,
+              ease: 'easeOut',
+            }}
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                'radial-gradient(ellipse 65% 55% at 50% 50%, rgba(13,51,37,0.7) 0%, rgba(7,31,22,1) 85%)',
+                'radial-gradient(circle 800px at 50% 50%, rgba(22,73,54,0.45) 0%, rgba(13,51,37,0.2) 45%, rgba(5,23,16,1) 85%)',
             }}
           />
 
-          {/* Very faint fine linen grain/veil overlay */}
-          <div className="absolute inset-0 bg-[#071F16]/20 pointer-events-none" />
+          {/* Faint Center Warm Gold Glow */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0.45, 0.35] }}
+            transition={{
+              duration: 3.2,
+              times: [0, 0.6, 1],
+              ease: 'easeInOut',
+            }}
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(circle 420px at 50% 48%, rgba(184,149,74,0.12) 0%, rgba(184,149,74,0.02) 60%, transparent 80%)',
+            }}
+          />
 
-          {/* Centered Brand Signature */}
-          <div className="relative z-10 flex flex-col items-center justify-center max-w-md w-full mx-auto px-4">
+          {/* Minimalist Framing Accents (Luxury Border Hints) */}
+          <div className="absolute inset-8 sm:inset-14 md:inset-20 border border-[#B8954A]/10 pointer-events-none rounded-sm">
+            {/* Top-left corner mark */}
+            <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#B8954A]/40" />
+            {/* Top-right corner mark */}
+            <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#B8954A]/40" />
+            {/* Bottom-left corner mark */}
+            <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#B8954A]/40" />
+            {/* Bottom-right corner mark */}
+            <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#B8954A]/40" />
+          </div>
+
+          {/* Centered Brand Presentation */}
+          <div className="relative z-10 flex flex-col items-center justify-center max-w-xl w-full mx-auto px-4">
             
-            {/* Subtle top gold accent pip */}
+            {/* Phase 1 & 2: Top Refined Crest Emblem */}
             <motion.div
-              initial={{ opacity: 0, scale: 0, y: 6 }}
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE_PREMIUM, delay: 0.1 }}
-              className="w-1.5 h-1.5 rounded-full bg-[#B8954A] shadow-[0_0_12px_rgba(184,149,74,0.6)] mb-5"
-            />
-
-            {/* Main Wordmark: FAVORA */}
-            <motion.h1
-              initial={{
-                opacity: 0,
-                y: 14,
-                letterSpacing: '0.24em',
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                letterSpacing: '0.34em',
-              }}
               transition={{
-                duration: 0.95,
-                ease: EASE_PREMIUM,
-                delay: 0.15,
+                duration: 0.85,
+                ease: EASE_CINEMATIC,
+                delay: 0.3,
               }}
-              className="font-editorial text-4xl sm:text-6xl md:text-7xl font-bold text-[#F5F0E6] uppercase tracking-[0.34em] pl-[0.34em] leading-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]"
+              className="flex items-center justify-center gap-2 mb-6"
             >
-              FAVORA
-            </motion.h1>
+              <span className="w-1 h-1 rounded-full bg-[#B8954A]/50" />
+              <span className="w-2 h-2 rotate-45 border border-[#B8954A] bg-[#B8954A]/30 shadow-[0_0_12px_rgba(184,149,74,0.5)]" />
+              <span className="w-1 h-1 rounded-full bg-[#B8954A]/50" />
+            </motion.div>
 
-            {/* Delicate divider rule */}
+            {/* Phase 2: FAVORA Wordmark Reveal */}
+            <div className="relative overflow-hidden py-1 px-4">
+              <motion.h1
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                  letterSpacing: '0.22em',
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  letterSpacing: '0.36em',
+                }}
+                transition={{
+                  duration: 1.15,
+                  ease: EASE_CINEMATIC,
+                  delay: 0.7,
+                }}
+                className="font-editorial text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F5F0E6] uppercase tracking-[0.36em] pl-[0.36em] leading-none drop-shadow-[0_8px_32px_rgba(0,0,0,0.7)]"
+              >
+                FAVORA
+              </motion.h1>
+
+              {/* Phase 3: Premium Light Sweep passing across the wordmark */}
+              <motion.div
+                initial={{ x: '-120%', opacity: 0 }}
+                animate={{
+                  x: '140%',
+                  opacity: [0, 1, 1, 0],
+                }}
+                transition={{
+                  duration: 1.1,
+                  ease: EASE_SHEEN,
+                  delay: 1.8,
+                  times: [0, 0.2, 0.8, 1],
+                }}
+                className="absolute inset-0 pointer-events-none mix-blend-screen"
+                style={{
+                  background:
+                    'linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.05) 35%, rgba(245,240,230,0.6) 50%, rgba(184,149,74,0.5) 58%, transparent 75%)',
+                }}
+              />
+            </div>
+
+            {/* Phase 4: Delicate Gold Divider Line */}
             <motion.div
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
               transition={{
                 duration: 0.8,
-                ease: EASE_PREMIUM,
-                delay: 0.5,
+                ease: EASE_CINEMATIC,
+                delay: 2.1,
               }}
-              className="w-16 sm:w-24 h-[1px] bg-gradient-to-r from-transparent via-[#B8954A]/80 to-transparent my-4 sm:my-5 origin-center"
+              className="w-20 sm:w-28 h-[1px] bg-gradient-to-r from-transparent via-[#B8954A] to-transparent my-5 sm:my-6 origin-center"
             />
 
-            {/* Tagline: Stockfish • Crayfish • Seafood */}
+            {/* Phase 4: Tagline Reveal (Noticeably after wordmark) */}
             <motion.div
               initial={{
                 opacity: 0,
-                y: 8,
+                y: 10,
               }}
               animate={{
                 opacity: 1,
@@ -163,37 +226,41 @@ export const FavoraBrandIntro: React.FC<FavoraBrandIntroProps> = ({ onFinish }) 
               }}
               transition={{
                 duration: 0.85,
-                ease: EASE_PREMIUM,
-                delay: 0.65,
+                ease: EASE_CINEMATIC,
+                delay: 2.3,
               }}
-              className="flex items-center justify-center gap-2 sm:gap-3 text-[#B8954A] text-[10px] sm:text-xs font-sans-clean font-semibold tracking-[0.26em] uppercase whitespace-nowrap"
+              className="flex items-center justify-center gap-2.5 sm:gap-3.5 text-[#C9A75E] text-[10.5px] sm:text-xs md:text-sm font-sans-clean font-semibold tracking-[0.28em] sm:tracking-[0.32em] uppercase whitespace-nowrap"
             >
               <span>Stockfish</span>
-              <span className="text-[#B8954A]/60 text-[8px]">•</span>
+              <span className="text-[#B8954A]/60 text-[8px] sm:text-[9px]">•</span>
               <span>Crayfish</span>
-              <span className="text-[#B8954A]/60 text-[8px]">•</span>
+              <span className="text-[#B8954A]/60 text-[8px] sm:text-[9px]">•</span>
               <span>Seafood</span>
             </motion.div>
 
-            {/* Subtle Sub-label */}
+            {/* Phase 4: Subtle Heritage Descriptor */}
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              transition={{ duration: 0.7, delay: 0.9 }}
-              className="text-[9px] sm:text-[10px] font-sans-clean text-[#EDEDED]/50 tracking-[0.2em] uppercase mt-3"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 0.55, y: 0 }}
+              transition={{
+                duration: 0.7,
+                ease: EASE_CINEMATIC,
+                delay: 2.65,
+              }}
+              className="text-[9px] sm:text-[10px] font-sans-clean text-[#EDEDED]/60 tracking-[0.24em] uppercase mt-3.5"
             >
-              Premium Nigerian Provisions
+              Artisanal Nigerian Provisions
             </motion.p>
           </div>
 
-          {/* Gentle skip hint (subtle, non-distracting) */}
+          {/* Phase 5 & Skip Indicator: Subtle, non-intrusive interactive affordance */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.45 }}
-            transition={{ duration: 0.5, delay: 1.2 }}
-            className="absolute bottom-6 sm:bottom-8 text-[9px] font-sans-clean tracking-[0.2em] uppercase text-[#EDEDED]/40 pointer-events-none"
+            animate={{ opacity: 0.4 }}
+            transition={{ duration: 0.6, delay: 1.5 }}
+            className="absolute bottom-6 sm:bottom-10 text-[9.5px] font-sans-clean tracking-[0.22em] uppercase text-[#EDEDED]/40 pointer-events-none"
           >
-            Click or tap to enter
+            Click anywhere to enter
           </motion.div>
         </motion.div>
       )}

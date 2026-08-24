@@ -25,7 +25,7 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ item, onClose, onNav
   }, [onClose]);
 
   const whatsappUrl = buildWhatsAppUrl(
-    `Hello ${settings.shortName || 'Favour Business Ventures'}, I saw ${item.title} in your gallery and I would like to make an order. Please share availability and current pricing.`,
+    `Hello ${settings.shortName || 'FAVORA'}, I saw ${item.title} in your gallery and I would like to make an order. Please share availability and current pricing.`,
     settings.whatsappNumberRaw
   );
 

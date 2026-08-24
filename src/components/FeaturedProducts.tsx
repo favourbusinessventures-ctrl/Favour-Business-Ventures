@@ -104,7 +104,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
           {featured.map((product, idx) => {
             const productWhatsAppUrl = buildWhatsAppUrl(
-              `Hello ${settings.shortName || 'Favour Business Ventures'}, I would like to order ${product.name}. Please confirm current portion availability and pricing.`,
+              `Hello ${settings.shortName || 'FAVORA'}, I would like to order ${product.name}. Please confirm current portion availability and pricing.`,
               settings.whatsappNumberRaw
             );
 

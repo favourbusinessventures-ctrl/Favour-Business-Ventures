@@ -229,7 +229,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onNavigate }) => {
                 <span className={`text-[10px] font-sans-clean uppercase tracking-[0.2em] ${
                   isDark ? 'text-[#EDEDED]/50' : 'text-[#6B7266]'
                 }`}>
-                  Favour Ventures
+                  FAVORA
                 </span>
               </div>
 

@@ -18,7 +18,7 @@ export const INITIAL_REVIEWS: CustomerReview[] = [
     customerName: 'Mrs. Folashade Adeyemi',
     rating: 5,
     reviewTitle: 'Clean, Sand-Free Oron Crayfish',
-    comment: 'The hardest thing about buying crayfish in open markets is finding grit-free and fresh batches. Favour Business Ventures delivers thoroughly sorted, sun-cured Oron crayfish. The vibrant orange color and sweet aroma elevate my jollof rice and native soups without any sand or gravel.',
+    comment: 'The hardest thing about buying crayfish in open markets is finding grit-free and fresh batches. FAVORA delivers thoroughly sorted, sun-cured Oron crayfish. The vibrant orange color and sweet aroma elevate my jollof rice and native soups without any sand or gravel.',
     productId: 'oron-crayfish',
     productName: 'Oron Crayfish (Sun-Cured / Stone-Free)',
     location: 'Lekki, Lagos',

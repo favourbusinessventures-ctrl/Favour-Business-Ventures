@@ -66,7 +66,7 @@ export const ImageWithPlaceholder: React.FC<ImageWithPlaceholderProps> = ({
         >
           <ImageOff className="w-8 h-8 mb-2 opacity-50 text-[#B8954A]" />
           <span className="font-editorial text-sm font-semibold tracking-wide">
-            {alt || 'Favour Business Ventures'}
+            {alt || 'FAVORA'}
           </span>
           <span className="text-[10px] font-sans-clean uppercase tracking-[0.2em] mt-1 opacity-70">
             Quality Product Presentation

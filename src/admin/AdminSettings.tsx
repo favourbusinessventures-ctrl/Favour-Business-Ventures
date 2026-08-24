@@ -142,7 +142,7 @@ export const AdminSettings: React.FC = () => {
       const now = new Date().toISOString();
       const payload: AdminBusinessSettings = {
         name: formData.name.trim(),
-        shortName: formData.shortName.trim() || 'Favour',
+        shortName: formData.shortName.trim() || 'FAVORA',
         tagline: formData.tagline.trim(),
         heroSubtitle: formData.heroSubtitle.trim(),
         description: formData.description.trim(),

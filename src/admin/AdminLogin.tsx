@@ -60,7 +60,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onReturnToStore }) => {
 
           <div className="space-y-1">
             <span className="text-[10px] font-sans-clean font-semibold tracking-[0.3em] uppercase text-[#B8954A]">
-              Favour Business Ventures
+              FAVORA
             </span>
             <h1 className="font-editorial text-2xl sm:text-3xl font-bold tracking-tight text-[#F5F0E6]">
               Admin Portal
