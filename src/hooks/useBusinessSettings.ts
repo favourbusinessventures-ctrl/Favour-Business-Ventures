@@ -21,8 +21,25 @@ interface SettingsCacheState {
   isFetched: boolean;
 }
 
+// Permanent Customer-Facing Brand Name Constant
+export const PERMANENT_BRAND_NAME = "FAVORA";
+
+/**
+ * Sanitizes any text string from Firestore to guarantee the customer-facing
+ * brand name is strictly FAVORA, removing any old legacy business names.
+ */
+function sanitizeBrandText(text?: string, fallback: string = ''): string {
+  if (!text) return fallback;
+  return text
+    .replace(/Favour\s+Business\s+Ventures/gi, PERMANENT_BRAND_NAME)
+    .replace(/Favour\s+Business/gi, PERMANENT_BRAND_NAME)
+    .replace(/\bFBV\b/gi, PERMANENT_BRAND_NAME);
+}
+
 const defaultSettings: AdminBusinessSettings = {
   ...BUSINESS_CONFIG,
+  name: PERMANENT_BRAND_NAME,
+  shortName: PERMANENT_BRAND_NAME,
   createdAt: undefined,
   updatedAt: undefined
 };
@@ -78,19 +95,20 @@ async function fetchBusinessSettingsSingle(): Promise<AdminBusinessSettings> {
       if (docSnap.exists()) {
         const d = docSnap.data();
         const freshSettings: AdminBusinessSettings = {
-          name: d.name || BUSINESS_CONFIG.name,
-          shortName: d.shortName || BUSINESS_CONFIG.shortName,
-          tagline: d.tagline || BUSINESS_CONFIG.tagline,
-          heroSubtitle: d.heroSubtitle || BUSINESS_CONFIG.heroSubtitle,
-          description: d.description || BUSINESS_CONFIG.description,
+          // Permanent customer-facing brand name is ALWAYS FAVORA
+          name: PERMANENT_BRAND_NAME,
+          shortName: PERMANENT_BRAND_NAME,
+          tagline: sanitizeBrandText(d.tagline, BUSINESS_CONFIG.tagline),
+          heroSubtitle: sanitizeBrandText(d.heroSubtitle, BUSINESS_CONFIG.heroSubtitle),
+          description: sanitizeBrandText(d.description, BUSINESS_CONFIG.description),
           whatsappNumberRaw: d.whatsappNumberRaw || BUSINESS_CONFIG.whatsappNumberRaw,
           whatsappNumberDisplay: d.whatsappNumberDisplay || BUSINESS_CONFIG.whatsappNumberDisplay,
           phoneNumberDisplay: d.phoneNumberDisplay || BUSINESS_CONFIG.phoneNumberDisplay,
           phoneCallUrl: d.phoneCallUrl || BUSINESS_CONFIG.phoneCallUrl,
           email: d.email || BUSINESS_CONFIG.email,
-          defaultOrderMessage: d.defaultOrderMessage || BUSINESS_CONFIG.defaultOrderMessage,
-          stockfishOrderMessage: d.stockfishOrderMessage || BUSINESS_CONFIG.stockfishOrderMessage,
-          crayfishOrderMessage: d.crayfishOrderMessage || BUSINESS_CONFIG.crayfishOrderMessage,
+          defaultOrderMessage: sanitizeBrandText(d.defaultOrderMessage, BUSINESS_CONFIG.defaultOrderMessage),
+          stockfishOrderMessage: sanitizeBrandText(d.stockfishOrderMessage, BUSINESS_CONFIG.stockfishOrderMessage),
+          crayfishOrderMessage: sanitizeBrandText(d.crayfishOrderMessage, BUSINESS_CONFIG.crayfishOrderMessage),
           createdAt: d.createdAt,
           updatedAt: d.updatedAt
         };

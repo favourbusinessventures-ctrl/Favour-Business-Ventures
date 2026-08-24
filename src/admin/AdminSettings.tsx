@@ -44,20 +44,29 @@ export const AdminSettings: React.FC = () => {
         
         if (docSnap.exists()) {
           const d = docSnap.data();
+          const sanitizeBrand = (val?: string) => (!val || val.includes('Favour') ? 'FAVORA' : val);
+          const sanitizeText = (text?: string, fallback: string = '') => {
+            if (!text) return fallback;
+            return text
+              .replace(/Favour\s+Business\s+Ventures/gi, 'FAVORA')
+              .replace(/Favour\s+Business/gi, 'FAVORA')
+              .replace(/\bFBV\b/gi, 'FAVORA');
+          };
+
           const loaded: AdminBusinessSettings = {
-            name: d.name || BUSINESS_CONFIG.name,
-            shortName: d.shortName || BUSINESS_CONFIG.shortName,
-            tagline: d.tagline || BUSINESS_CONFIG.tagline,
-            heroSubtitle: d.heroSubtitle || BUSINESS_CONFIG.heroSubtitle,
-            description: d.description || BUSINESS_CONFIG.description,
+            name: sanitizeBrand(d.name),
+            shortName: sanitizeBrand(d.shortName),
+            tagline: sanitizeText(d.tagline, BUSINESS_CONFIG.tagline),
+            heroSubtitle: sanitizeText(d.heroSubtitle, BUSINESS_CONFIG.heroSubtitle),
+            description: sanitizeText(d.description, BUSINESS_CONFIG.description),
             whatsappNumberRaw: d.whatsappNumberRaw || BUSINESS_CONFIG.whatsappNumberRaw,
             whatsappNumberDisplay: d.whatsappNumberDisplay || BUSINESS_CONFIG.whatsappNumberDisplay,
             phoneNumberDisplay: d.phoneNumberDisplay || BUSINESS_CONFIG.phoneNumberDisplay,
             phoneCallUrl: d.phoneCallUrl || BUSINESS_CONFIG.phoneCallUrl,
             email: d.email || BUSINESS_CONFIG.email,
-            defaultOrderMessage: d.defaultOrderMessage || BUSINESS_CONFIG.defaultOrderMessage,
-            stockfishOrderMessage: d.stockfishOrderMessage || BUSINESS_CONFIG.stockfishOrderMessage,
-            crayfishOrderMessage: d.crayfishOrderMessage || BUSINESS_CONFIG.crayfishOrderMessage,
+            defaultOrderMessage: sanitizeText(d.defaultOrderMessage, BUSINESS_CONFIG.defaultOrderMessage),
+            stockfishOrderMessage: sanitizeText(d.stockfishOrderMessage, BUSINESS_CONFIG.stockfishOrderMessage),
+            crayfishOrderMessage: sanitizeText(d.crayfishOrderMessage, BUSINESS_CONFIG.crayfishOrderMessage),
             createdAt: d.createdAt,
             updatedAt: d.updatedAt
           };
